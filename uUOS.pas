@@ -4,22 +4,22 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, uThread, Vcl.FileCtrl;
 
 type
   TForm1 = class(TForm)
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
-    Edit1: TEdit;
-    Edit2: TEdit;
+    EdFichero: TEdit;
+    EdDir: TEdit;
     Button1: TButton;
     Button2: TButton;
     RadioButton1: TRadioButton;
     RadioButton2: TRadioButton;
-    Edit3: TEdit;
-    Edit4: TEdit;
-    Edit5: TEdit;
-    Edit6: TEdit;
+    EdInicio: TEdit;
+    EdFin: TEdit;
+    EdBytes: TEdit;
+    EdValor: TEdit;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -36,7 +36,13 @@ type
     Button5: TButton;
     CheckBox4: TCheckBox;
     Button6: TButton;
+    Estado: TStatusBar;
+    OpenDialog1: TOpenDialog;
+    procedure Button3Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
+    TAvFuck: HPrincipal;
     { Private declarations }
   public
     { Public declarations }
@@ -48,5 +54,25 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  if OpenDialog1.Execute then
+    EdFichero.Text:= OpenDialog1.FileName;
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  Dir: string;
+begin
+  if SelectDirectory('Selecciona la carpeta de trabajo.', '', Dir) then
+    EdDir.Text:= Dir;
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+  TAvFuck:= HPrincipal.Create(False);
+  TAvFuck.WaitFor;
+end;
 
 end.

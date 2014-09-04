@@ -4,7 +4,9 @@ uses
   Vcl.Forms,
   uUOS in 'uUOS.pas' {Form1},
   Vcl.Themes,
-  Vcl.Styles;
+  Vcl.Styles,
+  uFunciones in 'uFunciones.pas',
+  uThread in 'uThread.pas';
 
 {$R *.res}
 

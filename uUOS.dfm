@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'UdTools Offset Suite'
-  ClientHeight = 461
+  ClientHeight = 480
   ClientWidth = 348
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,18 +17,12 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 348
-    Height = 461
+    Height = 480
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 346
-    ExplicitHeight = 428
     object TabSheet1: TTabSheet
       Caption = 'Offset Locator'
-      ExplicitLeft = 8
-      ExplicitTop = 16
-      ExplicitWidth = 569
-      ExplicitHeight = 230
       object Label1: TLabel
         Left = 3
         Top = 91
@@ -57,7 +51,7 @@ object Form1: TForm1
         Height = 13
         Caption = 'Valor:'
       end
-      object Edit1: TEdit
+      object EdFichero: TEdit
         Left = 3
         Top = 3
         Width = 305
@@ -65,7 +59,7 @@ object Form1: TForm1
         TabOrder = 0
         Text = 'Ruta del fichero'
       end
-      object Edit2: TEdit
+      object EdDir: TEdit
         Left = 3
         Top = 30
         Width = 305
@@ -80,6 +74,7 @@ object Form1: TForm1
         Height = 21
         Caption = '...'
         TabOrder = 2
+        OnClick = Button1Click
       end
       object Button2: TButton
         Left = 314
@@ -88,6 +83,7 @@ object Form1: TForm1
         Height = 21
         Caption = '...'
         TabOrder = 3
+        OnClick = Button2Click
       end
       object RadioButton1: TRadioButton
         Left = 44
@@ -107,7 +103,7 @@ object Form1: TForm1
         Caption = 'DSplit'
         TabOrder = 5
       end
-      object Edit3: TEdit
+      object EdInicio: TEdit
         Left = 44
         Top = 88
         Width = 83
@@ -115,7 +111,7 @@ object Form1: TForm1
         TabOrder = 6
         Text = '1000'
       end
-      object Edit4: TEdit
+      object EdFin: TEdit
         Left = 44
         Top = 115
         Width = 83
@@ -123,15 +119,15 @@ object Form1: TForm1
         TabOrder = 7
         Text = '0'
       end
-      object Edit5: TEdit
-        Left = 44
+      object EdBytes: TEdit
+        Left = 40
         Top = 142
         Width = 83
         Height = 21
         TabOrder = 8
         Text = '1000'
       end
-      object Edit6: TEdit
+      object EdValor: TEdit
         Left = 44
         Top = 169
         Width = 18
@@ -199,6 +195,7 @@ object Form1: TForm1
         Height = 25
         Caption = 'Iniciar'
         TabOrder = 12
+        OnClick = Button3Click
       end
       object CheckBox4: TCheckBox
         Left = 3
@@ -218,18 +215,22 @@ object Form1: TForm1
         Caption = 'AvFuck al listado'
         TabOrder = 14
       end
+      object Estado: TStatusBar
+        Left = 0
+        Top = 433
+        Width = 340
+        Height = 19
+        Panels = <>
+        SimplePanel = True
+      end
     end
     object TabSheet2: TTabSheet
       Caption = 'Offsets Patcher'
       ImageIndex = 1
-      ExplicitWidth = 569
-      ExplicitHeight = 230
     end
     object TabSheet3: TTabSheet
       Caption = 'Offsets Replacer'
       ImageIndex = 2
-      ExplicitWidth = 338
-      ExplicitHeight = 400
     end
   end
   object Button4: TButton
@@ -247,5 +248,9 @@ object Form1: TForm1
     Height = 25
     Caption = 'Mostrar lista'
     TabOrder = 2
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 280
+    Top = 24
   end
 end
