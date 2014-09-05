@@ -11,6 +11,10 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
+  PrintScale = poNone
+  Scaled = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object PageControl1: TPageControl
@@ -108,6 +112,7 @@ object Form1: TForm1
         Top = 88
         Width = 83
         Height = 21
+        NumbersOnly = True
         TabOrder = 6
         Text = '1000'
       end
@@ -116,6 +121,7 @@ object Form1: TForm1
         Top = 115
         Width = 83
         Height = 21
+        NumbersOnly = True
         TabOrder = 7
         Text = '0'
       end
@@ -124,6 +130,7 @@ object Form1: TForm1
         Top = 142
         Width = 83
         Height = 21
+        NumbersOnly = True
         TabOrder = 8
         Text = '1000'
       end
@@ -227,10 +234,18 @@ object Form1: TForm1
     object TabSheet2: TTabSheet
       Caption = 'Offsets Patcher'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabSheet3: TTabSheet
       Caption = 'Offsets Replacer'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
   end
   object Button4: TButton

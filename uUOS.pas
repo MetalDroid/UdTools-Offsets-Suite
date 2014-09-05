@@ -43,6 +43,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure BDetenerClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     TIniciar: HPrincipal;
     { Private declarations }
@@ -85,6 +86,11 @@ begin
   TIniciar:= HPrincipal.Create(False);
   TIniciar.WaitFor;
   BDetener.Visible:= False;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  ScaleBy(Screen.Height, 800);
 end;
 
 end.
