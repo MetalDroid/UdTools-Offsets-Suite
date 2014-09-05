@@ -120,7 +120,7 @@ object Form1: TForm1
         Text = '0'
       end
       object EdBytes: TEdit
-        Left = 40
+        Left = 44
         Top = 142
         Width = 83
         Height = 21
