@@ -89,8 +89,7 @@
             <Form>Form1</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="uFunciones.pas"/>
-        <DCCReference Include="uThread.pas"/>
+        <DCCReference Include="uThreadLocator.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

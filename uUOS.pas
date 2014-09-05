@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, uThread, Vcl.FileCtrl;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, uThreadLocator, Vcl.FileCtrl;
 
 type
   TForm1 = class(TForm)
@@ -38,11 +38,13 @@ type
     Button6: TButton;
     Estado: TStatusBar;
     OpenDialog1: TOpenDialog;
+    BDetener: TButton;
     procedure Button3Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure BDetenerClick(Sender: TObject);
   private
-    TAvFuck: HPrincipal;
+    TIniciar: HPrincipal;
     { Private declarations }
   public
     { Public declarations }
@@ -54,6 +56,14 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.BDetenerClick(Sender: TObject);
+begin
+  if TIniciar <> nil then
+    TIniciar.Terminate;
+  Estado.SimpleText := 'Proceso detenido.';
+  BDetener.Visible:= False;
+end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
@@ -71,8 +81,10 @@ end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 begin
-  TAvFuck:= HPrincipal.Create(False);
-  TAvFuck.WaitFor;
+  BDetener.Visible:= True;
+  TIniciar:= HPrincipal.Create(False);
+  TIniciar.WaitFor;
+  BDetener.Visible:= False;
 end;
 
 end.

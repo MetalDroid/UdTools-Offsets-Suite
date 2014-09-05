@@ -190,7 +190,7 @@ object Form1: TForm1
       end
       object Button3: TButton
         Left = 3
-        Top = 196
+        Top = 197
         Width = 86
         Height = 25
         Caption = 'Iniciar'
@@ -235,7 +235,7 @@ object Form1: TForm1
   end
   object Button4: TButton
     Left = 128
-    Top = 220
+    Top = 221
     Width = 89
     Height = 25
     Caption = '256 comb.'
@@ -248,6 +248,16 @@ object Form1: TForm1
     Height = 25
     Caption = 'Mostrar lista'
     TabOrder = 2
+  end
+  object BDetener: TButton
+    Left = 8
+    Top = 221
+    Width = 85
+    Height = 25
+    Caption = 'Detener'
+    TabOrder = 3
+    Visible = False
+    OnClick = BDetenerClick
   end
   object OpenDialog1: TOpenDialog
     Left = 280

@@ -1,13 +1,21 @@
-unit uFunciones;
+unit uThreadLocator;
 
 interface
 
 uses
-  Winapi.Windows, System.SysUtils, Vcl.Forms;
+  System.Classes, System.SysUtils, Winapi.Windows, Vcl.Forms;
 
-Procedure AvFucker(Fichero, RutaOffsets: AnsiString;
-  Inicio, Fin, Bytes: Integer; RellenarCon: AnsiString);
-Procedure DSplit(Fichero, RutaOffsets: AnsiString; Inicio, Fin, Bytes: Integer);
+type
+  HPrincipal = class(TThread)
+  private
+    procedure AvFuck;
+    procedure Split;
+    Procedure AvFucker(Fichero, RutaOffsets: AnsiString; Inicio, Fin, Bytes: Integer; RellenarCon: AnsiString);
+    Procedure DSplit(Fichero, RutaOffsets: AnsiString; Inicio, Fin, Bytes: Integer);
+    { Private declarations }
+  protected
+    procedure Execute; override;
+  end;
 
 implementation
 
@@ -52,7 +60,7 @@ begin
   CloseHandle(hFile);
 end;
 
-Procedure AvFucker(Fichero, RutaOffsets: AnsiString;
+Procedure HPrincipal.AvFucker(Fichero, RutaOffsets: AnsiString;
   Inicio, Fin, Bytes: Integer; RellenarCon: AnsiString);
 var
   o, Rell, Tam: Integer;
@@ -67,6 +75,8 @@ begin
   if Inicio > Tam then
     Inicio:= Tam;
   Repeat
+    if Terminated then
+      Exit;
     Aux := Fichero;
     if Inicio + Bytes <= Tam then
       for o := Inicio to Inicio + Bytes - 1 do
@@ -90,7 +100,7 @@ begin
   Form1.Estado.SimpleText := 'Proceso terminado.';
 end;
 
-Procedure DSplit(Fichero, RutaOffsets: AnsiString; Inicio, Fin, Bytes: Integer);
+Procedure HPrincipal.DSplit(Fichero, RutaOffsets: AnsiString; Inicio, Fin, Bytes: Integer);
 var
   FichAux: AnsiString;
   FichFinal: AnsiString;
@@ -116,6 +126,8 @@ begin
   Ultimo := False;
 
   Repeat
+    if Terminated then
+      Exit;
     if IniAux = TamFichero then
       Ultimo := True;
     FichFinal := '';
@@ -136,6 +148,29 @@ begin
     Inc(IniAux, Bytes);
   until Ultimo = True;
   Form1.Estado.SimpleText := 'Proceso terminado.';
+end;
+
+Procedure HPrincipal.AvFuck;
+begin
+  AvFucker(Form1.EdFichero.Text, Form1.EdDir.Text, StrToInt(Form1.EdInicio.Text),
+    StrToInt(Form1.EdFin.Text), StrToInt(Form1.EdBytes.Text), Form1.EdValor.Text);
+end;
+
+Procedure HPrincipal.Split;
+begin
+  DSplit(Form1.EdFichero.Text, Form1.EdDir.Text, StrToInt(Form1.EdInicio.Text),
+    StrToInt(Form1.EdFin.Text), StrToInt(Form1.EdBytes.Text));
+end;
+
+{ HPrincipal }
+
+procedure HPrincipal.Execute;
+begin
+  if Form1.RadioButton1.Checked then
+    Synchronize(AvFuck);
+  if Form1.RadioButton2.Checked then
+    Synchronize(Split);
+  { Place thread code here }
 end;
 
 end.
