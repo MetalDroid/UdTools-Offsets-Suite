@@ -8,8 +8,9 @@ uses
 type
   HPrincipal = class(TThread)
   private
-    procedure AvFuck;
-    procedure Split;
+    Procedure AvFuck;
+    Procedure Split;
+    Procedure VaciarCarpeta;
     Procedure AvFucker(Fichero, RutaOffsets: AnsiString; Inicio, Fin, Bytes: Integer; RellenarCon: AnsiString);
     Procedure DSplit(Fichero, RutaOffsets: AnsiString; Inicio, Fin, Bytes: Integer);
     { Private declarations }
@@ -58,6 +59,25 @@ begin
   if (WriteFile(hFile, bWrite[0], iSize, dwRet, nil) = True) then
     Result := True;
   CloseHandle(hFile);
+end;
+
+Procedure HPrincipal.VaciarCarpeta;
+var
+  Resultado: Integer;
+  SearchResult: TSearchRec;
+begin
+  SetCurrentDir(Form1.EdDir.Text);
+  Form1.Estado.SimpleText := 'Estado: Vaciando carpeta...';
+  Resultado := FindFirst('*', faArchive, SearchResult);
+  while Resultado = 0 do
+  begin
+    if (SearchResult.Attr and faArchive = faArchive) and
+      (SearchResult.Attr and faDirectory <> faDirectory) then
+      Deletefile(PChar(Form1.EdDir.Text + '\' + SearchResult.Name));
+    Resultado := FindNext(SearchResult);
+  end;
+  System.SysUtils.FindClose(SearchResult);
+  Form1.Estado.SimpleText := 'Estado: Carpeta vaciada.';
 end;
 
 Procedure HPrincipal.AvFucker(Fichero, RutaOffsets: AnsiString;
@@ -166,6 +186,8 @@ end;
 
 procedure HPrincipal.Execute;
 begin
+  if Form1.CheckBox1.Checked then
+    Synchronize(VaciarCarpeta);
   if Form1.RadioButton1.Checked then
     Synchronize(AvFuck);
   if Form1.RadioButton2.Checked then
