@@ -63,7 +63,9 @@ begin
   Rell := StrToInt('$' + RellenarCon);
   Tam := Length(Fichero) - 1;
   If Fin > Tam then
-    Exit;
+    Fin:= Tam;
+  if Inicio > Tam then
+    Inicio:= Tam;
   Repeat
     Aux := Fichero;
     if Inicio + Bytes <= Tam then
@@ -105,6 +107,9 @@ begin
 
   IniAux := Inicio + 1;
 
+  if IniAux > TamFichero then
+    IniAux:= TamFichero;
+
   if IniAux < Bytes then
     IniAux := Bytes;
 
@@ -129,12 +134,6 @@ begin
       end;
 
     Inc(IniAux, Bytes);
-
-    if IniAux > TamFichero then
-    begin
-      Bytes := Bytes + (TamFichero - IniAux);
-      IniAux := TamFichero;
-    end;
   until Ultimo = True;
   Form1.Estado.SimpleText := 'Proceso terminado.';
 end;
