@@ -230,49 +230,41 @@ object Form1: TForm1
         Panels = <>
         SimplePanel = True
       end
+      object Button5: TButton
+        Left = 251
+        Top = 197
+        Width = 86
+        Height = 25
+        Caption = 'Mostrar lista'
+        TabOrder = 16
+      end
+      object Button4: TButton
+        Left = 123
+        Top = 197
+        Width = 94
+        Height = 25
+        Caption = '256 comb.'
+        TabOrder = 17
+      end
+      object BDetener: TButton
+        Left = 3
+        Top = 197
+        Width = 86
+        Height = 25
+        Caption = 'Detener'
+        TabOrder = 18
+        Visible = False
+        OnClick = BDetenerClick
+      end
     end
     object TabSheet2: TTabSheet
       Caption = 'Offsets Patcher'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object TabSheet3: TTabSheet
       Caption = 'Offsets Replacer'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
-  end
-  object Button4: TButton
-    Left = 128
-    Top = 221
-    Width = 89
-    Height = 25
-    Caption = '256 comb.'
-    TabOrder = 1
-  end
-  object Button5: TButton
-    Left = 253
-    Top = 221
-    Width = 85
-    Height = 25
-    Caption = 'Mostrar lista'
-    TabOrder = 2
-  end
-  object BDetener: TButton
-    Left = 8
-    Top = 221
-    Width = 85
-    Height = 25
-    Caption = 'Detener'
-    TabOrder = 3
-    Visible = False
-    OnClick = BDetenerClick
   end
   object OpenDialog1: TOpenDialog
     Left = 280
