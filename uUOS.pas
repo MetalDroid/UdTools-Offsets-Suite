@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, uThreadLocator, Vcl.FileCtrl;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, uThreadLocator, Vcl.FileCtrl, System.IOUtils;
 
 type
   TForm1 = class(TForm)
@@ -50,6 +50,7 @@ type
     procedure EdInicioDblClick(Sender: TObject);
     procedure EdFinDblClick(Sender: TObject);
     procedure EdBytesDblClick(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
   private
     TIniciar: HPrincipal;
     { Private declarations }
@@ -88,6 +89,45 @@ var
 begin
   if SelectDirectory('Selecciona la carpeta de trabajo.', '', Dir) then
     EdDir.Text:= Dir;
+end;
+
+//Comprobar si una cadena es numérica
+Function IsNumber(Str: String): Boolean;
+var
+  i: integer;
+const
+  Numeros = '0123456789';
+begin
+  Result:= True;
+  for I := 1 to Length(Str) -1 do
+    if Pos(Str[i], Numeros) = 0 then
+      begin
+        Result:= False;
+        Break;
+      end;
+end;
+//Función para comprobar los nombres de los ficheros (xxxx_xxxx.xxx)
+Function IsValidOffsetFileName(FName: String; var NumI, NumD: String): Boolean;
+begin
+  Result:= True;
+  FName:= TPath.GetFileNameWithoutExtension(FName);
+  NumI:= Copy(FName, 1, Pos('_', FName)-1);
+  NumD:= Copy(FName, Pos('_', FName)+1, Length(FName) - Pos('_', FName));
+  if not(IsNumber(NumI)) or not (IsNumber(NumD)) then
+    Result:= False;
+end;
+
+//Función para añadir offsets al listado
+Procedure AddToList(NumI, NumD: String);
+begin
+  //?
+end;
+procedure TForm1.Button4Click(Sender: TObject);
+var
+  num1, num2: string;
+begin
+  if isvalidoffsetfilename('1234_6345', num1, num2) then
+    showmessage(num1 + ' ' + num2); //test (esto no irá en este button)
 end;
 
 procedure TForm1.BtnIniciarClick(Sender: TObject);

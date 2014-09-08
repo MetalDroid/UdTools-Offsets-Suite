@@ -3,7 +3,7 @@ unit uThreadLocator;
 interface
 
 uses
-  System.Classes, System.SysUtils, Winapi.Windows, Vcl.Forms;
+  System.Classes, System.SysUtils, Winapi.Windows, Vcl.Forms, System.IOUtils;
 
 type
   HPrincipal = class(TThread)

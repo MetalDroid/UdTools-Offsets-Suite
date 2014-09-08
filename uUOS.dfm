@@ -253,6 +253,7 @@ object Form1: TForm1
         Height = 25
         Caption = '256 comb.'
         TabOrder = 17
+        OnClick = Button4Click
       end
       object BDetener: TButton
         Left = 3
