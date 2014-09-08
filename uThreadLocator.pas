@@ -11,8 +11,9 @@ type
     Procedure AvFuck;
     Procedure Split;
     Procedure VaciarCarpeta;
-    Procedure AvFucker(Fichero, RutaOffsets: AnsiString; Inicio, Fin, Bytes: Integer; RellenarCon: AnsiString);
-    Procedure DSplit(Fichero, RutaOffsets: AnsiString; Inicio, Fin, Bytes: Integer);
+    Procedure AvFucker(Fichero, RutaOffsets: String;
+  Inicio, Fin, Bytes: Integer; RellenarCon: String);
+    Procedure DSplit(Fichero, RutaOffsets: String; Inicio, Fin, Bytes: Integer);
     { Private declarations }
   protected
     procedure Execute; override;
@@ -23,44 +24,44 @@ implementation
 uses
   uUOS;
 
-type
-  tArrBytes = array of byte;
-
-Function FileToStr(mFile: AnsiString): AnsiString;
+//Función para almacenar los bytes del fichero en una cadena
+Function FileToStr(mFile: String): String;
 var
   hFile: THandle;
   dwRet: DWORD;
   iSize: DWORD;
+  Buff: AnsiString; //El buffer DEBE ser AnsiString y NO WideString, responsable: Microsoft (?)
 begin
-  hFile := CreateFile(PChar(WideString(mFile)), GENERIC_READ, FILE_SHARE_READ,
+  hFile := CreateFile(PChar(mFile), GENERIC_READ, FILE_SHARE_READ,
     nil, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
   if hFile = INVALID_HANDLE_VALUE then
     Exit;
   iSize := GetFileSize(hFile, nil);
   SetFilePointer(hFile, 0, nil, FILE_BEGIN);
-  SetLength(mFile, iSize);
-  ReadFile(hFile, mFile[1], iSize, dwRet, nil);
+  SetLength(Buff, iSize);
+  ReadFile(hFile, Buff[1], iSize, dwRet, nil);
   CloseHandle(hFile);
-  Result := mFile;
+  Result := WiDeString(Buff);
 end;
 
-Function StrToFile(Str, Ruta: AnsiString): Boolean;
+//Función para crear ficheros a partir de una cadena
+Function StrToFile(Str, Ruta: String): Boolean;
 var
   hFile: THandle;
-  iSize: Integer;
-  bWrite: tArrBytes;
+  iSize: DWORD;
   dwRet: DWORD;
+  Buff: AnsiString; //El buffer DEBE ser AnsiString y NO WideString, responsable: Microsoft (?)
 begin
-  SetLength(bWrite, Length(Str));
-  CopyMemory(@bWrite[0], @Str[1], Length(Str));
-  iSize := Length(bWrite);
-  hFile := CreateFile(PChar(WideString(Ruta)), GENERIC_WRITE, FILE_SHARE_READ,
+  Buff:= AnsiString(Str);
+  iSize := Length(Buff);
+  hFile := CreateFile(PChar(Ruta), GENERIC_WRITE, FILE_SHARE_READ,
     nil, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
-  if (WriteFile(hFile, bWrite[0], iSize, dwRet, nil) = True) then
+  if (WriteFile(hFile, Buff[1], iSize, dwRet, nil) = True) then
     Result := True;
   CloseHandle(hFile);
 end;
 
+//Función para eliminar todos los ficheros existentes en el Directorio de trabajo
 Procedure HPrincipal.VaciarCarpeta;
 var
   Resultado: Integer;
@@ -80,11 +81,12 @@ begin
   Form1.Estado.SimpleText := 'Estado: Carpeta vaciada.';
 end;
 
-Procedure HPrincipal.AvFucker(Fichero, RutaOffsets: AnsiString;
-  Inicio, Fin, Bytes: Integer; RellenarCon: AnsiString);
+//Función para realizar AvFucker
+Procedure HPrincipal.AvFucker(Fichero, RutaOffsets: String;
+  Inicio, Fin, Bytes: Integer; RellenarCon: String);
 var
   o, Rell, Tam: Integer;
-  Aux, Aux2, OffIni, sBytes: AnsiString;
+  Aux, Aux2, OffIni, sBytes: String;
 begin
   Aux2 := Fichero;
   Fichero := FileToStr(Fichero);
@@ -100,10 +102,10 @@ begin
     Aux := Fichero;
     if Inicio + Bytes <= Tam then
       for o := Inicio to Inicio + Bytes - 1 do
-        Aux[o + 1] := AnsiChar(Rell)
+        Aux[o + 1] := Chr(Rell)
     else
       for o := Inicio to (Inicio + (Tam - Inicio)) do
-        Aux[o + 1] := AnsiChar(Rell);
+        Aux[o + 1] := Chr(Rell);
 
     OffIni := IntToStr(Inicio);
     sBytes := IntToStr(Bytes);
@@ -120,10 +122,11 @@ begin
   Form1.Estado.SimpleText := 'Proceso terminado.';
 end;
 
-Procedure HPrincipal.DSplit(Fichero, RutaOffsets: AnsiString; Inicio, Fin, Bytes: Integer);
+//Función para realizar DSplit
+Procedure HPrincipal.DSplit(Fichero, RutaOffsets: String; Inicio, Fin, Bytes: Integer);
 var
-  FichAux: AnsiString;
-  FichFinal: AnsiString;
+  FichAux: String;
+  FichFinal: String;
   IniAux: Integer;
   TamFichero: Integer;
   Ultimo: Boolean;
@@ -170,12 +173,14 @@ begin
   Form1.Estado.SimpleText := 'Proceso terminado.';
 end;
 
+//Procedimiento para realizar AvFucker con parámetros incluídos
 Procedure HPrincipal.AvFuck;
 begin
   AvFucker(Form1.EdFichero.Text, Form1.EdDir.Text, StrToInt(Form1.EdInicio.Text),
     StrToInt(Form1.EdFin.Text), StrToInt(Form1.EdBytes.Text), Form1.EdValor.Text);
 end;
 
+//Procedimiento para realizar DSplit con parámetros incluídos
 Procedure HPrincipal.Split;
 begin
   DSplit(Form1.EdFichero.Text, Form1.EdDir.Text, StrToInt(Form1.EdInicio.Text),
@@ -183,14 +188,14 @@ begin
 end;
 
 { HPrincipal }
-
+//Ejecución del Thread según proceda sincronizado con el form principal para mostrar el proceso en tiempo real
 procedure HPrincipal.Execute;
 begin
-  if Form1.CheckBox1.Checked then
+  if Form1.CheckVaciar.Checked then
     Synchronize(VaciarCarpeta);
-  if Form1.RadioButton1.Checked then
+  if Form1.RadAvFucker.Checked then
     Synchronize(AvFuck);
-  if Form1.RadioButton2.Checked then
+  if Form1.RadDSplit.Checked then
     Synchronize(Split);
   { Place thread code here }
 end;

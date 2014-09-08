@@ -89,7 +89,7 @@ object Form1: TForm1
         TabOrder = 3
         OnClick = Button2Click
       end
-      object RadioButton1: TRadioButton
+      object RadAvFucker: TRadioButton
         Left = 44
         Top = 57
         Width = 113
@@ -98,14 +98,16 @@ object Form1: TForm1
         Checked = True
         TabOrder = 4
         TabStop = True
+        OnClick = RadAvFuckerClick
       end
-      object RadioButton2: TRadioButton
+      object RadDSplit: TRadioButton
         Left = 216
         Top = 57
         Width = 54
         Height = 17
         Caption = 'DSplit'
         TabOrder = 5
+        OnClick = RadDSplitClick
       end
       object EdInicio: TEdit
         Left = 44
@@ -115,6 +117,7 @@ object Form1: TForm1
         NumbersOnly = True
         TabOrder = 6
         Text = '1000'
+        OnDblClick = EdInicioDblClick
       end
       object EdFin: TEdit
         Left = 44
@@ -124,6 +127,7 @@ object Form1: TForm1
         NumbersOnly = True
         TabOrder = 7
         Text = '0'
+        OnDblClick = EdFinDblClick
       end
       object EdBytes: TEdit
         Left = 44
@@ -133,14 +137,18 @@ object Form1: TForm1
         NumbersOnly = True
         TabOrder = 8
         Text = '1000'
+        OnDblClick = EdBytesDblClick
       end
       object EdValor: TEdit
         Left = 44
         Top = 169
-        Width = 18
+        Width = 20
         Height = 21
+        CharCase = ecUpperCase
+        MaxLength = 2
         TabOrder = 9
         Text = '90'
+        OnKeyPress = EdValorKeyPress
       end
       object GroupBox1: TGroupBox
         Left = 144
@@ -149,7 +157,7 @@ object Form1: TForm1
         Height = 110
         Caption = 'Opciones'
         TabOrder = 10
-        object CheckBox1: TCheckBox
+        object CheckVaciar: TCheckBox
           Left = 16
           Top = 16
           Width = 161
@@ -195,14 +203,14 @@ object Form1: TForm1
         TabOrder = 11
         ViewStyle = vsReport
       end
-      object Button3: TButton
+      object BtnIniciar: TButton
         Left = 3
         Top = 197
         Width = 86
         Height = 25
         Caption = 'Iniciar'
         TabOrder = 12
-        OnClick = Button3Click
+        OnClick = BtnIniciarClick
       end
       object CheckBox4: TCheckBox
         Left = 3
