@@ -167,7 +167,7 @@ object Form1: TForm1
           State = cbChecked
           TabOrder = 0
         end
-        object CheckBox2: TCheckBox
+        object CheckGen: TCheckBox
           Left = 16
           Top = 48
           Width = 145
@@ -204,6 +204,7 @@ object Form1: TForm1
         RowSelect = True
         TabOrder = 11
         ViewStyle = vsReport
+        OnDblClick = ListView1DblClick
       end
       object BtnIniciar: TButton
         Left = 3
@@ -214,7 +215,7 @@ object Form1: TForm1
         TabOrder = 12
         OnClick = BtnIniciarClick
       end
-      object CheckBox4: TCheckBox
+      object CheckAll: TCheckBox
         Left = 3
         Top = 401
         Width = 102
@@ -223,15 +224,16 @@ object Form1: TForm1
         Checked = True
         State = cbChecked
         TabOrder = 13
-        OnClick = CheckBox4Click
+        OnClick = CheckAllClick
       end
-      object Button6: TButton
+      object BtnAVFLista: TButton
         Left = 168
         Top = 401
         Width = 169
         Height = 25
         Caption = 'AvFuck al listado'
         TabOrder = 14
+        OnClick = BtnAVFListaClick
       end
       object Estado: TStatusBar
         Left = 0
@@ -243,7 +245,7 @@ object Form1: TForm1
       end
       object Button5: TButton
         Left = 251
-        Top = 197
+        Top = 196
         Width = 86
         Height = 25
         Caption = 'Mostrar lista'
