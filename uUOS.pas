@@ -50,7 +50,8 @@ type
     procedure EdInicioDblClick(Sender: TObject);
     procedure EdFinDblClick(Sender: TObject);
     procedure EdBytesDblClick(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure CheckBox4Click(Sender: TObject);
   private
     TIniciar: HPrincipal;
     { Private declarations }
@@ -79,7 +80,7 @@ begin
     if FileExists(OpenDialog1.FileName) then
       begin
         EdFichero.Text:= OpenDialog1.FileName;
-        EdFin.Text:= IntToStr(Integer(GetCompressedFileSize(PChar(OpenDialog1.FileName), 0))-1); //Tamaño del fichero (offset final)
+        EdFin.Text:= IntToStr(Integer(GetCompressedFileSize(PChar(OpenDialog1.FileName), nil))-1); //Tamaño del fichero (offset final)
       end;
 end;
 
@@ -117,17 +118,71 @@ begin
     Result:= False;
 end;
 
-//Función para añadir offsets al listado
-Procedure AddToList(NumI, NumD: String);
-begin
-  //?
-end;
-procedure TForm1.Button4Click(Sender: TObject);
+//Función para añadir offsets al listado teniendo en cuenta ficheros consecutivos
+Procedure AddToList;
 var
-  num1, num2: string;
+  SearchResult: TSearchRec;
+  Dir, Inicio, Fin, sBytes, IniAux, FinAux: String;
+  Acumulados, i, Ficheros, Res: Integer;
 begin
-  if isvalidoffsetfilename('1234_6345', num1, num2) then
-    showmessage(num1 + ' ' + num2); //test (esto no irá en este button)
+  Form1.ListView1.clear;
+  Acumulados:= 0;
+  Dir:= Form1.EdDir.Text + '\';
+  Inicio:= Form1.EdInicio.Text;
+  Fin:= Form1.EdFin.Text;
+  sBytes:= Form1.EdBytes.Text;
+  Ficheros:= StrToInt(Fin) - StrToInt(Inicio);
+
+  if Ficheros <= 0 then
+    Ficheros:= 1
+  else
+    Ficheros:= (StrToInt(Fin) - StrToInt(Inicio)) div StrToInt(sBytes);
+
+  for I := 0 to Ficheros + 1 do
+    begin  //Podríamos buscar por "_1000, _2000", etc (sBytes), pero no funcionaría debido al RESTO (último fichero);
+      Res:= FindFirst(Dir + Inicio + '_*' , faAnyFile, SearchResult);                                 
+      if Res = 0 then
+        begin
+          Acumulados:= Acumulados + StrToInt(sBytes);
+        end
+        else 
+        begin    //Tenemos en cuenta el último fichero válido encontrado para añadir con éxito "Fin"
+          if FindFirst(Dir + IntToStr(StrToInt(Inicio) - StrToInt(sBytes)) + '_*' , faAnyFile, SearchResult) = 0 then  
+            if IsValidOffsetFileName(SearchResult.Name, IniAux, FinAux) then
+              begin  
+                with Form1.ListView1.Items.Add do
+                  begin  
+                    Caption:= IntToStr(StrToInt(Inicio) - Acumulados);
+                    SubItems.Add(IntToStr((StrToInt(iniaux) + StrToInt(FinAux))-1));
+                  end;
+                Application.ProcessMessages;  
+              end;
+            Acumulados:= 0;
+        end;
+      FindClose(SearchResult); 
+      Inicio:= IntToStr(StrToInt(Inicio) + StrToInt(sBytes)); 
+    end;
+  if (Form1.CheckBox4.Checked) and (Form1.ListView1.Items.Count > 0) then
+    for I := 0 to Form1.ListView1.Items.Count -1 do
+      Form1.ListView1.Items.Item[i].Checked:= True;  
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+begin
+  AddToList;
+end;
+
+procedure TForm1.CheckBox4Click(Sender: TObject);
+var
+  i: integer;
+begin
+  if (CheckBox4.Checked) and (Form1.ListView1.Items.Count > 0) then
+    for I := 0 to Form1.ListView1.Items.Count -1 do
+      Form1.ListView1.Items.Item[i].Checked:= True
+  else
+  if not(CheckBox4.Checked) and (Form1.ListView1.Items.Count > 0) then
+    for I := 0 to Form1.ListView1.Items.Count -1 do
+      Form1.ListView1.Items.Item[i].Checked:= False;    
 end;
 
 procedure TForm1.BtnIniciarClick(Sender: TObject);
@@ -146,7 +201,7 @@ end;
 procedure TForm1.EdFinDblClick(Sender: TObject);
 begin
   if FileExists(EdFichero.Text) then
-    EdFin.Text:= IntToStr(Integer(GetCompressedFileSize(PChar(EdFichero.Text), 0))-1);
+    EdFin.Text:= IntToStr(Integer(GetCompressedFileSize(PChar(EdFichero.Text), nil))-1);
 end;
 
 procedure TForm1.EdInicioDblClick(Sender: TObject);

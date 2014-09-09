@@ -163,6 +163,8 @@ object Form1: TForm1
           Width = 161
           Height = 17
           Caption = 'Vaciar directorio de trabajo.'
+          Checked = True
+          State = cbChecked
           TabOrder = 0
         end
         object CheckBox2: TCheckBox
@@ -221,6 +223,7 @@ object Form1: TForm1
         Checked = True
         State = cbChecked
         TabOrder = 13
+        OnClick = CheckBox4Click
       end
       object Button6: TButton
         Left = 168
@@ -245,15 +248,15 @@ object Form1: TForm1
         Height = 25
         Caption = 'Mostrar lista'
         TabOrder = 16
+        OnClick = Button5Click
       end
       object Button4: TButton
         Left = 123
-        Top = 197
+        Top = 196
         Width = 94
         Height = 25
         Caption = '256 comb.'
         TabOrder = 17
-        OnClick = Button4Click
       end
       object BDetener: TButton
         Left = 3

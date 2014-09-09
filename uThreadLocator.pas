@@ -52,6 +52,7 @@ var
   dwRet: DWORD;
   Buff: AnsiString; //El buffer DEBE ser AnsiString y NO WideString, responsable: Microsoft (?)
 begin
+  Result:= False;
   Buff:= AnsiString(Str);
   iSize := Length(Buff);
   hFile := CreateFile(PChar(Ruta), GENERIC_WRITE, FILE_SHARE_READ,
@@ -64,20 +65,19 @@ end;
 //Función para eliminar todos los ficheros existentes en el Directorio de trabajo
 Procedure HPrincipal.VaciarCarpeta;
 var
-  Resultado: Integer;
   SearchResult: TSearchRec;
 begin
   SetCurrentDir(Form1.EdDir.Text);
   Form1.Estado.SimpleText := 'Estado: Vaciando carpeta...';
-  Resultado := FindFirst('*', faArchive, SearchResult);
-  while Resultado = 0 do
-  begin
-    if (SearchResult.Attr and faArchive = faArchive) and
-      (SearchResult.Attr and faDirectory <> faDirectory) then
-      Deletefile(PChar(Form1.EdDir.Text + '\' + SearchResult.Name));
-    Resultado := FindNext(SearchResult);
-  end;
-  System.SysUtils.FindClose(SearchResult);
+  if FindFirst('*', faArchive, SearchResult) = 0 then
+    begin
+      repeat
+        if (SearchResult.Attr and faArchive = faArchive) and
+          (SearchResult.Attr and faDirectory <> faDirectory) then
+        Deletefile(PChar(Form1.EdDir.Text + '\' + SearchResult.Name));
+      until FindNext(SearchResult) <> 0;
+        System.SysUtils.FindClose(SearchResult);
+    end;
   Form1.Estado.SimpleText := 'Estado: Carpeta vaciada.';
 end;
 
@@ -101,14 +101,20 @@ begin
       Exit;
     Aux := Fichero;
     if Inicio + Bytes <= Tam then
-      for o := Inicio to Inicio + Bytes - 1 do
-        Aux[o + 1] := Chr(Rell)
-    else
-      for o := Inicio to (Inicio + (Tam - Inicio)) do
-        Aux[o + 1] := Chr(Rell);
+      begin
+        sBytes := IntToStr(Bytes);
+        for o := Inicio to Inicio + Bytes - 1 do
+          Aux[o + 1] := Chr(Rell);
+      end
+      else
+      begin
+        sBytes := IntToStr((Tam - Inicio) +1); //Si el resto del fichero es menor que Bytes, tapamos el resto
+        for o := Inicio to (Inicio + (Tam - Inicio)) do
+          Aux[o + 1] := Chr(Rell);
+      end;
 
     OffIni := IntToStr(Inicio);
-    sBytes := IntToStr(Bytes);
+    //sBytes := IntToStr(Bytes);
 
     Form1.Estado.SimpleText := 'Procesando fichero: ' + OffIni + '_' + sBytes +
       ExtractFileExt(Aux2);
