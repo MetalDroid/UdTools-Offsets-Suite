@@ -90,7 +90,7 @@ object Form1: TForm1
         OnClick = Button2Click
       end
       object RadAvFucker: TRadioButton
-        Left = 44
+        Left = 17
         Top = 57
         Width = 113
         Height = 17
@@ -101,7 +101,7 @@ object Form1: TForm1
         OnClick = RadAvFuckerClick
       end
       object RadDSplit: TRadioButton
-        Left = 216
+        Left = 144
         Top = 57
         Width = 54
         Height = 17
@@ -209,7 +209,7 @@ object Form1: TForm1
       object BtnIniciar: TButton
         Left = 3
         Top = 197
-        Width = 86
+        Width = 150
         Height = 25
         Caption = 'Iniciar'
         TabOrder = 12
@@ -244,31 +244,108 @@ object Form1: TForm1
         SimplePanel = True
       end
       object Button5: TButton
-        Left = 251
-        Top = 196
-        Width = 86
+        Left = 187
+        Top = 197
+        Width = 150
         Height = 25
         Caption = 'Mostrar lista'
         TabOrder = 16
         OnClick = Button5Click
       end
-      object Button4: TButton
-        Left = 123
-        Top = 196
-        Width = 94
-        Height = 25
-        Caption = '256 comb.'
-        TabOrder = 17
-      end
       object BDetener: TButton
         Left = 3
         Top = 197
-        Width = 86
+        Width = 150
         Height = 25
         Caption = 'Detener'
-        TabOrder = 18
+        TabOrder = 17
         Visible = False
         OnClick = BDetenerClick
+      end
+      object RadComb: TRadioButton
+        Left = 250
+        Top = 57
+        Width = 84
+        Height = 17
+        Caption = '256 Combin.'
+        TabOrder = 18
+        OnClick = RadCombClick
+      end
+      object GroupBox2: TGroupBox
+        Left = 3
+        Top = 80
+        Width = 334
+        Height = 110
+        Caption = 'Opciones'
+        TabOrder = 19
+        Visible = False
+        object Label5: TLabel
+          Left = 37
+          Top = 50
+          Width = 29
+          Height = 13
+          Caption = 'Inicio:'
+        end
+        object Label6: TLabel
+          Left = 199
+          Top = 50
+          Width = 18
+          Height = 13
+          Caption = 'Fin:'
+        end
+        object Label7: TLabel
+          Left = 14
+          Top = 53
+          Width = 219
+          Height = 13
+          Caption = 'Escribe las Offsets separadas con ESPACIOS:'
+          Visible = False
+        end
+        object RadioButton1: TRadioButton
+          Left = 54
+          Top = 25
+          Width = 81
+          Height = 17
+          Caption = 'Progresivo'
+          Checked = True
+          TabOrder = 0
+          TabStop = True
+          OnClick = RadioButton1Click
+        end
+        object RadioButton2: TRadioButton
+          Left = 199
+          Top = 25
+          Width = 72
+          Height = 17
+          Caption = 'Selectivo'
+          TabOrder = 1
+          OnClick = RadioButton2Click
+        end
+        object Edit1: TEdit
+          Left = 37
+          Top = 69
+          Width = 82
+          Height = 21
+          TabOrder = 2
+          Text = '0'
+        end
+        object Edit2: TEdit
+          Left = 199
+          Top = 69
+          Width = 82
+          Height = 21
+          TabOrder = 3
+          Text = '0'
+        end
+        object Edit3: TEdit
+          Left = 14
+          Top = 70
+          Width = 305
+          Height = 21
+          TabOrder = 4
+          Text = '0'
+          Visible = False
+        end
       end
     end
     object TabSheet2: TTabSheet

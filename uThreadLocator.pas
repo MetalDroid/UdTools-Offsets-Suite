@@ -216,6 +216,8 @@ begin
     Synchronize(AvFuck);
   if Form1.RadDSplit.Checked then
     Synchronize(Split);
+  //if Form1.RadComb.Checked then
+
   { Place thread code here }
 end;
 

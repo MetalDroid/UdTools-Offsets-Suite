@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls,
-  uThreadLocator, Vcl.FileCtrl, System.IOUtils;
+  uThreadLocator, Vcl.FileCtrl, System.IOUtils, Vcl.ExtCtrls;
 
 type
   TForm1 = class(TForm)
@@ -34,13 +34,22 @@ type
     ListView1: TListView;
     TabSheet3: TTabSheet;
     BtnIniciar: TButton;
-    Button4: TButton;
     Button5: TButton;
     CheckAll: TCheckBox;
     BtnAVFLista: TButton;
     Estado: TStatusBar;
     OpenDialog1: TOpenDialog;
     BDetener: TButton;
+    RadComb: TRadioButton;
+    GroupBox2: TGroupBox;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Label5: TLabel;
+    Label6: TLabel;
+    Edit3: TEdit;
+    Label7: TLabel;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -56,6 +65,9 @@ type
     procedure CheckAllClick(Sender: TObject);
     procedure ListView1DblClick(Sender: TObject);
     procedure BtnAVFListaClick(Sender: TObject);
+    procedure RadCombClick(Sender: TObject);
+    procedure RadioButton1Click(Sender: TObject);
+    procedure RadioButton2Click(Sender: TObject);
   private
     TIniciar: HPrincipal;
     { Private declarations }
@@ -234,14 +246,20 @@ begin
 end;
 
 procedure TForm1.BtnIniciarClick(Sender: TObject);
+var
+  Vaciar: Boolean;
 begin
   ListView1.clear;
   BDetener.Visible := True;
+  if RadComb.Checked then
+    Vaciar:= CheckVaciar.Checked;
   TIniciar := HPrincipal.Create(False);
   TIniciar.WaitFor;
   BDetener.Visible := False;
-  if CheckGen.Checked then
+  if (CheckGen.Checked) and NOT(RadComb.Checked) then
     AddToList;
+  if RadComb.Checked then
+    CheckVaciar.Checked:= Vaciar;
 end;
 
 procedure TForm1.EdBytesDblClick(Sender: TObject);
@@ -291,6 +309,27 @@ begin
       EdValor.Enabled := True;
       CheckAll.Enabled:= True;
       BtnAVFLista.Enabled:= True;
+      Label1.Visible:= True;
+      Label2.Visible:= True;
+      Label3.Visible:= True;
+      Label4.Visible:= True;
+      Button5.Enabled:= True;
+      GroupBox2.Visible:= False;
+    end;
+end;
+
+procedure TForm1.RadCombClick(Sender: TObject);
+begin
+  if RadComb.Checked then
+    begin
+      Label1.Visible:= False;
+      Label2.Visible:= False;
+      Label3.Visible:= False;
+      Label4.Visible:= False;
+      Button5.Enabled:= False;
+      CheckAll.Enabled:= False;
+      BtnAVFLista.Enabled:= False;
+      GroupBox2.Visible:= True;
     end;
 end;
 
@@ -301,6 +340,38 @@ begin
       EdValor.Enabled := False;
       CheckAll.Enabled:= False;
       BtnAVFLista.Enabled:= False;
+      Label1.Visible:= True;
+      Label2.Visible:= True;
+      Label3.Visible:= True;
+      Label4.Visible:= True;
+      Button5.Enabled:= True;
+      GroupBox2.Visible:= False;
+    end;
+end;
+
+procedure TForm1.RadioButton1Click(Sender: TObject);
+begin
+  if radiobutton1.Checked then
+    begin
+      Label5.Visible:= True;
+      Label6.Visible:= True;
+      Edit1.Visible:= True;
+      Edit2.Visible:= True;
+      Edit3.Visible:= False;
+      Label7.Visible:= False;
+    end;
+end;
+
+procedure TForm1.RadioButton2Click(Sender: TObject);
+begin
+  if radiobutton2.Checked then
+    begin
+      Label5.Visible:= False;
+      Label6.Visible:= False;
+      Edit1.Visible:= False;
+      Edit2.Visible:= False;
+      Edit3.Visible:= True;
+      Label7.Visible:= True;
     end;
 end;
 
