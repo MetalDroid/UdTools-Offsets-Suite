@@ -211,7 +211,10 @@ procedure TForm1.BtnAVFListaClick(Sender: TObject);
 var
   i: Integer;
   Vaciar: Boolean;
+  IniRestore, FinRestore: String;
 begin
+  IniRestore:= Form1.EdInicio.Text;
+  FinRestore:= Form1.EdFin.Text;
   Vaciar := CheckVaciar.Checked;
   if ListView1.Items.Count > 0 then
   begin
@@ -231,6 +234,8 @@ begin
   ListView1.clear;
   BDetener.Visible := False;
   CheckVaciar.Checked := Vaciar;
+  Form1.EdInicio.Text:= IniRestore;
+  Form1.EdFin.Text:= FinRestore;
 end;
 
 procedure TForm1.CheckAllClick(Sender: TObject);
