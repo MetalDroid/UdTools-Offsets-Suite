@@ -1,9 +1,11 @@
 object Form1: TForm1
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'UdTools Offset Suite'
-  ClientHeight = 480
-  ClientWidth = 348
+  ClientHeight = 490
+  ClientWidth = 358
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,13 +23,18 @@ object Form1: TForm1
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 348
-    Height = 480
+    Width = 358
+    Height = 471
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 348
+    ExplicitHeight = 480
     object TabSheet1: TTabSheet
       Caption = 'Offset Locator'
+      OnShow = TabSheet1Show
+      ExplicitWidth = 340
+      ExplicitHeight = 452
       object Label1: TLabel
         Left = 3
         Top = 91
@@ -56,40 +63,6 @@ object Form1: TForm1
         Height = 13
         Caption = 'Valor:'
       end
-      object EdFichero: TEdit
-        Left = 3
-        Top = 3
-        Width = 305
-        Height = 21
-        TabOrder = 0
-        Text = 'Ruta del fichero'
-      end
-      object EdDir: TEdit
-        Left = 3
-        Top = 30
-        Width = 305
-        Height = 21
-        TabOrder = 1
-        Text = 'Directorio de trabajo'
-      end
-      object Button1: TButton
-        Left = 314
-        Top = 3
-        Width = 23
-        Height = 21
-        Caption = '...'
-        TabOrder = 2
-        OnClick = Button1Click
-      end
-      object Button2: TButton
-        Left = 314
-        Top = 30
-        Width = 23
-        Height = 21
-        Caption = '...'
-        TabOrder = 3
-        OnClick = Button2Click
-      end
       object RadAvFucker: TRadioButton
         Left = 17
         Top = 57
@@ -97,7 +70,7 @@ object Form1: TForm1
         Height = 17
         Caption = 'AvFucker'
         Checked = True
-        TabOrder = 4
+        TabOrder = 0
         TabStop = True
         OnClick = RadAvFuckerClick
       end
@@ -107,7 +80,7 @@ object Form1: TForm1
         Width = 54
         Height = 17
         Caption = 'DSplit'
-        TabOrder = 5
+        TabOrder = 1
         OnClick = RadDSplitClick
       end
       object EdInicio: TEdit
@@ -116,7 +89,7 @@ object Form1: TForm1
         Width = 83
         Height = 21
         NumbersOnly = True
-        TabOrder = 6
+        TabOrder = 2
         Text = '1000'
         OnDblClick = EdInicioDblClick
       end
@@ -126,7 +99,7 @@ object Form1: TForm1
         Width = 83
         Height = 21
         NumbersOnly = True
-        TabOrder = 7
+        TabOrder = 3
         Text = '0'
         OnDblClick = EdFinDblClick
       end
@@ -136,7 +109,7 @@ object Form1: TForm1
         Width = 83
         Height = 21
         NumbersOnly = True
-        TabOrder = 8
+        TabOrder = 4
         Text = '1000'
         OnDblClick = EdBytesDblClick
       end
@@ -147,7 +120,7 @@ object Form1: TForm1
         Height = 21
         CharCase = ecUpperCase
         MaxLength = 2
-        TabOrder = 9
+        TabOrder = 5
         Text = '90'
         OnKeyPress = EdValorKeyPress
       end
@@ -157,7 +130,7 @@ object Form1: TForm1
         Width = 193
         Height = 110
         Caption = 'Opciones'
-        TabOrder = 10
+        TabOrder = 6
         object CheckVaciar: TCheckBox
           Left = 16
           Top = 16
@@ -203,7 +176,7 @@ object Form1: TForm1
         GridLines = True
         ReadOnly = True
         RowSelect = True
-        TabOrder = 11
+        TabOrder = 7
         ViewStyle = vsReport
         OnDblClick = ListView1DblClick
       end
@@ -213,7 +186,7 @@ object Form1: TForm1
         Width = 150
         Height = 25
         Caption = 'Iniciar'
-        TabOrder = 12
+        TabOrder = 8
         OnClick = BtnIniciarClick
       end
       object CheckAll: TCheckBox
@@ -224,7 +197,7 @@ object Form1: TForm1
         Caption = 'Seleccionar todos.'
         Checked = True
         State = cbChecked
-        TabOrder = 13
+        TabOrder = 9
         OnClick = CheckAllClick
       end
       object BtnAVFLista: TButton
@@ -233,16 +206,8 @@ object Form1: TForm1
         Width = 169
         Height = 25
         Caption = 'AvFuck al listado'
-        TabOrder = 14
+        TabOrder = 10
         OnClick = BtnAVFListaClick
-      end
-      object Estado: TStatusBar
-        Left = 0
-        Top = 433
-        Width = 340
-        Height = 19
-        Panels = <>
-        SimplePanel = True
       end
       object Button5: TButton
         Left = 187
@@ -250,7 +215,7 @@ object Form1: TForm1
         Width = 150
         Height = 25
         Caption = 'Mostrar lista'
-        TabOrder = 16
+        TabOrder = 11
         OnClick = Button5Click
       end
       object BDetener: TButton
@@ -259,7 +224,7 @@ object Form1: TForm1
         Width = 150
         Height = 25
         Caption = 'Detener'
-        TabOrder = 17
+        TabOrder = 12
         Visible = False
         OnClick = BDetenerClick
       end
@@ -269,7 +234,7 @@ object Form1: TForm1
         Width = 84
         Height = 17
         Caption = '256 Combin.'
-        TabOrder = 18
+        TabOrder = 13
         OnClick = RadCombClick
       end
       object GroupBox2: TGroupBox
@@ -278,7 +243,7 @@ object Form1: TForm1
         Width = 334
         Height = 110
         Caption = 'Opciones'
-        TabOrder = 19
+        TabOrder = 14
         Visible = False
         object Label5: TLabel
           Left = 37
@@ -390,21 +355,165 @@ object Form1: TForm1
       end
     end
     object TabSheet2: TTabSheet
-      Caption = 'Offsets Patcher'
+      Caption = 'Offsets Replacer'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      OnShow = TabSheet2Show
+      ExplicitLeft = 8
+      ExplicitTop = 22
+      ExplicitWidth = 340
+      ExplicitHeight = 433
+      object Label11: TLabel
+        Left = 4
+        Top = 65
+        Width = 60
+        Height = 13
+        Caption = 'Hex original:'
+      end
+      object Label12: TLabel
+        Left = 112
+        Top = 65
+        Width = 79
+        Height = 13
+        Caption = 'Reemplazar por:'
+      end
+      object Label13: TLabel
+        Left = 3
+        Top = 101
+        Width = 29
+        Height = 13
+        Caption = 'Inicio:'
+      end
+      object Label14: TLabel
+        Left = 128
+        Top = 101
+        Width = 18
+        Height = 13
+        Caption = 'Fin:'
+      end
+      object Button4: TButton
+        Left = 128
+        Top = 126
+        Width = 209
+        Height = 38
+        Caption = 'Detener'
+        TabOrder = 8
+      end
+      object CheckBox1: TCheckBox
+        Left = 3
+        Top = 136
+        Width = 97
+        Height = 17
+        Caption = 'Vaciar directorio.'
+        TabOrder = 0
+      end
+      object Edit4: TEdit
+        Left = 70
+        Top = 63
+        Width = 19
+        Height = 21
+        TabOrder = 1
+        Text = '00'
+      end
+      object Edit5: TEdit
+        Left = 198
+        Top = 63
+        Width = 19
+        Height = 21
+        TabOrder = 2
+        Text = '90'
+      end
+      object Edit6: TEdit
+        Left = 38
+        Top = 98
+        Width = 62
+        Height = 21
+        TabOrder = 3
+        Text = '0'
+      end
+      object Edit7: TEdit
+        Left = 152
+        Top = 98
+        Width = 65
+        Height = 21
+        TabOrder = 4
+        Text = '0'
+      end
+      object RadioButton1: TRadioButton
+        Left = 235
+        Top = 63
+        Width = 102
+        Height = 17
+        Caption = 'Fichero completo'
+        Checked = True
+        TabOrder = 5
+        TabStop = True
+      end
+      object RadioButton2: TRadioButton
+        Left = 235
+        Top = 100
+        Width = 113
+        Height = 17
+        Caption = 'Rango'
+        TabOrder = 6
+      end
+      object Button3: TButton
+        Left = 128
+        Top = 127
+        Width = 209
+        Height = 36
+        Caption = 'Iniciar'
+        TabOrder = 7
+      end
     end
     object TabSheet3: TTabSheet
-      Caption = 'Offsets Replacer'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 340
+      ExplicitHeight = 452
     end
+  end
+  object EdFichero: TEdit
+    Left = 8
+    Top = 27
+    Width = 305
+    Height = 21
+    TabOrder = 1
+    Text = 'Ruta del fichero'
+  end
+  object EdDir: TEdit
+    Left = 8
+    Top = 54
+    Width = 305
+    Height = 21
+    TabOrder = 2
+    Text = 'Directorio de trabajo'
+  end
+  object Button2: TButton
+    Left = 319
+    Top = 54
+    Width = 23
+    Height = 21
+    Caption = '...'
+    TabOrder = 3
+    OnClick = Button2Click
+  end
+  object Button1: TButton
+    Left = 319
+    Top = 27
+    Width = 23
+    Height = 21
+    Caption = '...'
+    TabOrder = 4
+    OnClick = Button1Click
+  end
+  object Estado: TStatusBar
+    Left = 0
+    Top = 471
+    Width = 358
+    Height = 19
+    Panels = <>
+    SimplePanel = True
+    ExplicitTop = 433
+    ExplicitWidth = 340
   end
   object OpenDialog1: TOpenDialog
     Left = 280

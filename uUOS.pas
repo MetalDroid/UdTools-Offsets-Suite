@@ -54,6 +54,19 @@ type
     Label8: TLabel;
     Label9: TLabel;
     Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    CheckBox1: TCheckBox;
+    Edit4: TEdit;
+    Edit5: TEdit;
+    Edit6: TEdit;
+    Edit7: TEdit;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
+    Button3: TButton;
+    Button4: TButton;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -73,6 +86,8 @@ type
     procedure RadProgresivoClick(Sender: TObject);
     procedure RadSelectivoClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure TabSheet2Show(Sender: TObject);
+    procedure TabSheet1Show(Sender: TObject);
   private
     TIniciar: HPrincipal;
     procedure DragAndDrop(var Msg: TWMDropFiles); message WM_DROPFILES;
@@ -445,6 +460,20 @@ begin
     Label9.Visible := False;
     Label10.Visible := True;
   end;
+end;
+
+procedure TForm1.TabSheet1Show(Sender: TObject);
+begin
+  Form1.Height:= 518;
+  EdFichero.Enabled:= True;
+  Button1.Enabled:= True;
+end;
+
+procedure TForm1.TabSheet2Show(Sender: TObject);
+begin
+  EdFichero.Enabled:= True;
+  Button1.Enabled:= True;
+  Form1.Height:= 250;
 end;
 
 end.
