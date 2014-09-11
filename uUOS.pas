@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls,
-  uThreadLocator, Vcl.FileCtrl, System.IOUtils, Vcl.ExtCtrls;
+  uThreadLocator, Vcl.FileCtrl, System.IOUtils, Vcl.ExtCtrls, System.IniFiles,
+  Winapi.ShellApi;
 
 type
   TForm1 = class(TForm)
@@ -29,7 +30,7 @@ type
     GroupBox1: TGroupBox;
     CheckVaciar: TCheckBox;
     CheckGen: TCheckBox;
-    CheckBox3: TCheckBox;
+    ChkRecordar: TCheckBox;
     TabSheet2: TTabSheet;
     ListView1: TListView;
     TabSheet3: TTabSheet;
@@ -71,8 +72,10 @@ type
     procedure RadCombClick(Sender: TObject);
     procedure RadProgresivoClick(Sender: TObject);
     procedure RadSelectivoClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     TIniciar: HPrincipal;
+    procedure DragAndDrop(var Msg: TWMDropFiles); message WM_DROPFILES;
     { Private declarations }
   public
     { Public declarations }
@@ -296,10 +299,62 @@ begin
     Key := #0;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+var
+  Opt: TIniFile;
 begin
-  ScaleBy(Screen.Height, 800);
+  Opt:= TIniFile.Create('UOS.ini');
+  Try
+    Opt.WriteString('Locator', 'Dir', EdDir.Text);
+    Opt.WriteBool('Locator', 'Recordar', ChkRecordar.Checked);
+  Finally
+    Opt.Free;
+  End;
+end;
+
+//Procedimiento para arrastrar y soltar
+procedure TForm1.DragAndDrop(var Msg: TWMDropFiles);
+var
+  sName : array [0..MAX_PATH] of Char;
+begin
+if WindowFromPoint(Mouse.CursorPos) = EdFichero.Handle  then
+  begin
+    DragQueryFile(Msg.Drop, 0, sName, MAX_PATH );
+    if FileExists(sName) then
+      begin
+        EdFichero.Text:= sName;
+        EdFin.Text:= IntToStr(GetCompressedFileSize(PChar(EdFichero.Text), 0)-1);
+      end;
+  end else
+if WindowFromPoint(Mouse.CursorPos) = EdDir.Handle  then
+  begin
+    DragQueryFile(Msg.Drop, 0, sName, MAX_PATH );
+    if DirectoryExists(sName) then
+      EdDir.Text:= sName;
+  end;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+var
+   Opt: TIniFile;
+   Dir: string;
+   Recordar: Boolean;
+begin
+  Opt:= TIniFile.Create('UOS.ini');
+  Try
+    Dir:= Opt.ReadString('Locator', 'Dir', 'Directorio de trabajo');
+    Recordar:= Opt.ReadBool('Locator', 'Recordar', False);
+    if Recordar then
+      begin
+        EdDir.Text:= Dir;
+        ChkRecordar.Checked:= True;
+      end;
+  Finally
+    Opt.Free;
+  End;
   // Cambia proporcionalmente el tamaño del form y controles según resolución en base al alto (800 px)
+  ScaleBy(Screen.Height, 800);
+  DragAcceptFiles(Handle, True);
 end;
 
 procedure TForm1.ListView1DblClick(Sender: TObject);

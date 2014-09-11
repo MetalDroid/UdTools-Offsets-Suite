@@ -14,6 +14,7 @@ object Form1: TForm1
   Position = poScreenCenter
   PrintScale = poNone
   Scaled = False
+  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -175,7 +176,7 @@ object Form1: TForm1
           Caption = 'Generar lista al terminar.'
           TabOrder = 1
         end
-        object CheckBox3: TCheckBox
+        object ChkRecordar: TCheckBox
           Left = 16
           Top = 82
           Width = 174
@@ -391,10 +392,18 @@ object Form1: TForm1
     object TabSheet2: TTabSheet
       Caption = 'Offsets Patcher'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabSheet3: TTabSheet
       Caption = 'Offsets Replacer'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
   end
   object OpenDialog1: TOpenDialog
