@@ -301,7 +301,47 @@ object Form1: TForm1
           Caption = 'Escribe las Offsets separadas con ESPACIOS:'
           Visible = False
         end
-        object RadioButton1: TRadioButton
+        object Label8: TLabel
+          Left = 37
+          Top = 89
+          Width = 23
+          Height = 11
+          Caption = 'M'#225'x: '
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label9: TLabel
+          Left = 199
+          Top = 89
+          Width = 23
+          Height = 11
+          Caption = 'M'#225'x: '
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label10: TLabel
+          Left = 14
+          Top = 90
+          Width = 23
+          Height = 11
+          Caption = 'M'#225'x: '
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          Visible = False
+        end
+        object RadProgresivo: TRadioButton
           Left = 54
           Top = 25
           Width = 81
@@ -310,16 +350,16 @@ object Form1: TForm1
           Checked = True
           TabOrder = 0
           TabStop = True
-          OnClick = RadioButton1Click
+          OnClick = RadProgresivoClick
         end
-        object RadioButton2: TRadioButton
+        object RadSelectivo: TRadioButton
           Left = 199
           Top = 25
           Width = 72
           Height = 17
           Caption = 'Selectivo'
           TabOrder = 1
-          OnClick = RadioButton2Click
+          OnClick = RadSelectivoClick
         end
         object Edit1: TEdit
           Left = 37

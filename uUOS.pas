@@ -42,14 +42,17 @@ type
     BDetener: TButton;
     RadComb: TRadioButton;
     GroupBox2: TGroupBox;
-    RadioButton1: TRadioButton;
-    RadioButton2: TRadioButton;
+    RadProgresivo: TRadioButton;
+    RadSelectivo: TRadioButton;
     Edit1: TEdit;
     Edit2: TEdit;
     Label5: TLabel;
     Label6: TLabel;
     Edit3: TEdit;
     Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -66,8 +69,8 @@ type
     procedure ListView1DblClick(Sender: TObject);
     procedure BtnAVFListaClick(Sender: TObject);
     procedure RadCombClick(Sender: TObject);
-    procedure RadioButton1Click(Sender: TObject);
-    procedure RadioButton2Click(Sender: TObject);
+    procedure RadProgresivoClick(Sender: TObject);
+    procedure RadSelectivoClick(Sender: TObject);
   private
     TIniciar: HPrincipal;
     { Private declarations }
@@ -91,14 +94,19 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
+var
+  FichTam: String;
 begin
   if OpenDialog1.Execute then
     if FileExists(OpenDialog1.FileName) then
     begin
       EdFichero.Text := OpenDialog1.FileName;
-      EdFin.Text :=
-        IntToStr(Integer(GetCompressedFileSize(PChar(OpenDialog1.FileName), nil)
-        ) - 1); // Tamaño del fichero (offset final)
+      FichTam:= IntToStr(Integer(GetCompressedFileSize(PChar(OpenDialog1.FileName), nil)) - 1); // Tamaño del fichero (offset final)
+      EdFin.Text := FichTam;
+      Label8.Caption:= 'Máx: ' + FichTam;
+      Label9.Caption:= 'Máx: ' + FichTam;
+      Label10.Caption:= 'Máx: ' + FichTam;
+      Form1.Estado.SimpleText:= 'Fichero cargado.';
     end;
 end;
 
@@ -107,7 +115,10 @@ var
   Dir: string;
 begin
   if SelectDirectory('Selecciona la carpeta de trabajo.', '', Dir) then
-    EdDir.Text := Dir;
+    begin
+      EdDir.Text := Dir;
+      Form1.Estado.SimpleText:= 'Directorio cargado.';
+    end;
 end;
 
 // Comprobar si una cadena es numérica
@@ -254,6 +265,11 @@ procedure TForm1.BtnIniciarClick(Sender: TObject);
 var
   Vaciar: Boolean;
 begin
+  if not FileExists(EdFichero.Text) or not DirectoryExists(EdDir.Text) then
+    begin
+      Form1.Estado.SimpleText:= 'Fichero o Ruta inexistente.';
+      Exit;
+    end;
   ListView1.clear;
   BDetener.Visible := True;
   if RadComb.Checked then
@@ -275,8 +291,7 @@ end;
 procedure TForm1.EdFinDblClick(Sender: TObject);
 begin
   if FileExists(EdFichero.Text) then
-    EdFin.Text :=
-      IntToStr(Integer(GetCompressedFileSize(PChar(EdFichero.Text), nil)) - 1);
+    EdFin.Text := IntToStr(Integer(GetCompressedFileSize(PChar(EdFichero.Text), nil)) - 1);
 end;
 
 procedure TForm1.EdInicioDblClick(Sender: TObject);
@@ -354,9 +369,9 @@ begin
     end;
 end;
 
-procedure TForm1.RadioButton1Click(Sender: TObject);
+procedure TForm1.RadProgresivoClick(Sender: TObject);
 begin
-  if radiobutton1.Checked then
+  if RadProgresivo.Checked then
     begin
       Label5.Visible:= True;
       Label6.Visible:= True;
@@ -364,12 +379,15 @@ begin
       Edit2.Visible:= True;
       Edit3.Visible:= False;
       Label7.Visible:= False;
+      Label8.Visible:= True;
+      Label9.Visible:= True;
+      Label10.Visible:= False;
     end;
 end;
 
-procedure TForm1.RadioButton2Click(Sender: TObject);
+procedure TForm1.RadSelectivoClick(Sender: TObject);
 begin
-  if radiobutton2.Checked then
+  if RadSelectivo.Checked then
     begin
       Label5.Visible:= False;
       Label6.Visible:= False;
@@ -377,6 +395,9 @@ begin
       Edit2.Visible:= False;
       Edit3.Visible:= True;
       Label7.Visible:= True;
+      Label8.Visible:= False;
+      Label9.Visible:= False;
+      Label10.Visible:= True;
     end;
 end;
 

@@ -14,6 +14,7 @@ type
     Procedure AvFucker(Fichero, RutaOffsets: String;
       Inicio, Fin, Bytes: Integer; RellenarCon: String);
     Procedure DSplit(Fichero, RutaOffsets: String; Inicio, Fin, Bytes: Integer);
+    Procedure Combinaciones;
     { Private declarations }
   protected
     procedure Execute; override;
@@ -161,7 +162,7 @@ begin
   Repeat
     if Terminated then
       Exit;
-    // if IniAux > Fin then exit;
+
     if IniAux > TamFichero then
     begin
       Ultimo := True;
@@ -191,6 +192,78 @@ begin
   Form1.Estado.SimpleText := 'Proceso terminado.';
 end;
 
+Procedure HPrincipal.Combinaciones;
+var
+  Fichero, FichAux, Extension: string;
+  Ruta: string;
+  OffIni: string;
+  OffFin: string;
+  OffsetsEspacios: string;
+  OffAct: string;
+  i, j: integer;
+  TamFich: DWORD;
+  IniAux, FinAux: integer;
+  OffActAux: integer;
+begin
+  Fichero:= Form1.EdFichero.Text;
+  Extension:= ExtractFileExt(Fichero);
+  Ruta:= Form1.EdDir.Text;
+  TamFich:= GetCompressedFileSize(PChar(Fichero), nil) - 1;
+  Fichero:= FileToStr(Fichero);
+
+  if Form1.RadProgresivo.Checked then
+    begin
+      OffIni:= Form1.Edit1.Text;
+      OffFin:= Form1.Edit2.Text;
+      if (StrToInt(OffIni) > TamFich) or (StrToInt(OffFin) > TamFich) or (StrToInt(OffIni) < 0) or (StrToInt(OffFin) < 0) or (StrToInt(OffFin) < StrToInt(OffIni)) then
+        begin
+          Form1.Estado.SimpleText:= 'Secuencia no válida.';
+          Exit;
+        end;
+      IniAux:= StrToInt(OffIni);
+      FinAux:= StrToInt(OffFin);
+      for I := IniAux to FinAux do
+        for j := 0 to 255 do
+          begin
+            if Terminated then
+              Exit;
+            FichAux:= Fichero;
+            FichAux[i+1]:= Chr(j);
+            Form1.Estado.SimpleText:= 'Procesando fichero: ' + IntToStr(i) + '_' + IntToHex(j, 2) + Extension;
+            Application.ProcessMessages;
+            StrToFile(FichAux, Ruta + '\' + IntToStr(i) + '_' + IntToHex(j, 2) + Extension);
+          end;
+      Form1.Estado.SimpleText:= 'Proceso terminado.';
+    end;
+
+  if Form1.RadSelectivo.Checked then
+    begin
+      OffsetsEspacios:= Form1.Edit3.Text;
+      repeat
+        OffsetsEspacios:= Trim(OffsetsEspacios);
+        OffsetsEspacios:= OffsetsEspacios + ' ';
+        OffAct:= Copy(OffsetsEspacios, 1, pos(' ', OffsetsEspacios)-1);
+        if OffAct <> '' then
+          begin
+            OffActAux:= StrToInt(OffAct);
+            if NOT (OffActAux > TamFich) or (OffActAux < 0) then //Con NOT ignoramos las offsets no válidas
+              begin
+                FichAux:= Fichero;
+                for I := 0 to 255 do
+                  begin
+                    FichAux[OffActAux+1]:= Chr(i);
+                    Form1.Estado.SimpleText:= 'Procesando fichero: ' + IntToStr(OffActAux) + '_' + IntToHex(i, 2) + Extension;
+                    Application.ProcessMessages;
+                    StrToFile(FichAux, Ruta + '\' + IntToStr(OffActAux) + '_' + IntToHex(i, 2) + Extension);
+                  end;
+              end;
+          end;
+        Delete(OffsetsEspacios, 1, pos(' ', OffsetsEspacios));
+      until Length(OffAct) = 0;
+      Form1.Estado.SimpleText:= 'Proceso terminado.';
+    end;
+end;
+
 // Procedimiento para realizar AvFucker con parámetros incluídos
 Procedure HPrincipal.AvFuck;
 begin
@@ -216,8 +289,8 @@ begin
     Synchronize(AvFuck);
   if Form1.RadDSplit.Checked then
     Synchronize(Split);
-  //if Form1.RadComb.Checked then
-
+  if Form1.RadComb.Checked then
+    Synchronize(Combinaciones);
   { Place thread code here }
 end;
 
