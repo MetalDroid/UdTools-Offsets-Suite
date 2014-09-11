@@ -80,6 +80,8 @@ type
 
 var
   Form1: TForm1;
+  // Variable para que no se vuelva loco el thread con el botón del avfuck al listado (saber si el avfuck es lanzado con ese botón)
+  BtnListado: Boolean;
 
 implementation
 
@@ -101,12 +103,14 @@ begin
     if FileExists(OpenDialog1.FileName) then
     begin
       EdFichero.Text := OpenDialog1.FileName;
-      FichTam:= IntToStr(Integer(GetCompressedFileSize(PChar(OpenDialog1.FileName), nil)) - 1); // Tamaño del fichero (offset final)
+      FichTam :=
+        IntToStr(Integer(GetCompressedFileSize(PChar(OpenDialog1.FileName), nil)
+        ) - 1); // Tamaño del fichero (offset final)
       EdFin.Text := FichTam;
-      Label8.Caption:= 'Máx: ' + FichTam;
-      Label9.Caption:= 'Máx: ' + FichTam;
-      Label10.Caption:= 'Máx: ' + FichTam;
-      Form1.Estado.SimpleText:= 'Fichero cargado.';
+      Label8.Caption := 'Máx: ' + FichTam;
+      Label9.Caption := 'Máx: ' + FichTam;
+      Label10.Caption := 'Máx: ' + FichTam;
+      Form1.Estado.SimpleText := 'Fichero cargado.';
     end;
 end;
 
@@ -115,10 +119,10 @@ var
   Dir: string;
 begin
   if SelectDirectory('Selecciona la carpeta de trabajo.', '', Dir) then
-    begin
-      EdDir.Text := Dir;
-      Form1.Estado.SimpleText:= 'Directorio cargado.';
-    end;
+  begin
+    EdDir.Text := Dir;
+    Form1.Estado.SimpleText := 'Directorio cargado.';
+  end;
 end;
 
 // Comprobar si una cadena es numérica
@@ -224,29 +228,15 @@ var
   Vaciar: Boolean;
   IniRestore, FinRestore: String;
 begin
-  IniRestore:= Form1.EdInicio.Text;
-  FinRestore:= Form1.EdFin.Text;
+  BtnListado := True;
   Vaciar := CheckVaciar.Checked;
-  if ListView1.Items.Count > 0 then
-  begin
-    if Length(EdBytes.Text) > 1 then
-      EdBytes.Text := Copy(EdBytes.Text, 1, Length(EdBytes.Text) - 1);
-    for i := 0 to ListView1.Items.Count - 1 do
-      if ListView1.Items.Item[i].Checked then
-      begin
-        EdInicio.Text := ListView1.Items.Item[i].Caption;
-        EdFin.Text := ListView1.Items.Item[i].SubItems[0];
-        BDetener.Visible := True;
-        TIniciar := HPrincipal.Create(False);
-        TIniciar.WaitFor;
-        CheckVaciar.Checked := False;
-      end;
-  end;
+  BDetener.Visible := True;
+  TIniciar := HPrincipal.Create(False);
+  TIniciar.WaitFor;
   ListView1.clear;
   BDetener.Visible := False;
   CheckVaciar.Checked := Vaciar;
-  Form1.EdInicio.Text:= IniRestore;
-  Form1.EdFin.Text:= FinRestore;
+  BtnListado := False;
 end;
 
 procedure TForm1.CheckAllClick(Sender: TObject);
@@ -266,21 +256,21 @@ var
   Vaciar: Boolean;
 begin
   if not FileExists(EdFichero.Text) or not DirectoryExists(EdDir.Text) then
-    begin
-      Form1.Estado.SimpleText:= 'Fichero o Ruta inexistente.';
-      Exit;
-    end;
+  begin
+    Form1.Estado.SimpleText := 'Fichero o Ruta inexistente.';
+    Exit;
+  end;
   ListView1.clear;
   BDetener.Visible := True;
   if RadComb.Checked then
-    Vaciar:= CheckVaciar.Checked;
+    Vaciar := CheckVaciar.Checked;
   TIniciar := HPrincipal.Create(False);
   TIniciar.WaitFor;
   BDetener.Visible := False;
   if (CheckGen.Checked) and NOT(RadComb.Checked) then
     AddToList;
   if RadComb.Checked then
-    CheckVaciar.Checked:= Vaciar;
+    CheckVaciar.Checked := Vaciar;
 end;
 
 procedure TForm1.EdBytesDblClick(Sender: TObject);
@@ -291,7 +281,8 @@ end;
 procedure TForm1.EdFinDblClick(Sender: TObject);
 begin
   if FileExists(EdFichero.Text) then
-    EdFin.Text := IntToStr(Integer(GetCompressedFileSize(PChar(EdFichero.Text), nil)) - 1);
+    EdFin.Text := IntToStr(Integer(GetCompressedFileSize(PChar(EdFichero.Text),
+      nil)) - 1);
 end;
 
 procedure TForm1.EdInicioDblClick(Sender: TObject);
@@ -325,80 +316,80 @@ end;
 procedure TForm1.RadAvFuckerClick(Sender: TObject);
 begin
   if RadAvFucker.Checked then
-    begin
-      EdValor.Enabled := True;
-      CheckAll.Enabled:= True;
-      BtnAVFLista.Enabled:= True;
-      Label1.Visible:= True;
-      Label2.Visible:= True;
-      Label3.Visible:= True;
-      Label4.Visible:= True;
-      Button5.Enabled:= True;
-      GroupBox2.Visible:= False;
-    end;
+  begin
+    EdValor.Enabled := True;
+    CheckAll.Enabled := True;
+    BtnAVFLista.Enabled := True;
+    Label1.Visible := True;
+    Label2.Visible := True;
+    Label3.Visible := True;
+    Label4.Visible := True;
+    Button5.Enabled := True;
+    GroupBox2.Visible := False;
+  end;
 end;
 
 procedure TForm1.RadCombClick(Sender: TObject);
 begin
   if RadComb.Checked then
-    begin
-      Label1.Visible:= False;
-      Label2.Visible:= False;
-      Label3.Visible:= False;
-      Label4.Visible:= False;
-      Button5.Enabled:= False;
-      CheckAll.Enabled:= False;
-      BtnAVFLista.Enabled:= False;
-      GroupBox2.Visible:= True;
-    end;
+  begin
+    Label1.Visible := False;
+    Label2.Visible := False;
+    Label3.Visible := False;
+    Label4.Visible := False;
+    Button5.Enabled := False;
+    CheckAll.Enabled := False;
+    BtnAVFLista.Enabled := False;
+    GroupBox2.Visible := True;
+  end;
 end;
 
 procedure TForm1.RadDSplitClick(Sender: TObject);
 begin
   if RadDSplit.Checked then
-    begin
-      EdValor.Enabled := False;
-      CheckAll.Enabled:= False;
-      BtnAVFLista.Enabled:= False;
-      Label1.Visible:= True;
-      Label2.Visible:= True;
-      Label3.Visible:= True;
-      Label4.Visible:= True;
-      Button5.Enabled:= True;
-      GroupBox2.Visible:= False;
-    end;
+  begin
+    EdValor.Enabled := False;
+    CheckAll.Enabled := False;
+    BtnAVFLista.Enabled := False;
+    Label1.Visible := True;
+    Label2.Visible := True;
+    Label3.Visible := True;
+    Label4.Visible := True;
+    Button5.Enabled := True;
+    GroupBox2.Visible := False;
+  end;
 end;
 
 procedure TForm1.RadProgresivoClick(Sender: TObject);
 begin
   if RadProgresivo.Checked then
-    begin
-      Label5.Visible:= True;
-      Label6.Visible:= True;
-      Edit1.Visible:= True;
-      Edit2.Visible:= True;
-      Edit3.Visible:= False;
-      Label7.Visible:= False;
-      Label8.Visible:= True;
-      Label9.Visible:= True;
-      Label10.Visible:= False;
-    end;
+  begin
+    Label5.Visible := True;
+    Label6.Visible := True;
+    Edit1.Visible := True;
+    Edit2.Visible := True;
+    Edit3.Visible := False;
+    Label7.Visible := False;
+    Label8.Visible := True;
+    Label9.Visible := True;
+    Label10.Visible := False;
+  end;
 end;
 
 procedure TForm1.RadSelectivoClick(Sender: TObject);
 begin
   if RadSelectivo.Checked then
-    begin
-      Label5.Visible:= False;
-      Label6.Visible:= False;
-      Edit1.Visible:= False;
-      Edit2.Visible:= False;
-      Edit3.Visible:= True;
-      Label7.Visible:= True;
-      Label8.Visible:= False;
-      Label9.Visible:= False;
-      Label10.Visible:= True;
-    end;
+  begin
+    Label5.Visible := False;
+    Label6.Visible := False;
+    Edit1.Visible := False;
+    Edit2.Visible := False;
+    Edit3.Visible := True;
+    Label7.Visible := True;
+    Label8.Visible := False;
+    Label9.Visible := False;
+    Label10.Visible := True;
+  end;
 end;
 
 end.
