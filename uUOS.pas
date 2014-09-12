@@ -156,7 +156,7 @@ end;
 
 procedure TForm1.BtnIniciarRClick(Sender: TObject);
 begin
-  if not FileExists(EdFichero.Text) or not DirectoryExists(EdDir.Text) then
+  if not FileExists(EdFichero.Text) or not System.SysUtils.DirectoryExists(EdDir.Text) then
   begin
     Form1.Estado.SimpleText := 'Fichero o Ruta inexistente.';
     Exit;
@@ -266,9 +266,7 @@ end;
 
 procedure TForm1.BtnAVFListaClick(Sender: TObject);
 var
-  i: Integer;
   Vaciar: Boolean;
-  IniRestore, FinRestore: String;
 begin
   BtnListado := True;
   Vaciar := CheckVaciar.Checked;
@@ -305,7 +303,7 @@ procedure TForm1.BtnIniciarClick(Sender: TObject);
 var
   Vaciar: Boolean;
 begin
-  if not FileExists(EdFichero.Text) or not DirectoryExists(EdDir.Text) then
+  if not FileExists(EdFichero.Text) or not System.SysUtils.DirectoryExists(EdDir.Text) then
   begin
     Form1.Estado.SimpleText := 'Fichero o Ruta inexistente.';
     Exit;
@@ -383,13 +381,13 @@ begin
     begin
       EdFichero.Text := sName;
       EdFin.Text :=
-        IntToStr(GetCompressedFileSize(PChar(EdFichero.Text), 0) - 1);
+        IntToStr(GetCompressedFileSize(PChar(EdFichero.Text), nil) - 1);
     end;
   end
   else if WindowFromPoint(Mouse.CursorPos) = EdDir.Handle then
   begin
     DragQueryFile(Msg.Drop, 0, sName, MAX_PATH);
-    if DirectoryExists(sName) then
+    if System.SysUtils.DirectoryExists(sName) then
       EdDir.Text := sName;
   end;
 end;
