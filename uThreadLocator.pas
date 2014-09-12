@@ -51,7 +51,7 @@ Procedure HPrincipal.AvFucker(Fichero, RutaOffsets: String;
   Inicio, Fin, Bytes: Integer; RellenarCon: String);
 var
   o, Rell, Tam: Integer;
-  Aux, Aux2, OffIni, sBytes: String;
+  Aux: AnsiString; Aux2, OffIni, sBytes: String;
 begin
   Aux2 := Fichero;
   Fichero := FileToStr(Fichero);
@@ -64,19 +64,19 @@ begin
   Repeat
     if Terminated then
       Exit;
-    Aux := Fichero;
+    Aux := AnsiString(Fichero);
     if Inicio + Bytes <= Tam then
     begin
       sBytes := IntToStr(Bytes);
       for o := Inicio to Inicio + Bytes - 1 do
-        Aux[o + 1] := Chr(Rell);
+        Aux[o + 1] := AnsiChar(Rell);
     end
     else
     begin
       sBytes := IntToStr((Tam - Inicio) + 1);
       // Si el resto del fichero es menor que Bytes, tapamos el resto
       for o := Inicio to (Inicio + (Tam - Inicio)) do
-        Aux[o + 1] := Chr(Rell);
+        Aux[o + 1] := AnsiChar(Rell);
     end;
 
     OffIni := IntToStr(Inicio);
@@ -86,7 +86,7 @@ begin
       ExtractFileExt(Aux2);
     Application.ProcessMessages;
 
-    StrToFile(Aux, RutaOffsets + '\' + OffIni + '_' + sBytes +
+    StrToFile(WideString(Aux), RutaOffsets + '\' + OffIni + '_' + sBytes +
       ExtractFileExt(Aux2));
 
     Inc(Inicio, Bytes);
@@ -156,7 +156,8 @@ end;
 
 Procedure HPrincipal.Combinaciones;
 var
-  Fichero, FichAux, Extension: string;
+  Fichero, Extension: string;
+  FichAux: AnsiString;
   Ruta: string;
   OffIni: string;
   OffFin: string;
@@ -191,12 +192,12 @@ begin
       begin
         if Terminated then
           Exit;
-        FichAux := Fichero;
-        FichAux[i + 1] := Chr(j);
+        FichAux := AnsiString(Fichero);
+        FichAux[i + 1] := AnsiChar(j);
         Form1.Estado.SimpleText := 'Procesando fichero: ' + IntToStr(i) + '_' +
           IntToHex(j, 2) + Extension;
         Application.ProcessMessages;
-        StrToFile(FichAux, Ruta + '\' + IntToStr(i) + '_' + IntToHex(j, 2) +
+        StrToFile(WideString(FichAux), Ruta + '\' + IntToStr(i) + '_' + IntToHex(j, 2) +
           Extension);
       end;
     Form1.Estado.SimpleText := 'Proceso terminado.';
@@ -215,14 +216,14 @@ begin
         if NOT(OffActAux > TamFich) or (OffActAux < 0) then
         // Con NOT ignoramos las offsets no válidas
         begin
-          FichAux := Fichero;
+          FichAux := AnsiString(Fichero);
           for i := 0 to 255 do
           begin
-            FichAux[OffActAux + 1] := Chr(i);
+            FichAux[OffActAux + 1] := AnsiChar(i);
             Form1.Estado.SimpleText := 'Procesando fichero: ' +
               IntToStr(OffActAux) + '_' + IntToHex(i, 2) + Extension;
             Application.ProcessMessages;
-            StrToFile(FichAux, Ruta + '\' + IntToStr(OffActAux) + '_' +
+            StrToFile(WideString(FichAux), Ruta + '\' + IntToStr(OffActAux) + '_' +
               IntToHex(i, 2) + Extension);
           end;
         end;

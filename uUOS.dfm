@@ -25,16 +25,12 @@ object Form1: TForm1
     Top = 0
     Width = 358
     Height = 471
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Offset Locator'
       OnShow = TabSheet1Show
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 340
-      ExplicitHeight = 452
       object Label1: TLabel
         Left = 3
         Top = 91
@@ -155,6 +151,8 @@ object Form1: TForm1
           Width = 174
           Height = 17
           Caption = 'Recordar directorio de trabajo.'
+          Checked = True
+          State = cbChecked
           TabOrder = 2
         end
       end
@@ -508,10 +506,6 @@ object Form1: TForm1
     end
     object TabSheet3: TTabSheet
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 340
-      ExplicitHeight = 452
     end
   end
   object EdFichero: TEdit

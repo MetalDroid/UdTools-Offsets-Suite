@@ -1,4 +1,4 @@
-unit uUOS;
+﻿unit uUOS;
 
 interface
 
@@ -131,8 +131,7 @@ begin
     begin
       EdFichero.Text := OpenDialog1.FileName;
       FichTam :=
-        IntToStr(Integer(GetCompressedFileSize(PChar(OpenDialog1.FileName), nil)
-        ) - 1); // Tamaño del fichero (offset final)
+        IntToStr(Integer(GetCompressedFileSize(PChar(OpenDialog1.FileName), nil)) - 1); // Tamaño del fichero (offset final)
       EdFin.Text := FichTam;
       Label8.Caption := 'Máx: ' + FichTam;
       Label9.Caption := 'Máx: ' + FichTam;
@@ -373,30 +372,33 @@ end;
 procedure TForm1.DragAndDrop(var Msg: TWMDropFiles);
 var
   sName: array [0 .. MAX_PATH] of Char;
+  FichTam: String;
 begin
   if WindowFromPoint(Mouse.CursorPos) = EdFichero.Handle then
   begin
     DragQueryFile(Msg.Drop, 0, sName, MAX_PATH);
     if FileExists(sName) then
     begin
+      FichTam:= IntToStr(GetCompressedFileSize(sName, nil) - 1);
       EdFichero.Text := sName;
-      EdFin.Text :=
-        IntToStr(GetCompressedFileSize(PChar(EdFichero.Text), nil) - 1);
-    end;
-  end
-  else if WindowFromPoint(Mouse.CursorPos) = EdDir.Handle then
-  begin
-    DragQueryFile(Msg.Drop, 0, sName, MAX_PATH);
-    if System.SysUtils.DirectoryExists(sName) then
-      EdDir.Text := sName;
-  end;
       EdFin.Text := FichTam;
       Label8.Caption := 'Máx: ' + FichTam;
       Label9.Caption := 'Máx: ' + FichTam;
       Label10.Caption := 'Máx: ' + FichTam;
       Label15.Caption := 'Máx: ' + FichTam;
       Label16.Caption := 'Máx: ' + FichTam;
-      Form1.Estado.SimpleText := 'Fichero cargado.';
+      Estado.SimpleText := 'Fichero cargado.';
+    end;
+  end
+  else if WindowFromPoint(Mouse.CursorPos) = EdDir.Handle then
+  begin
+    DragQueryFile(Msg.Drop, 0, sName, MAX_PATH);
+    if System.SysUtils.DirectoryExists(sName) then
+      begin
+        EdDir.Text := sName;
+        Estado.SimpleText := 'Directorio cargado.';
+      end;
+  end;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
