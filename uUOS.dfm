@@ -449,6 +449,7 @@ object Form1: TForm1
         Width = 19
         Height = 21
         CharCase = ecUpperCase
+        MaxLength = 2
         TabOrder = 1
         Text = '00'
         OnKeyPress = EdOriginalKeyPress
@@ -459,6 +460,7 @@ object Form1: TForm1
         Width = 19
         Height = 21
         CharCase = ecUpperCase
+        MaxLength = 2
         TabOrder = 2
         Text = '90'
         OnKeyPress = EdReemplazarKeyPress

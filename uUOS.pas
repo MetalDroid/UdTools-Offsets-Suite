@@ -107,8 +107,8 @@ type
 
 var
   Form1: TForm1;
-  // Variable para que no se vuelva loco el thread con el botón del avfuck al listado (saber si el avfuck es lanzado con ese botón)
   BtnListado: Boolean;
+  HexChars: TSysCharSet;
 
 implementation
 
@@ -339,19 +339,22 @@ end;
 
 procedure TForm1.EdOriginalKeyPress(Sender: TObject; var Key: Char);
 begin
-  if not(Key in ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8]) then
+  HexChars:= ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8];
+  if not(CharInSet(Key, HexChars)) then
     Key := #0;
 end;
 
 procedure TForm1.EdReemplazarKeyPress(Sender: TObject; var Key: Char);
 begin
-  if not(Key in ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8]) then
+  HexChars:= ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8];
+  if not(CharInSet(Key, HexChars)) then
     Key := #0;
 end;
 
 procedure TForm1.EdValorKeyPress(Sender: TObject; var Key: Char);
 begin
-  if not(Key in ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8]) then
+  HexChars:= ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8];
+  if not(CharInSet(Key, HexChars)) then
     Key := #0;
 end;
 
