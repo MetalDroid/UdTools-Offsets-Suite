@@ -107,7 +107,7 @@ type
 
 var
   Form1: TForm1;
-  // Variable para que no se vuelva loco el thread con el botón del avfuck al listado (saber si el avfuck es lanzado con ese botón)
+  // Variable para que no se vuelva loco el thread con el botÃ³n del avfuck al listado (saber si el avfuck es lanzado con ese botÃ³n)
   BtnListado: Boolean;
 
 implementation
@@ -132,13 +132,13 @@ begin
       EdFichero.Text := OpenDialog1.FileName;
       FichTam :=
         IntToStr(Integer(GetCompressedFileSize(PChar(OpenDialog1.FileName), nil)
-        ) - 1); // Tamaño del fichero (offset final)
+        ) - 1); // TamaÃ±o del fichero (offset final)
       EdFin.Text := FichTam;
-      Label8.Caption := 'Máx: ' + FichTam;
-      Label9.Caption := 'Máx: ' + FichTam;
-      Label10.Caption := 'Máx: ' + FichTam;
-      Label15.Caption := 'Máx: ' + FichTam;
-      Label16.Caption := 'Máx: ' + FichTam;
+      Label8.Caption := 'MÃ¡x: ' + FichTam;
+      Label9.Caption := 'MÃ¡x: ' + FichTam;
+      Label10.Caption := 'MÃ¡x: ' + FichTam;
+      Label15.Caption := 'MÃ¡x: ' + FichTam;
+      Label16.Caption := 'MÃ¡x: ' + FichTam;
       Form1.Estado.SimpleText := 'Fichero cargado.';
     end;
 end;
@@ -167,7 +167,7 @@ begin
   BtnDetenerR.Visible := False;
 end;
 
-// Comprobar si una cadena es numérica
+// Comprobar si una cadena es numÃ©rica
 Function IsNumber(Str: String): Boolean;
 var
   i: Integer;
@@ -183,7 +183,7 @@ begin
     end;
 end;
 
-// Función para comprobar los nombres de los ficheros (xxxx_xxxx.xxx)
+// FunciÃ³n para comprobar los nombres de los ficheros (xxxx_xxxx.xxx)
 Function IsValidOffsetFileName(FName: String; var NumI, NumD: String): Boolean;
 begin
   Result := True;
@@ -194,7 +194,7 @@ begin
     Result := False;
 end;
 
-// Función para añadir offsets al listado teniendo en cuenta ficheros consecutivos (Es un poco chapuza por ahora, pero funcional)
+// FunciÃ³n para aÃ±adir offsets al listado teniendo en cuenta ficheros consecutivos (Es un poco chapuza por ahora, pero funcional)
 Procedure AddToList;
 var
   SearchResult: TSearchRec;
@@ -216,14 +216,14 @@ begin
     Ficheros := (StrToInt(Fin) - StrToInt(Inicio)) div StrToInt(sBytes);
 
   for i := 0 to Ficheros + 2 do
-  begin // Podríamos buscar por "_1000, _2000", etc (sBytes), pero no funcionaría debido al RESTO (último fichero);
+  begin // PodrÃ­amos buscar por "_1000, _2000", etc (sBytes), pero no funcionarÃ­a debido al RESTO (Ãºltimo fichero);
     Res := FindFirst(Dir + Inicio + '_*', faAnyFile, SearchResult);
     if Res = 0 then
     begin
       Acumulados := Acumulados + StrToInt(sBytes);
     end
     else
-    begin // Tenemos en cuenta el último fichero válido encontrado para añadir con éxito "Fin"
+    begin // Tenemos en cuenta el Ãºltimo fichero vÃ¡lido encontrado para aÃ±adir con Ã©xito "Fin"
       if FindFirst(Dir + IntToStr(StrToInt(Inicio) - StrToInt(sBytes)) + '_*',
         faAnyFile, SearchResult) = 0 then
         if IsValidOffsetFileName(SearchResult.Name, IniAux, FinAux) then
@@ -390,6 +390,13 @@ begin
     if System.SysUtils.DirectoryExists(sName) then
       EdDir.Text := sName;
   end;
+      EdFin.Text := FichTam;
+      Label8.Caption := 'MÃ¡x: ' + FichTam;
+      Label9.Caption := 'MÃ¡x: ' + FichTam;
+      Label10.Caption := 'MÃ¡x: ' + FichTam;
+      Label15.Caption := 'MÃ¡x: ' + FichTam;
+      Label16.Caption := 'MÃ¡x: ' + FichTam;
+      Form1.Estado.SimpleText := 'Fichero cargado.';
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -410,7 +417,7 @@ begin
   Finally
     Opt.Free;
   End;
-  // Cambia proporcionalmente el tamaño del form y controles según resolución en base al alto (800 px)
+  // Cambia proporcionalmente el tamaÃ±o del form y controles segÃºn resoluciÃ³n en base al alto (800 px)
   ScaleBy(Screen.Height, 800);
   DragAcceptFiles(Handle, True);
 end;
