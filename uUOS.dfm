@@ -28,11 +28,11 @@ object Form1: TForm1
     ActivePage = TabSheet2
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 348
-    ExplicitHeight = 480
     object TabSheet1: TTabSheet
       Caption = 'Offset Locator'
       OnShow = TabSheet1Show
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 340
       ExplicitHeight = 452
       object Label1: TLabel
@@ -358,10 +358,6 @@ object Form1: TForm1
       Caption = 'Offsets Replacer'
       ImageIndex = 1
       OnShow = TabSheet2Show
-      ExplicitLeft = 8
-      ExplicitTop = 22
-      ExplicitWidth = 340
-      ExplicitHeight = 433
       object Label11: TLabel
         Left = 4
         Top = 65
@@ -512,6 +508,8 @@ object Form1: TForm1
     end
     object TabSheet3: TTabSheet
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 340
       ExplicitHeight = 452
     end
@@ -557,8 +555,6 @@ object Form1: TForm1
     Height = 19
     Panels = <>
     SimplePanel = True
-    ExplicitTop = 433
-    ExplicitWidth = 340
   end
   object OpenDialog1: TOpenDialog
     Left = 280

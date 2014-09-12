@@ -362,7 +362,7 @@ procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
 var
   Opt: TIniFile;
 begin
-  Opt := TIniFile.Create('UOS.ini');
+  Opt := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\UOS.ini');
   Try
     Opt.WriteString('Locator', 'Dir', EdDir.Text);
     Opt.WriteBool('Locator', 'Recordar', ChkRecordar.Checked);
@@ -400,7 +400,7 @@ var
   Dir: string;
   Recordar: Boolean;
 begin
-  Opt := TIniFile.Create('UOS.ini');
+  Opt := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\UOS.ini');
   Try
     Dir := Opt.ReadString('Locator', 'Dir', 'Directorio de trabajo');
     Recordar := Opt.ReadBool('Locator', 'Recordar', False);
