@@ -45,7 +45,8 @@ var
   Inicio, Fin: integer;
   Original: byte;
   Reemplazo: byte;
-  Fichero, FicheroF, RutaFichero, Directorio, Extension: String;
+  Fichero, RutaFichero, Directorio, Extension: String;
+  FicheroF: AnsiString;
   i: integer;
   TamFich: DWORD;
   Coincidencias: integer;
@@ -73,14 +74,14 @@ begin
   end;
   for i := (Inicio + 1) to (Fin + 1) do
   begin
-    FicheroF := Fichero;
-    if Fichero[i] = Chr(Original) then
+    FicheroF := AnsiString(Fichero);
+    if FicheroF[i] = AnsiChar(Original) then
     begin
       if Terminated then
         Exit;
       inc(Coincidencias);
-      FicheroF[i] := Chr(Reemplazo);
-      StrToFile(FicheroF, Directorio + '\' + IntToStr(i - 1) + Extension);
+      FicheroF[i] := AnsiChar(Reemplazo);
+      StrToFile(WideString(FicheroF), Directorio + '\' + IntToStr(i - 1) + Extension);
       Form1.Estado.SimpleText := 'Procesando fichero ' + IntToStr(i - 1) +
         Extension;
       Application.ProcessMessages;
