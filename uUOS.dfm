@@ -25,7 +25,7 @@ object Form1: TForm1
     Top = 0
     Width = 358
     Height = 471
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alClient
     TabOrder = 0
     ExplicitWidth = 348
@@ -209,14 +209,14 @@ object Form1: TForm1
         TabOrder = 10
         OnClick = BtnAVFListaClick
       end
-      object Button5: TButton
+      object BtnMostrarLista: TButton
         Left = 187
         Top = 197
         Width = 150
         Height = 25
         Caption = 'Mostrar lista'
         TabOrder = 11
-        OnClick = Button5Click
+        OnClick = BtnMostrarListaClick
       end
       object BDetener: TButton
         Left = 3
@@ -382,6 +382,7 @@ object Form1: TForm1
         Width = 29
         Height = 13
         Caption = 'Inicio:'
+        Enabled = False
       end
       object Label14: TLabel
         Left = 128
@@ -389,80 +390,124 @@ object Form1: TForm1
         Width = 18
         Height = 13
         Caption = 'Fin:'
+        Enabled = False
       end
-      object Button4: TButton
+      object Label15: TLabel
+        Left = 38
+        Top = 120
+        Width = 20
+        Height = 11
+        Caption = 'Max:'
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label16: TLabel
+        Left = 152
+        Top = 120
+        Width = 20
+        Height = 11
+        Caption = 'Max:'
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object BtnIniciarR: TButton
         Left = 128
-        Top = 126
+        Top = 137
+        Width = 209
+        Height = 36
+        Caption = 'Iniciar'
+        TabOrder = 7
+        OnClick = BtnIniciarRClick
+      end
+      object BtnDetenerR: TButton
+        Left = 128
+        Top = 136
         Width = 209
         Height = 38
         Caption = 'Detener'
         TabOrder = 8
+        Visible = False
+        OnClick = BtnDetenerRClick
       end
-      object CheckBox1: TCheckBox
+      object CheckVaciarR: TCheckBox
         Left = 3
-        Top = 136
+        Top = 146
         Width = 97
         Height = 17
         Caption = 'Vaciar directorio.'
+        Checked = True
+        State = cbChecked
         TabOrder = 0
       end
-      object Edit4: TEdit
+      object EdOriginal: TEdit
         Left = 70
         Top = 63
         Width = 19
         Height = 21
+        CharCase = ecUpperCase
         TabOrder = 1
         Text = '00'
+        OnKeyPress = EdOriginalKeyPress
       end
-      object Edit5: TEdit
+      object EdReemplazar: TEdit
         Left = 198
         Top = 63
         Width = 19
         Height = 21
+        CharCase = ecUpperCase
         TabOrder = 2
         Text = '90'
+        OnKeyPress = EdReemplazarKeyPress
       end
-      object Edit6: TEdit
+      object EdInicioR: TEdit
         Left = 38
         Top = 98
         Width = 62
         Height = 21
+        Enabled = False
+        NumbersOnly = True
         TabOrder = 3
         Text = '0'
       end
-      object Edit7: TEdit
+      object EdFinR: TEdit
         Left = 152
         Top = 98
         Width = 65
         Height = 21
+        Enabled = False
+        NumbersOnly = True
         TabOrder = 4
         Text = '0'
       end
-      object RadioButton1: TRadioButton
+      object RadCompleto: TRadioButton
         Left = 235
-        Top = 63
+        Top = 64
         Width = 102
         Height = 17
         Caption = 'Fichero completo'
         Checked = True
         TabOrder = 5
         TabStop = True
+        OnClick = RadCompletoClick
       end
-      object RadioButton2: TRadioButton
+      object RadRango: TRadioButton
         Left = 235
         Top = 100
         Width = 113
         Height = 17
         Caption = 'Rango'
         TabOrder = 6
-      end
-      object Button3: TButton
-        Left = 128
-        Top = 127
-        Width = 209
-        Height = 36
-        Caption = 'Iniciar'
-        TabOrder = 7
+        OnClick = RadRangoClick
       end
     end
     object TabSheet3: TTabSheet

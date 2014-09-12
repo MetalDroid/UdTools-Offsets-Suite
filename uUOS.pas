@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls,
   uThreadLocator, Vcl.FileCtrl, System.IOUtils, Vcl.ExtCtrls, System.IniFiles,
-  Winapi.ShellApi;
+  Winapi.ShellApi, uThreadReplacer;
 
 type
   TForm1 = class(TForm)
@@ -35,7 +35,7 @@ type
     ListView1: TListView;
     TabSheet3: TTabSheet;
     BtnIniciar: TButton;
-    Button5: TButton;
+    BtnMostrarLista: TButton;
     CheckAll: TCheckBox;
     BtnAVFLista: TButton;
     Estado: TStatusBar;
@@ -58,15 +58,17 @@ type
     Label12: TLabel;
     Label13: TLabel;
     Label14: TLabel;
-    CheckBox1: TCheckBox;
-    Edit4: TEdit;
-    Edit5: TEdit;
-    Edit6: TEdit;
-    Edit7: TEdit;
-    RadioButton1: TRadioButton;
-    RadioButton2: TRadioButton;
-    Button3: TButton;
-    Button4: TButton;
+    CheckVaciarR: TCheckBox;
+    EdOriginal: TEdit;
+    EdReemplazar: TEdit;
+    EdInicioR: TEdit;
+    EdFinR: TEdit;
+    RadCompleto: TRadioButton;
+    RadRango: TRadioButton;
+    BtnIniciarR: TButton;
+    BtnDetenerR: TButton;
+    Label15: TLabel;
+    Label16: TLabel;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -78,7 +80,7 @@ type
     procedure EdInicioDblClick(Sender: TObject);
     procedure EdFinDblClick(Sender: TObject);
     procedure EdBytesDblClick(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
+    procedure BtnMostrarListaClick(Sender: TObject);
     procedure CheckAllClick(Sender: TObject);
     procedure ListView1DblClick(Sender: TObject);
     procedure BtnAVFListaClick(Sender: TObject);
@@ -88,8 +90,15 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure TabSheet2Show(Sender: TObject);
     procedure TabSheet1Show(Sender: TObject);
+    procedure BtnIniciarRClick(Sender: TObject);
+    procedure BtnDetenerRClick(Sender: TObject);
+    procedure EdOriginalKeyPress(Sender: TObject; var Key: Char);
+    procedure EdReemplazarKeyPress(Sender: TObject; var Key: Char);
+    procedure RadCompletoClick(Sender: TObject);
+    procedure RadRangoClick(Sender: TObject);
   private
     TIniciar: HPrincipal;
+    TIniciarR: HReplacer;
     procedure DragAndDrop(var Msg: TWMDropFiles); message WM_DROPFILES;
     { Private declarations }
   public
@@ -128,6 +137,8 @@ begin
       Label8.Caption := 'Máx: ' + FichTam;
       Label9.Caption := 'Máx: ' + FichTam;
       Label10.Caption := 'Máx: ' + FichTam;
+      Label15.Caption := 'Máx: ' + FichTam;
+      Label16.Caption := 'Máx: ' + FichTam;
       Form1.Estado.SimpleText := 'Fichero cargado.';
     end;
 end;
@@ -141,6 +152,19 @@ begin
     EdDir.Text := Dir;
     Form1.Estado.SimpleText := 'Directorio cargado.';
   end;
+end;
+
+procedure TForm1.BtnIniciarRClick(Sender: TObject);
+begin
+  if not FileExists(EdFichero.Text) or not DirectoryExists(EdDir.Text) then
+  begin
+    Form1.Estado.SimpleText := 'Fichero o Ruta inexistente.';
+    Exit;
+  end;
+  BtnDetenerR.Visible := True;
+  TIniciarR := HReplacer.Create(False);
+  TIniciarR.WaitFor;
+  BtnDetenerR.Visible := False;
 end;
 
 // Comprobar si una cadena es numérica
@@ -235,7 +259,7 @@ begin
       Form1.ListView1.Items.Item[i].Checked := True;
 end;
 
-procedure TForm1.Button5Click(Sender: TObject);
+procedure TForm1.BtnMostrarListaClick(Sender: TObject);
 begin
   AddToList;
 end;
@@ -255,6 +279,14 @@ begin
   BDetener.Visible := False;
   CheckVaciar.Checked := Vaciar;
   BtnListado := False;
+end;
+
+procedure TForm1.BtnDetenerRClick(Sender: TObject);
+begin
+  if TIniciarR <> nil then
+    TIniciarR.Terminate;
+  Estado.SimpleText := 'Proceso detenido.';
+  BtnDetenerR.Visible := False;
 end;
 
 procedure TForm1.CheckAllClick(Sender: TObject);
@@ -308,6 +340,18 @@ begin
   EdInicio.Text := '1000';
 end;
 
+procedure TForm1.EdOriginalKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not(Key in ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8]) then
+    Key := #0;
+end;
+
+procedure TForm1.EdReemplazarKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not(Key in ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8]) then
+    Key := #0;
+end;
+
 procedure TForm1.EdValorKeyPress(Sender: TObject; var Key: Char);
 begin
   if not(Key in ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8]) then
@@ -318,7 +362,7 @@ procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
 var
   Opt: TIniFile;
 begin
-  Opt:= TIniFile.Create('UOS.ini');
+  Opt := TIniFile.Create('UOS.ini');
   Try
     Opt.WriteString('Locator', 'Dir', EdDir.Text);
     Opt.WriteBool('Locator', 'Recordar', ChkRecordar.Checked);
@@ -327,43 +371,44 @@ begin
   End;
 end;
 
-//Procedimiento para arrastrar y soltar
+// Procedimiento para arrastrar y soltar
 procedure TForm1.DragAndDrop(var Msg: TWMDropFiles);
 var
-  sName : array [0..MAX_PATH] of Char;
+  sName: array [0 .. MAX_PATH] of Char;
 begin
-if WindowFromPoint(Mouse.CursorPos) = EdFichero.Handle  then
+  if WindowFromPoint(Mouse.CursorPos) = EdFichero.Handle then
   begin
-    DragQueryFile(Msg.Drop, 0, sName, MAX_PATH );
+    DragQueryFile(Msg.Drop, 0, sName, MAX_PATH);
     if FileExists(sName) then
-      begin
-        EdFichero.Text:= sName;
-        EdFin.Text:= IntToStr(GetCompressedFileSize(PChar(EdFichero.Text), 0)-1);
-      end;
-  end else
-if WindowFromPoint(Mouse.CursorPos) = EdDir.Handle  then
+    begin
+      EdFichero.Text := sName;
+      EdFin.Text :=
+        IntToStr(GetCompressedFileSize(PChar(EdFichero.Text), 0) - 1);
+    end;
+  end
+  else if WindowFromPoint(Mouse.CursorPos) = EdDir.Handle then
   begin
-    DragQueryFile(Msg.Drop, 0, sName, MAX_PATH );
+    DragQueryFile(Msg.Drop, 0, sName, MAX_PATH);
     if DirectoryExists(sName) then
-      EdDir.Text:= sName;
+      EdDir.Text := sName;
   end;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 var
-   Opt: TIniFile;
-   Dir: string;
-   Recordar: Boolean;
+  Opt: TIniFile;
+  Dir: string;
+  Recordar: Boolean;
 begin
-  Opt:= TIniFile.Create('UOS.ini');
+  Opt := TIniFile.Create('UOS.ini');
   Try
-    Dir:= Opt.ReadString('Locator', 'Dir', 'Directorio de trabajo');
-    Recordar:= Opt.ReadBool('Locator', 'Recordar', False);
+    Dir := Opt.ReadString('Locator', 'Dir', 'Directorio de trabajo');
+    Recordar := Opt.ReadBool('Locator', 'Recordar', False);
     if Recordar then
-      begin
-        EdDir.Text:= Dir;
-        ChkRecordar.Checked:= True;
-      end;
+    begin
+      EdDir.Text := Dir;
+      ChkRecordar.Checked := True;
+    end;
   Finally
     Opt.Free;
   End;
@@ -394,7 +439,7 @@ begin
     Label2.Visible := True;
     Label3.Visible := True;
     Label4.Visible := True;
-    Button5.Enabled := True;
+    BtnMostrarLista.Enabled := True;
     GroupBox2.Visible := False;
   end;
 end;
@@ -407,10 +452,23 @@ begin
     Label2.Visible := False;
     Label3.Visible := False;
     Label4.Visible := False;
-    Button5.Enabled := False;
+    BtnMostrarLista.Enabled := False;
     CheckAll.Enabled := False;
     BtnAVFLista.Enabled := False;
     GroupBox2.Visible := True;
+  end;
+end;
+
+procedure TForm1.RadCompletoClick(Sender: TObject);
+begin
+  if RadCompleto.Checked then
+  begin
+    Label13.Enabled := False;
+    Label14.Enabled := False;
+    Label15.Enabled := False;
+    Label16.Enabled := False;
+    EdInicioR.Enabled := False;
+    EdFinR.Enabled := False;
   end;
 end;
 
@@ -425,7 +483,7 @@ begin
     Label2.Visible := True;
     Label3.Visible := True;
     Label4.Visible := True;
-    Button5.Enabled := True;
+    BtnMostrarLista.Enabled := True;
     GroupBox2.Visible := False;
   end;
 end;
@@ -443,6 +501,19 @@ begin
     Label8.Visible := True;
     Label9.Visible := True;
     Label10.Visible := False;
+  end;
+end;
+
+procedure TForm1.RadRangoClick(Sender: TObject);
+begin
+  if RadRango.Checked then
+  begin
+    Label13.Enabled := True;
+    Label14.Enabled := True;
+    Label15.Enabled := True;
+    Label16.Enabled := True;
+    EdInicioR.Enabled := True;
+    EdFinR.Enabled := True;
   end;
 end;
 
@@ -464,16 +535,16 @@ end;
 
 procedure TForm1.TabSheet1Show(Sender: TObject);
 begin
-  Form1.Height:= 518;
-  EdFichero.Enabled:= True;
-  Button1.Enabled:= True;
+  Form1.Height := 518;
+  EdFichero.Enabled := True;
+  Button1.Enabled := True;
 end;
 
 procedure TForm1.TabSheet2Show(Sender: TObject);
 begin
-  EdFichero.Enabled:= True;
-  Button1.Enabled:= True;
-  Form1.Height:= 250;
+  EdFichero.Enabled := True;
+  Button1.Enabled := True;
+  Form1.Height := 260;
 end;
 
 end.
