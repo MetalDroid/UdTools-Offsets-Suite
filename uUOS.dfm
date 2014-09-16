@@ -555,6 +555,7 @@ object Form1: TForm1
         GridLines = True
         TabOrder = 0
         ViewStyle = vsReport
+        OnAdvancedCustomDrawSubItem = ListView2AdvancedCustomDrawSubItem
       end
       object EdEspera: TEdit
         Left = 167
@@ -565,7 +566,7 @@ object Form1: TForm1
         TabOrder = 1
         Text = '750'
       end
-      object Edit5: TEdit
+      object EdFuncionales: TEdit
         Left = 167
         Top = 95
         Width = 140

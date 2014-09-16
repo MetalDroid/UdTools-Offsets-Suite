@@ -59,7 +59,8 @@ Procedure ListarFicheros;
 var
   SearchResult: TSearchRec;
 begin
-  if NOT System.SysUtils.DirectoryExists(Form1.EdDir.Text) then
+  Form1.ListView2.Clear;
+  if (NOT System.SysUtils.DirectoryExists(Form1.EdDir.Text)) or (NOT System.SysUtils.FileExists(Form1.EdFichero.Text)) then
     Exit;
   SetCurrentDir(Form1.EdDir.Text);
   if FindFirst('*' + ExtractFileExt(Form1.EdFichero.Text), faArchive, SearchResult) = 0 then

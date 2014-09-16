@@ -83,7 +83,7 @@ type
     BIniciarCh: TButton;
     BDetenerCh: TButton;
     Label19: TLabel;
-    Edit5: TEdit;
+    EdFuncionales: TEdit;
     Button5: TButton;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -120,6 +120,9 @@ type
     procedure TabSheet3Show(Sender: TObject);
     procedure BIniciarChClick(Sender: TObject);
     procedure BDetenerChClick(Sender: TObject);
+    procedure ListView2AdvancedCustomDrawSubItem(Sender: TCustomListView;
+      Item: TListItem; SubItem: Integer; State: TCustomDrawState;
+      Stage: TCustomDrawStage; var DefaultDraw: Boolean);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -197,6 +200,10 @@ begin
   begin
     Form1.Estado.SimpleText := 'Fichero o Ruta inexistente.';
     Exit;
+  end
+  else
+  begin
+    ListarFicheros;
   end;
   BDetenerCh.Visible := True;
   TChecker := HChecker.Create(False);
@@ -502,6 +509,16 @@ begin
     if Length(EdBytes.Text) > 1 then
       EdBytes.Text := Copy(EdBytes.Text, 1, Length(EdBytes.Text) - 1);
   end;
+end;
+
+procedure TForm1.ListView2AdvancedCustomDrawSubItem(Sender: TCustomListView;
+  Item: TListItem; SubItem: Integer; State: TCustomDrawState;
+  Stage: TCustomDrawStage; var DefaultDraw: Boolean);
+begin
+  if Item.SubItems[0] = 'Sí' then
+    Sender.Canvas.Font.Color := clGreen
+  else
+    Sender.Canvas.Font.Color := clRed;
 end;
 
 procedure TForm1.N11Click(Sender: TObject);

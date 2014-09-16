@@ -40,14 +40,18 @@ Procedure HChecker.CheckAndKill;
 var
   i, o: integer;
   TotalFiles, Espera: Integer;
-  FicheroActual, RutaCompleta, Dir: String;
+  FicheroActual, RutaCompleta, Dir, Funcionales: String;
   hFindW: HWND;
 begin
   Dir:= Form1.EdDir.Text;
+  Funcionales:= Dir + '\' + Form1.EdFuncionales.Text;
   if Form1.EdEspera.Text = '' then
     Espera:= 750
   else
     Espera:= StrToInt(Form1.EdEspera.Text);
+
+  if FileExists(Funcionales) then
+    DeleteFile(Funcionales);
 
   TotalFiles:= Form1.ListView2.Items.Count;
   if TotalFiles = 0 then
@@ -64,12 +68,12 @@ begin
       Form1.Estado.SimpleText:= 'Comprobando fichero: ' + FicheroActual;
       ShellExecute(0, 'open', PChar(RutaCompleta), nil, nil, SW_SHOW);
       Sleep(Espera);
-      if FileExists(Dir + '\funcionales.txt') = true then  //Error en esta zona, se bloquea!!!!)
+      if FileExists(Funcionales) then
         begin
-          while FileExists(Dir + '\funcionales.txt') do  //experimento
-            DeleteFile(PChar(Dir + '\funcionales.txt'));
+          while FileExists(Funcionales) do
+            DeleteFile(Funcionales);
           Form1.ListView2.Items.Item[i].SubItems[0]:= 'Sí';
-          application.ProcessMessages;
+          Application.ProcessMessages;
         end
         else
         begin
@@ -97,36 +101,6 @@ begin
     end;
   Form1.Estado.SimpleText:= 'Proceso completado.';
 end;
-{ 
-  Important: Methods and properties of objects in visual components can only be
-  used in a method called using Synchronize, for example,
-
-      Synchronize(UpdateCaption);  
-
-  and UpdateCaption could look like,
-
-    procedure HChecker.UpdateCaption;
-    begin
-      Form1.Caption := 'Updated in a thread';
-    end; 
-    
-    or 
-    
-    Synchronize( 
-      procedure 
-      begin
-        Form1.Caption := 'Updated in thread via an anonymous method' 
-      end
-      )
-    );
-    
-  where an anonymous method is passed.
-  
-  Similarly, the developer can call the Queue method with similar parameters as 
-  above, instead passing another TThread class as the first parameter, putting
-  the calling thread in a queue with the other thread.
-    
-}
 
 { HChecker }
 
