@@ -39,7 +39,6 @@ type
     BtnMostrarLista: TButton;
     CheckAll: TCheckBox;
     BtnAVFLista: TButton;
-    Estado: TStatusBar;
     OpenDialog1: TOpenDialog;
     BDetener: TButton;
     RadComb: TRadioButton;
@@ -85,6 +84,7 @@ type
     Label19: TLabel;
     EdFuncionales: TEdit;
     Button5: TButton;
+    Estado: TPanel;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -146,7 +146,7 @@ procedure TForm1.BDetenerChClick(Sender: TObject);
 begin
   if TChecker <> nil then
     TChecker.Terminate;
-  Estado.SimpleText := 'Proceso detenido.';
+  Estado.Caption := 'Proceso detenido.';
   BDetenerCh.Visible := False;
 end;
 
@@ -154,7 +154,7 @@ procedure TForm1.BDetenerClick(Sender: TObject);
 begin
   if TIniciar <> nil then
     TIniciar.Terminate;
-  Estado.SimpleText := 'Proceso detenido.';
+  Estado.Caption := 'Proceso detenido.';
   BDetener.Visible := False;
 end;
 
@@ -175,7 +175,7 @@ begin
       Label10.Caption := 'Máx: ' + FichTam;
       Label15.Caption := 'Máx: ' + FichTam;
       Label16.Caption := 'Máx: ' + FichTam;
-      Form1.Estado.SimpleText := 'Fichero cargado.';
+      Form1.Estado.Caption := 'Fichero cargado.';
       Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
         ExtractFileExt(OpenDialog1.FileName);
       if System.SysUtils.DirectoryExists(EdDir.Text) then
@@ -190,7 +190,7 @@ begin
   if SelectDirectory('Selecciona la carpeta de trabajo.', '', Dir) then
   begin
     EdDir.Text := Dir;
-    Form1.Estado.SimpleText := 'Directorio cargado.';
+    Form1.Estado.Caption := 'Directorio cargado.';
     ListarFicheros;
   end;
 end;
@@ -200,7 +200,7 @@ begin
   if not FileExists(EdFichero.Text) or not System.SysUtils.DirectoryExists
     (EdDir.Text) then
   begin
-    Form1.Estado.SimpleText := 'Fichero o Ruta inexistente.';
+    Form1.Estado.Caption := 'Fichero o Ruta inexistente.';
     Exit;
   end
   else
@@ -227,7 +227,7 @@ begin
   if not FileExists(EdFichero.Text) or not System.SysUtils.DirectoryExists
     (EdDir.Text) then
   begin
-    Form1.Estado.SimpleText := 'Fichero o Ruta inexistente.';
+    Form1.Estado.Caption := 'Fichero o Ruta inexistente.';
     Exit;
   end;
   BtnDetenerR.Visible := True;
@@ -352,7 +352,7 @@ procedure TForm1.BtnDetenerRClick(Sender: TObject);
 begin
   if TIniciarR <> nil then
     TIniciarR.Terminate;
-  Estado.SimpleText := 'Proceso detenido.';
+  Estado.Caption := 'Proceso detenido.';
   BtnDetenerR.Visible := False;
 end;
 
@@ -375,7 +375,7 @@ begin
   if not FileExists(EdFichero.Text) or not System.SysUtils.DirectoryExists
     (EdDir.Text) then
   begin
-    Form1.Estado.SimpleText := 'Fichero o Ruta inexistente.';
+    Form1.Estado.Caption := 'Fichero o Ruta inexistente.';
     Exit;
   end;
   ListView1.clear;
@@ -464,7 +464,7 @@ begin
       Label16.Caption := 'Máx: ' + FichTam;
       Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
         ExtractFileExt(OpenDialog1.FileName);
-      Estado.SimpleText := 'Fichero cargado.';
+      Estado.Caption := 'Fichero cargado.';
       if System.SysUtils.DirectoryExists(EdDir.Text) then
         ListarFicheros;
     end;
@@ -476,7 +476,7 @@ begin
     begin
       EdDir.Text := sName;
       ListarFicheros;
-      Estado.SimpleText := 'Directorio cargado.';
+      Estado.Caption := 'Directorio cargado.';
     end;
   end;
 end;
@@ -485,7 +485,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
   Opt: TIniFile;
   Dir: string;
-  Recordar: Boolean;
+  Recordar: Boolean;  ori, fin: integer;
 begin
   Opt := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\UOS.ini');
   Try
@@ -655,18 +655,27 @@ begin
 end;
 
 procedure TForm1.TabSheet1Show(Sender: TObject);
+var
+  Escala: Real;
 begin
-  Form1.Height := 538;
+  Escala:= (Screen.Height * 100) / 800;
+  Form1.ClientHeight := Round((490 * Escala) / 100);
 end;
 
 procedure TForm1.TabSheet2Show(Sender: TObject);
+var
+  Escala: Real;
 begin
-  Form1.Height := 280;
+  Escala:= (Screen.Height * 100) / 800;
+  Form1.ClientHeight := Round((225 * Escala) / 100);
 end;
 
 procedure TForm1.TabSheet3Show(Sender: TObject);
+var
+  Escala: Real;
 begin
-  Form1.Height := 538;
+  Escala:= (Screen.Height * 100) / 800;
+  Form1.ClientHeight := Round((490 * Escala) / 100);
   ListarFicheros;
 end;
 

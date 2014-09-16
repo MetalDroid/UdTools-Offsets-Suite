@@ -26,7 +26,7 @@ var
   SearchResult: TSearchRec;
 begin
   SetCurrentDir(Form1.EdDir.Text);
-  Form1.Estado.SimpleText := 'Estado: Vaciando carpeta...';
+  Form1.Estado.Caption := 'Estado: Vaciando carpeta...';
   if FindFirst('*', faArchive, SearchResult) = 0 then
   begin
     repeat
@@ -36,7 +36,7 @@ begin
     until FindNext(SearchResult) <> 0;
     System.SysUtils.FindClose(SearchResult);
   end;
-  Form1.Estado.SimpleText := 'Estado: Carpeta vaciada.';
+  Form1.Estado.Caption := 'Estado: Carpeta vaciada.';
 end;
 
 // Esta Función busca byte a byte el valor que digamos dentro de un fichero y genera fichero nuevo con la offset modificada (NO sobreescribe el fichero original)
@@ -68,7 +68,7 @@ begin
     if (Inicio > TamFich) or (Fin > TamFich) or (Inicio < 0) or (Fin < 0) or
       (Fin < Inicio) then
     begin
-      Form1.Estado.SimpleText := 'Secuencia no válida.';
+      Form1.Estado.Caption := 'Secuencia no válida.';
       Exit;
     end;
   end;
@@ -82,12 +82,12 @@ begin
       inc(Coincidencias);
       FicheroF[i] := AnsiChar(Reemplazo);
       StrToFile(WideString(FicheroF), Directorio + '\' + IntToStr(i - 1) + Extension);
-      Form1.Estado.SimpleText := 'Procesando fichero ' + IntToStr(i - 1) +
+      Form1.Estado.Caption := 'Procesando fichero ' + IntToStr(i - 1) +
         Extension;
       Application.ProcessMessages;
     end;
   end;
-  Form1.Estado.SimpleText := 'Proceso completado. Encontradas ' +
+  Form1.Estado.Caption := 'Proceso completado. Encontradas ' +
     IntToStr(Coincidencias) + ' coincidencias.';
 end;
 

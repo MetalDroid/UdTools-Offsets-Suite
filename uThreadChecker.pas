@@ -56,7 +56,7 @@ begin
   TotalFiles:= Form1.ListView2.Items.Count;
   if TotalFiles = 0 then
     begin
-      Form1.Estado.SimpleText:= 'No hay ficheros para comprobar.';
+      Form1.Estado.Caption:= 'No hay ficheros para comprobar.';
       Exit;
     end;
   for i := 0 to TotalFiles -1 do
@@ -65,7 +65,7 @@ begin
         Exit;
       FicheroActual:= ExtractFileName(Form1.ListView2.Items.Item[i].Caption);
       RutaCompleta:= Form1.ListView2.Items.Item[i].Caption;
-      Form1.Estado.SimpleText:= 'Comprobando fichero: ' + FicheroActual;
+      Form1.Estado.Caption:= 'Comprobando fichero: ' + FicheroActual;
       ShellExecute(0, 'open', PChar(RutaCompleta), nil, nil, SW_SHOW);
       Sleep(Espera);
       if FileExists(Funcionales) then
@@ -91,7 +91,7 @@ begin
       begin
         if Terminated then
           Exit;
-        Form1.Estado.SimpleText:= 'Buscando procesos no cerrados...';
+        Form1.Estado.Caption:= 'Buscando procesos no cerrados...';
         Application.ProcessMessages;
         FicheroActual:= ExtractFileName(Form1.ListView2.Items.Item[i].Caption);
         hFindW := FindWindow('#32770', nil);
@@ -99,7 +99,7 @@ begin
         PostMessage(hFindW, WM_QUIT, 0, 0);
         KillProcessByName(FicheroActual);
     end;
-  Form1.Estado.SimpleText:= 'Proceso completado.';
+  Form1.Estado.Caption := 'Proceso completado.';
 end;
 
 { HChecker }

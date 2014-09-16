@@ -33,7 +33,7 @@ var
   SearchResult: TSearchRec;
 begin
   SetCurrentDir(Form1.EdDir.Text);
-  Form1.Estado.SimpleText := 'Estado: Vaciando carpeta...';
+  Form1.Estado.Caption := 'Estado: Vaciando carpeta...';
   if FindFirst('*', faArchive, SearchResult) = 0 then
   begin
     repeat
@@ -43,7 +43,7 @@ begin
     until FindNext(SearchResult) <> 0;
     System.SysUtils.FindClose(SearchResult);
   end;
-  Form1.Estado.SimpleText := 'Estado: Carpeta vaciada.';
+  Form1.Estado.Caption := 'Estado: Carpeta vaciada.';
 end;
 
 // Función para realizar AvFucker
@@ -82,7 +82,7 @@ begin
     OffIni := IntToStr(Inicio);
     // sBytes := IntToStr(Bytes);
 
-    Form1.Estado.SimpleText := 'Procesando fichero: ' + OffIni + '_' + sBytes +
+    Form1.Estado.Caption := 'Procesando fichero: ' + OffIni + '_' + sBytes +
       ExtractFileExt(Aux2);
     Application.ProcessMessages;
 
@@ -91,7 +91,7 @@ begin
 
     Inc(Inicio, Bytes);
   until Inicio > Fin;
-  Form1.Estado.SimpleText := 'Proceso terminado.';
+  Form1.Estado.Caption := 'Proceso terminado.';
 end;
 
 // Función para realizar DSplit
@@ -134,7 +134,7 @@ begin
     end;
     FichFinal := '';
     FichFinal := Copy(Fichero, 1, IniAux);
-    Form1.Estado.SimpleText := 'Procesando fichero: ' + IntToStr(IniAux - 1) +
+    Form1.Estado.Caption := 'Procesando fichero: ' + IntToStr(IniAux - 1) +
       '_' + IntToStr(Bytes) + ExtractFileExt(FichAux);
     Application.ProcessMessages;
     if not(Ultimo) then
@@ -146,13 +146,13 @@ begin
 
     If IniAux - 1 >= Fin then
     begin
-      Form1.Estado.SimpleText := 'Proceso terminado.';
+      Form1.Estado.Caption := 'Proceso terminado.';
       Exit;
     end;
 
     Inc(IniAux, Bytes);
   until Ultimo = True;
-  Form1.Estado.SimpleText := 'Proceso terminado.';
+  Form1.Estado.Caption := 'Proceso terminado.';
 end;
 
 Procedure HPrincipal.Combinaciones;
@@ -183,7 +183,7 @@ begin
       (StrToInt(OffIni) < 0) or (StrToInt(OffFin) < 0) or
       (StrToInt(OffFin) < StrToInt(OffIni)) then
     begin
-      Form1.Estado.SimpleText := 'Secuencia no válida.';
+      Form1.Estado.Caption := 'Secuencia no válida.';
       Exit;
     end;
     IniAux := StrToInt(OffIni);
@@ -195,13 +195,13 @@ begin
           Exit;
         FichAux := AnsiString(Fichero);
         FichAux[i + 1] := AnsiChar(j);
-        Form1.Estado.SimpleText := 'Procesando fichero: ' + IntToStr(i) + '_' +
+        Form1.Estado.Caption := 'Procesando fichero: ' + IntToStr(i) + '_' +
           IntToHex(j, 2) + Extension;
         Application.ProcessMessages;
         StrToFile(WideString(FichAux), Ruta + '\' + IntToStr(i) + '_' + IntToHex(j, 2) +
           Extension);
       end;
-    Form1.Estado.SimpleText := 'Proceso terminado.';
+    Form1.Estado.Caption := 'Proceso terminado.';
   end;
 
   if Form1.RadSelectivo.Checked then
@@ -221,7 +221,7 @@ begin
           for i := 0 to 255 do
           begin
             FichAux[OffActAux + 1] := AnsiChar(i);
-            Form1.Estado.SimpleText := 'Procesando fichero: ' +
+            Form1.Estado.Caption := 'Procesando fichero: ' +
               IntToStr(OffActAux) + '_' + IntToHex(i, 2) + Extension;
             Application.ProcessMessages;
             StrToFile(WideString(FichAux), Ruta + '\' + IntToStr(OffActAux) + '_' +
@@ -231,7 +231,7 @@ begin
       end;
       Delete(OffsetsEspacios, 1, pos(' ', OffsetsEspacios));
     until Length(OffAct) = 0;
-    Form1.Estado.SimpleText := 'Proceso terminado.';
+    Form1.Estado.Caption := 'Proceso terminado.';
   end;
 end;
 

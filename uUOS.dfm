@@ -25,13 +25,15 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 358
-    Height = 471
-    ActivePage = TabSheet3
+    Height = 472
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
+    ExplicitHeight = 471
     object TabSheet1: TTabSheet
       Caption = 'Offset Locator'
       OnShow = TabSheet1Show
+      ExplicitHeight = 443
       object Label1: TLabel
         Left = 3
         Top = 91
@@ -357,6 +359,7 @@ object Form1: TForm1
       Caption = 'Offsets Replacer'
       ImageIndex = 1
       OnShow = TabSheet2Show
+      ExplicitHeight = 443
       object Label11: TLabel
         Left = 4
         Top = 65
@@ -511,6 +514,7 @@ object Form1: TForm1
       Caption = 'Offsets Checker'
       ImageIndex = 2
       OnShow = TabSheet3Show
+      ExplicitHeight = 443
       object Label17: TLabel
         Left = 4
         Top = 74
@@ -640,13 +644,16 @@ object Form1: TForm1
     TabOrder = 4
     OnClick = Button1Click
   end
-  object Estado: TStatusBar
+  object Estado: TPanel
     Left = 0
-    Top = 471
+    Top = 472
     Width = 358
-    Height = 19
-    Panels = <>
-    SimplePanel = True
+    Height = 18
+    Align = alBottom
+    Alignment = taLeftJustify
+    BevelInner = bvLowered
+    BevelOuter = bvNone
+    TabOrder = 5
   end
   object OpenDialog1: TOpenDialog
     Left = 280
