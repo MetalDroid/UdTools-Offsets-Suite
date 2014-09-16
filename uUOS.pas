@@ -178,6 +178,8 @@ begin
       Form1.Estado.SimpleText := 'Fichero cargado.';
       Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
         ExtractFileExt(OpenDialog1.FileName);
+      if System.SysUtils.DirectoryExists(EdDir.Text) then
+        ListarFicheros;
     end;
 end;
 
