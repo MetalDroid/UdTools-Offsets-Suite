@@ -46,8 +46,7 @@
 *.projdata
 *.tvsconfig
 *.dsk
-Win32/Debug/
-*.*
+*.ini
 
 # Delphi history and backups
 __history/
