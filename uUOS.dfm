@@ -510,6 +510,7 @@ object Form1: TForm1
     object TabSheet3: TTabSheet
       Caption = 'Offsets Checker'
       ImageIndex = 2
+      OnShow = TabSheet3Show
       object Label17: TLabel
         Left = 4
         Top = 74
@@ -549,13 +550,13 @@ object Form1: TForm1
           end
           item
             Caption = 'Funcional'
-            Width = 65
+            Width = 60
           end>
         GridLines = True
         TabOrder = 0
         ViewStyle = vsReport
       end
-      object Edit4: TEdit
+      object EdEspera: TEdit
         Left = 167
         Top = 71
         Width = 41
@@ -580,6 +581,25 @@ object Form1: TForm1
         Caption = '?'
         TabOrder = 3
         OnClick = Button5Click
+      end
+      object BIniciarCh: TButton
+        Left = 99
+        Top = 409
+        Width = 145
+        Height = 25
+        Caption = 'Iniciar'
+        TabOrder = 4
+        OnClick = BIniciarChClick
+      end
+      object BDetenerCh: TButton
+        Left = 99
+        Top = 409
+        Width = 145
+        Height = 25
+        Caption = 'Detener'
+        TabOrder = 5
+        Visible = False
+        OnClick = BDetenerChClick
       end
     end
   end
@@ -626,22 +646,6 @@ object Form1: TForm1
     Height = 19
     Panels = <>
     SimplePanel = True
-  end
-  object Button3: TButton
-    Left = 8
-    Top = 433
-    Width = 145
-    Height = 25
-    Caption = 'Iniciar'
-    TabOrder = 6
-  end
-  object Button4: TButton
-    Left = 197
-    Top = 433
-    Width = 145
-    Height = 25
-    Caption = 'Detener'
-    TabOrder = 7
   end
   object OpenDialog1: TOpenDialog
     Left = 280

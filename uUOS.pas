@@ -7,8 +7,8 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls,
   uThreadLocator, Vcl.FileCtrl, System.IOUtils, Vcl.ExtCtrls, System.IniFiles,
-  Winapi.ShellApi, uThreadReplacer, Vcl.Menus, Vcl.Themes,
-  Vcl.Styles;
+  Winapi.ShellApi, uThreadReplacer, Vcl.Menus, Vcl.Themes, Vcl.Styles,
+  Winapi.TlHelp32, uFuncCompartidas, uThreadChecker;
 
 type
   TForm1 = class(TForm)
@@ -78,10 +78,10 @@ type
     N41: TMenuItem;
     ListView2: TListView;
     Label17: TLabel;
-    Edit4: TEdit;
+    EdEspera: TEdit;
     Label18: TLabel;
-    Button3: TButton;
-    Button4: TButton;
+    BIniciarCh: TButton;
+    BDetenerCh: TButton;
     Label19: TLabel;
     Edit5: TEdit;
     Button5: TButton;
@@ -117,9 +117,13 @@ type
     procedure N31Click(Sender: TObject);
     procedure N41Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure TabSheet3Show(Sender: TObject);
+    procedure BIniciarChClick(Sender: TObject);
+    procedure BDetenerChClick(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
+    TChecker: HChecker;
     procedure DragAndDrop(var Msg: TWMDropFiles); message WM_DROPFILES;
     { Private declarations }
   public
@@ -134,6 +138,14 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.BDetenerChClick(Sender: TObject);
+begin
+  if TChecker <> nil then
+    TChecker.Terminate;
+  Estado.SimpleText := 'Proceso detenido.';
+  BDetenerCh.Visible := False;
+end;
 
 procedure TForm1.BDetenerClick(Sender: TObject);
 begin
@@ -174,7 +186,22 @@ begin
   begin
     EdDir.Text := Dir;
     Form1.Estado.SimpleText := 'Directorio cargado.';
+    ListarFicheros;
   end;
+end;
+
+procedure TForm1.BIniciarChClick(Sender: TObject);
+begin
+  if not FileExists(EdFichero.Text) or not System.SysUtils.DirectoryExists
+    (EdDir.Text) then
+  begin
+    Form1.Estado.SimpleText := 'Fichero o Ruta inexistente.';
+    Exit;
+  end;
+  BDetenerCh.Visible := True;
+  TChecker := HChecker.Create(False);
+  TChecker.WaitFor;
+  BDetenerCh.Visible := False;
 end;
 
 procedure TForm1.Button5Click(Sender: TObject);
@@ -426,6 +453,8 @@ begin
       Label10.Caption := 'Máx: ' + FichTam;
       Label15.Caption := 'Máx: ' + FichTam;
       Label16.Caption := 'Máx: ' + FichTam;
+      Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
+        ExtractFileExt(OpenDialog1.FileName);
       Estado.SimpleText := 'Fichero cargado.';
     end;
   end
@@ -435,6 +464,7 @@ begin
     if System.SysUtils.DirectoryExists(sName) then
     begin
       EdDir.Text := sName;
+      ListarFicheros;
       Estado.SimpleText := 'Directorio cargado.';
     end;
   end;
@@ -606,15 +636,17 @@ end;
 procedure TForm1.TabSheet1Show(Sender: TObject);
 begin
   Form1.Height := 538;
-  EdFichero.Enabled := True;
-  Button1.Enabled := True;
 end;
 
 procedure TForm1.TabSheet2Show(Sender: TObject);
 begin
-  EdFichero.Enabled := True;
-  Button1.Enabled := True;
   Form1.Height := 280;
+end;
+
+procedure TForm1.TabSheet3Show(Sender: TObject);
+begin
+  Form1.Height := 538;
+  ListarFicheros;
 end;
 
 end.

@@ -7,7 +7,8 @@ uses
   Vcl.Styles,
   uThreadLocator in 'uThreadLocator.pas',
   uThreadReplacer in 'uThreadReplacer.pas',
-  uFuncCompartidas in 'uFuncCompartidas.pas';
+  uFuncCompartidas in 'uFuncCompartidas.pas',
+  uThreadChecker in 'uThreadChecker.pas';
 
 {$R *.res}
 

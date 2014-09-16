@@ -7,8 +7,12 @@ uses
 
 Function FileToStr(mFile: String): String;
 Function StrToFile(Str, Ruta: String): Boolean;
+Procedure ListarFicheros;
 
 implementation
+
+uses
+  uUOS;
 
 // Función para almacenar los bytes del fichero en una cadena
 Function FileToStr(mFile: String): String;
@@ -48,6 +52,28 @@ begin
   if (WriteFile(hFile, Buff[1], iSize, dwRet, nil) = True) then
     Result := True;
   CloseHandle(hFile);
+end;
+
+// Procedimiento para listar ficheros del Directorio de trabajo
+Procedure ListarFicheros;
+var
+  SearchResult: TSearchRec;
+begin
+  if NOT System.SysUtils.DirectoryExists(Form1.EdDir.Text) then
+    Exit;
+  SetCurrentDir(Form1.EdDir.Text);
+  if FindFirst('*' + ExtractFileExt(Form1.EdFichero.Text), faArchive, SearchResult) = 0 then
+  begin
+    repeat
+      if (SearchResult.Attr and faArchive = faArchive) and (SearchResult.Attr and faDirectory <> faDirectory) then
+        with Form1.ListView2.Items.Add do
+          begin
+            Caption:= Form1.EdDir.Text + '\' + SearchResult.Name;
+            SubItems.Add('');
+          end;
+    until FindNext(SearchResult) <> 0;
+    System.SysUtils.FindClose(SearchResult);
+  end;
 end;
 
 end.
