@@ -12,6 +12,7 @@ object Form1: TForm1
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  Menu = MainMenu1
   OldCreateOrder = False
   Position = poScreenCenter
   PrintScale = poNone
@@ -25,7 +26,7 @@ object Form1: TForm1
     Top = 0
     Width = 358
     Height = 471
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -507,7 +508,79 @@ object Form1: TForm1
       end
     end
     object TabSheet3: TTabSheet
+      Caption = 'Offsets Checker'
       ImageIndex = 2
+      object Label17: TLabel
+        Left = 4
+        Top = 74
+        Width = 150
+        Height = 13
+        Caption = 'Tiempo entre ejecuciones (Ms):'
+      end
+      object Label18: TLabel
+        Left = 4
+        Top = 55
+        Width = 224
+        Height = 11
+        Caption = 'S'#243'lo se comprobar'#225'n ficheros con extensi'#243'n: '
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold, fsItalic, fsUnderline]
+        ParentFont = False
+      end
+      object Label19: TLabel
+        Left = 4
+        Top = 98
+        Width = 157
+        Height = 13
+        Caption = 'Fichero para revisar funcionales:'
+      end
+      object ListView2: TListView
+        Left = 4
+        Top = 128
+        Width = 334
+        Height = 275
+        Columns = <
+          item
+            Caption = 'Fichero'
+            Width = 250
+          end
+          item
+            Caption = 'Funcional'
+            Width = 65
+          end>
+        GridLines = True
+        TabOrder = 0
+        ViewStyle = vsReport
+      end
+      object Edit4: TEdit
+        Left = 167
+        Top = 71
+        Width = 41
+        Height = 21
+        NumbersOnly = True
+        TabOrder = 1
+        Text = '750'
+      end
+      object Edit5: TEdit
+        Left = 167
+        Top = 95
+        Width = 140
+        Height = 21
+        TabOrder = 2
+        Text = 'funcionales.txt'
+      end
+      object Button5: TButton
+        Left = 313
+        Top = 93
+        Width = 25
+        Height = 25
+        Caption = '?'
+        TabOrder = 3
+        OnClick = Button5Click
+      end
     end
   end
   object EdFichero: TEdit
@@ -515,6 +588,7 @@ object Form1: TForm1
     Top = 27
     Width = 305
     Height = 21
+    ReadOnly = True
     TabOrder = 1
     Text = 'Ruta del fichero'
   end
@@ -523,6 +597,7 @@ object Form1: TForm1
     Top = 54
     Width = 305
     Height = 21
+    ReadOnly = True
     TabOrder = 2
     Text = 'Directorio de trabajo'
   end
@@ -552,8 +627,56 @@ object Form1: TForm1
     Panels = <>
     SimplePanel = True
   end
+  object Button3: TButton
+    Left = 8
+    Top = 433
+    Width = 145
+    Height = 25
+    Caption = 'Iniciar'
+    TabOrder = 6
+  end
+  object Button4: TButton
+    Left = 197
+    Top = 433
+    Width = 145
+    Height = 25
+    Caption = 'Detener'
+    TabOrder = 7
+  end
   object OpenDialog1: TOpenDialog
     Left = 280
     Top = 24
+  end
+  object MainMenu1: TMainMenu
+    Left = 240
+    Top = 32
+    object Skin1: TMenuItem
+      Caption = 'Skin'
+      object N11: TMenuItem
+        AutoCheck = True
+        Caption = 'Smokey Quartz Kamri'
+        Checked = True
+        RadioItem = True
+        OnClick = N11Click
+      end
+      object N21: TMenuItem
+        AutoCheck = True
+        Caption = 'Amethyst Kamri'
+        RadioItem = True
+        OnClick = N21Click
+      end
+      object N31: TMenuItem
+        AutoCheck = True
+        Caption = 'Carbon'
+        RadioItem = True
+        OnClick = N31Click
+      end
+      object N41: TMenuItem
+        AutoCheck = True
+        Caption = 'Metropolis UI Black'
+        RadioItem = True
+        OnClick = N41Click
+      end
+    end
   end
 end

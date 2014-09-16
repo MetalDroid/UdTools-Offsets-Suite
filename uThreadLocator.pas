@@ -107,6 +107,7 @@ begin
   FichAux := Fichero;
   Fichero := FileToStr(Fichero);
   TamFichero := Length(Fichero);
+  IniAuxUlt:= 0;
 
   If TamFichero = 0 then
     Exit;

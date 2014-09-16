@@ -7,7 +7,8 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls,
   uThreadLocator, Vcl.FileCtrl, System.IOUtils, Vcl.ExtCtrls, System.IniFiles,
-  Winapi.ShellApi, uThreadReplacer;
+  Winapi.ShellApi, uThreadReplacer, Vcl.Menus, Vcl.Themes,
+  Vcl.Styles;
 
 type
   TForm1 = class(TForm)
@@ -69,6 +70,21 @@ type
     BtnDetenerR: TButton;
     Label15: TLabel;
     Label16: TLabel;
+    MainMenu1: TMainMenu;
+    Skin1: TMenuItem;
+    N11: TMenuItem;
+    N21: TMenuItem;
+    N31: TMenuItem;
+    N41: TMenuItem;
+    ListView2: TListView;
+    Label17: TLabel;
+    Edit4: TEdit;
+    Label18: TLabel;
+    Button3: TButton;
+    Button4: TButton;
+    Label19: TLabel;
+    Edit5: TEdit;
+    Button5: TButton;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -96,6 +112,11 @@ type
     procedure EdReemplazarKeyPress(Sender: TObject; var Key: Char);
     procedure RadCompletoClick(Sender: TObject);
     procedure RadRangoClick(Sender: TObject);
+    procedure N11Click(Sender: TObject);
+    procedure N21Click(Sender: TObject);
+    procedure N31Click(Sender: TObject);
+    procedure N41Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -131,7 +152,8 @@ begin
     begin
       EdFichero.Text := OpenDialog1.FileName;
       FichTam :=
-        IntToStr(Integer(GetCompressedFileSize(PChar(OpenDialog1.FileName), nil)) - 1); // Tamaño del fichero (offset final)
+        IntToStr(Integer(GetCompressedFileSize(PChar(OpenDialog1.FileName), nil)
+        ) - 1); // Tamaño del fichero (offset final)
       EdFin.Text := FichTam;
       Label8.Caption := 'Máx: ' + FichTam;
       Label9.Caption := 'Máx: ' + FichTam;
@@ -139,6 +161,8 @@ begin
       Label15.Caption := 'Máx: ' + FichTam;
       Label16.Caption := 'Máx: ' + FichTam;
       Form1.Estado.SimpleText := 'Fichero cargado.';
+      Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
+        ExtractFileExt(OpenDialog1.FileName);
     end;
 end;
 
@@ -153,9 +177,19 @@ begin
   end;
 end;
 
+procedure TForm1.Button5Click(Sender: TObject);
+begin
+  Application.MessageBox
+    ('Especifica el nombre del fichero que se genera al ejecutar tu fichero o anotador.'
+    + #13#10 + 'Ejemplo: funcionales.txt' + #13#10#13#10 +
+    'Este fichero sirve de referencia para detectar los ficheros funcionales.',
+    'Información Offsets Checker', MB_OK or MB_ICONINFORMATION);
+end;
+
 procedure TForm1.BtnIniciarRClick(Sender: TObject);
 begin
-  if not FileExists(EdFichero.Text) or not System.SysUtils.DirectoryExists(EdDir.Text) then
+  if not FileExists(EdFichero.Text) or not System.SysUtils.DirectoryExists
+    (EdDir.Text) then
   begin
     Form1.Estado.SimpleText := 'Fichero o Ruta inexistente.';
     Exit;
@@ -302,13 +336,15 @@ procedure TForm1.BtnIniciarClick(Sender: TObject);
 var
   Vaciar: Boolean;
 begin
-  if not FileExists(EdFichero.Text) or not System.SysUtils.DirectoryExists(EdDir.Text) then
+  if not FileExists(EdFichero.Text) or not System.SysUtils.DirectoryExists
+    (EdDir.Text) then
   begin
     Form1.Estado.SimpleText := 'Fichero o Ruta inexistente.';
     Exit;
   end;
   ListView1.clear;
   BDetener.Visible := True;
+  Vaciar := False;
   if RadComb.Checked then
     Vaciar := CheckVaciar.Checked;
   TIniciar := HPrincipal.Create(False);
@@ -339,21 +375,21 @@ end;
 
 procedure TForm1.EdOriginalKeyPress(Sender: TObject; var Key: Char);
 begin
-  HexChars:= ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8];
+  HexChars := ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8];
   if not(CharInSet(Key, HexChars)) then
     Key := #0;
 end;
 
 procedure TForm1.EdReemplazarKeyPress(Sender: TObject; var Key: Char);
 begin
-  HexChars:= ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8];
+  HexChars := ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8];
   if not(CharInSet(Key, HexChars)) then
     Key := #0;
 end;
 
 procedure TForm1.EdValorKeyPress(Sender: TObject; var Key: Char);
 begin
-  HexChars:= ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8];
+  HexChars := ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8];
   if not(CharInSet(Key, HexChars)) then
     Key := #0;
 end;
@@ -382,7 +418,7 @@ begin
     DragQueryFile(Msg.Drop, 0, sName, MAX_PATH);
     if FileExists(sName) then
     begin
-      FichTam:= IntToStr(GetCompressedFileSize(sName, nil) - 1);
+      FichTam := IntToStr(GetCompressedFileSize(sName, nil) - 1);
       EdFichero.Text := sName;
       EdFin.Text := FichTam;
       Label8.Caption := 'Máx: ' + FichTam;
@@ -397,10 +433,10 @@ begin
   begin
     DragQueryFile(Msg.Drop, 0, sName, MAX_PATH);
     if System.SysUtils.DirectoryExists(sName) then
-      begin
-        EdDir.Text := sName;
-        Estado.SimpleText := 'Directorio cargado.';
-      end;
+    begin
+      EdDir.Text := sName;
+      Estado.SimpleText := 'Directorio cargado.';
+    end;
   end;
 end;
 
@@ -436,6 +472,30 @@ begin
     if Length(EdBytes.Text) > 1 then
       EdBytes.Text := Copy(EdBytes.Text, 1, Length(EdBytes.Text) - 1);
   end;
+end;
+
+procedure TForm1.N11Click(Sender: TObject);
+begin
+  N11.Checked := True;
+  TStyleManager.TrySetStyle('Smokey Quartz Kamri');
+end;
+
+procedure TForm1.N21Click(Sender: TObject);
+begin
+  N21.Checked := True;
+  TStyleManager.TrySetStyle('Amethyst Kamri');
+end;
+
+procedure TForm1.N31Click(Sender: TObject);
+begin
+  N31.Checked := True;
+  TStyleManager.TrySetStyle('Carbon');
+end;
+
+procedure TForm1.N41Click(Sender: TObject);
+begin
+  N41.Checked := True;
+  TStyleManager.TrySetStyle('Metropolis UI Black');
 end;
 
 procedure TForm1.RadAvFuckerClick(Sender: TObject);
@@ -545,7 +605,7 @@ end;
 
 procedure TForm1.TabSheet1Show(Sender: TObject);
 begin
-  Form1.Height := 518;
+  Form1.Height := 538;
   EdFichero.Enabled := True;
   Button1.Enabled := True;
 end;
@@ -554,7 +614,7 @@ procedure TForm1.TabSheet2Show(Sender: TObject);
 begin
   EdFichero.Enabled := True;
   Button1.Enabled := True;
-  Form1.Height := 260;
+  Form1.Height := 280;
 end;
 
 end.
