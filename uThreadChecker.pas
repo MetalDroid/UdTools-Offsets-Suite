@@ -4,7 +4,7 @@ interface
 
 uses
   System.Classes, Winapi.tlHelp32, Winapi.Windows, System.SysUtils, Winapi.Shellapi,
-  Winapi.Messages, Vcl.Forms;
+  Winapi.Messages, Vcl.Forms, Vcl.Graphics;
 
 type
   HChecker = class(TThread)
@@ -40,9 +40,15 @@ Procedure HChecker.CheckAndKill;
 var
   i, o: integer;
   TotalFiles, Espera: Integer;
+  OFuncionales, Max: Integer;
   FicheroActual, RutaCompleta, Dir, Funcionales: String;
   hFindW: HWND;
 begin
+  OFuncionales:= 0;
+  if Length(Form1.Edit5.Text) = 0 then
+    Max:= 0
+  else
+    Max:= StrToInt(Form1.Edit5.Text);
   Dir:= Form1.EdDir.Text;
   Funcionales:= Dir + '\' + Form1.EdFuncionales.Text;
   if Form1.EdEspera.Text = '' then
@@ -63,6 +69,9 @@ begin
     begin
       if Terminated then
         Exit;
+      if Form1.CheckBox1.Checked then
+        if Max = OFuncionales then
+          Break;
       FicheroActual:= ExtractFileName(Form1.ListView2.Items.Item[i].Caption);
       RutaCompleta:= Form1.ListView2.Items.Item[i].Caption;
       Form1.Estado.Caption:= 'Comprobando fichero: ' + FicheroActual;
@@ -74,12 +83,23 @@ begin
             DeleteFile(Funcionales);
           Form1.ListView2.Items.Item[i].SubItems[0]:= 'Sí';
           Application.ProcessMessages;
+          inc(OFuncionales);
         end
         else
         begin
           Form1.ListView2.Items.Item[i].SubItems[0]:= 'No';
           Application.ProcessMessages;
         end;
+
+      if Form1.CheckBox2.Checked then   //Scroll ListView2
+        begin
+          Form1.ListView2.Items.Item[i].Selected:= True;
+          Form1.ListView2.SetFocus;
+          if i > 12 then
+            Form1.ListView2.Scroll(0, Abs(Form1.ListView2.Font.Height));
+          Application.ProcessMessages;
+        end;
+
       hFindW := FindWindow('#32770', nil);
       PostMessage(hFindW, WM_CLOSE, 0, 0);
       PostMessage(hFindW, WM_QUIT, 0, 0);
@@ -99,7 +119,13 @@ begin
         PostMessage(hFindW, WM_QUIT, 0, 0);
         KillProcessByName(FicheroActual);
     end;
-  Form1.Estado.Caption := 'Proceso completado.';
+  if NOT Form1.CheckBox1.Checked then
+    Form1.Estado.Caption := 'Proceso completado. Se encontraron ' + IntToStr(OFuncionales) + ' funcionales.'
+  else
+    if OFuncionales = Max then
+      Form1.Estado.Caption := 'Proceso detenido al obtener ' + IntToStr(OFuncionales) + ' funcionales.'
+    else
+      Form1.Estado.Caption := 'Proceso completado. Se encontraron ' + IntToStr(OFuncionales) + ' funcionales.';
 end;
 
 { HChecker }

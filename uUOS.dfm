@@ -29,11 +29,9 @@ object Form1: TForm1
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
-    ExplicitHeight = 471
     object TabSheet1: TTabSheet
       Caption = 'Offset Locator'
       OnShow = TabSheet1Show
-      ExplicitHeight = 443
       object Label1: TLabel
         Left = 3
         Top = 91
@@ -179,6 +177,7 @@ object Form1: TForm1
         RowSelect = True
         TabOrder = 7
         ViewStyle = vsReport
+        OnChange = ListView1Change
         OnDblClick = ListView1DblClick
       end
       object BtnIniciar: TButton
@@ -205,8 +204,9 @@ object Form1: TForm1
         Left = 168
         Top = 401
         Width = 169
-        Height = 25
+        Height = 32
         Caption = 'AvFuck al listado'
+        Enabled = False
         TabOrder = 10
         OnClick = BtnAVFListaClick
       end
@@ -359,7 +359,6 @@ object Form1: TForm1
       Caption = 'Offsets Replacer'
       ImageIndex = 1
       OnShow = TabSheet2Show
-      ExplicitHeight = 443
       object Label11: TLabel
         Left = 4
         Top = 65
@@ -514,17 +513,16 @@ object Form1: TForm1
       Caption = 'Offsets Checker'
       ImageIndex = 2
       OnShow = TabSheet3Show
-      ExplicitHeight = 443
       object Label17: TLabel
-        Left = 4
-        Top = 74
+        Left = 3
+        Top = 98
         Width = 150
         Height = 13
         Caption = 'Tiempo entre ejecuciones (Ms):'
       end
       object Label18: TLabel
-        Left = 4
-        Top = 55
+        Left = 3
+        Top = 78
         Width = 224
         Height = 11
         Caption = 'S'#243'lo se comprobar'#225'n ficheros con extensi'#243'n: '
@@ -537,16 +535,16 @@ object Form1: TForm1
       end
       object Label19: TLabel
         Left = 4
-        Top = 98
+        Top = 122
         Width = 157
         Height = 13
         Caption = 'Fichero para revisar funcionales:'
       end
       object ListView2: TListView
         Left = 4
-        Top = 128
+        Top = 144
         Width = 334
-        Height = 275
+        Height = 259
         Columns = <
           item
             Caption = 'Fichero'
@@ -557,13 +555,15 @@ object Form1: TForm1
             Width = 60
           end>
         GridLines = True
+        ReadOnly = True
+        RowSelect = True
         TabOrder = 0
         ViewStyle = vsReport
         OnAdvancedCustomDrawSubItem = ListView2AdvancedCustomDrawSubItem
       end
       object EdEspera: TEdit
         Left = 167
-        Top = 71
+        Top = 95
         Width = 41
         Height = 21
         NumbersOnly = True
@@ -572,7 +572,7 @@ object Form1: TForm1
       end
       object EdFuncionales: TEdit
         Left = 167
-        Top = 95
+        Top = 117
         Width = 140
         Height = 21
         TabOrder = 2
@@ -580,31 +580,86 @@ object Form1: TForm1
       end
       object Button5: TButton
         Left = 313
-        Top = 93
+        Top = 117
         Width = 25
-        Height = 25
+        Height = 21
         Caption = '?'
         TabOrder = 3
         OnClick = Button5Click
       end
       object BIniciarCh: TButton
-        Left = 99
+        Left = 193
         Top = 409
         Width = 145
-        Height = 25
+        Height = 32
         Caption = 'Iniciar'
         TabOrder = 4
         OnClick = BIniciarChClick
       end
       object BDetenerCh: TButton
-        Left = 99
+        Left = 193
         Top = 409
         Width = 145
-        Height = 25
+        Height = 32
         Caption = 'Detener'
         TabOrder = 5
         Visible = False
         OnClick = BDetenerChClick
+      end
+      object RadioButton1: TRadioButton
+        Left = 3
+        Top = 57
+        Width = 157
+        Height = 17
+        Caption = 'Usar extensi'#243'n del fichero'
+        Checked = True
+        TabOrder = 6
+        TabStop = True
+        OnClick = RadioButton1Click
+      end
+      object RadioButton2: TRadioButton
+        Left = 191
+        Top = 57
+        Width = 94
+        Height = 17
+        Caption = 'Otra extensi'#243'n:'
+        TabOrder = 7
+        OnClick = RadioButton2Click
+      end
+      object Edit4: TEdit
+        Left = 291
+        Top = 55
+        Width = 47
+        Height = 21
+        TabOrder = 8
+        Text = '.exe'
+        OnChange = Edit4Change
+      end
+      object CheckBox1: TCheckBox
+        Left = 3
+        Top = 409
+        Width = 142
+        Height = 17
+        Caption = 'Detener si funcionales = '
+        TabOrder = 9
+      end
+      object Edit5: TEdit
+        Left = 144
+        Top = 409
+        Width = 25
+        Height = 21
+        TabOrder = 10
+        Text = '5'
+      end
+      object CheckBox2: TCheckBox
+        Left = 3
+        Top = 425
+        Width = 118
+        Height = 17
+        Caption = 'Scroll autom'#225'tico.'
+        Checked = True
+        State = cbChecked
+        TabOrder = 11
       end
     end
   end

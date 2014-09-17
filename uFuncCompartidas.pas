@@ -58,12 +58,23 @@ end;
 Procedure ListarFicheros;
 var
   SearchResult: TSearchRec;
+  Extension: String;
 begin
   Form1.ListView2.Clear;
-  if (NOT System.SysUtils.DirectoryExists(Form1.EdDir.Text)) or (NOT System.SysUtils.FileExists(Form1.EdFichero.Text)) then
-    Exit;
+  if Form1.RadioButton1.Checked then
+    begin
+      if (NOT System.SysUtils.DirectoryExists(Form1.EdDir.Text)) or (NOT System.SysUtils.FileExists(Form1.EdFichero.Text)) then
+        Exit;
+      Extension:= ExtractFileExt(Form1.EdFichero.Text);
+    end;
+  if Form1.RadioButton2.Checked then
+    begin
+      if (NOT System.SysUtils.DirectoryExists(Form1.EdDir.Text)) then
+        Exit;
+      Extension:= Form1.Edit4.Text;
+    end;
   SetCurrentDir(Form1.EdDir.Text);
-  if FindFirst('*' + ExtractFileExt(Form1.EdFichero.Text), faArchive, SearchResult) = 0 then
+  if FindFirst('*' + Extension, faArchive, SearchResult) = 0 then
   begin
     repeat
       if (SearchResult.Attr and faArchive = faArchive) and (SearchResult.Attr and faDirectory <> faDirectory) then

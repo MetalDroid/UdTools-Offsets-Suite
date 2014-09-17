@@ -85,6 +85,12 @@ type
     EdFuncionales: TEdit;
     Button5: TButton;
     Estado: TPanel;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
+    Edit4: TEdit;
+    CheckBox1: TCheckBox;
+    Edit5: TEdit;
+    CheckBox2: TCheckBox;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -98,7 +104,6 @@ type
     procedure EdBytesDblClick(Sender: TObject);
     procedure BtnMostrarListaClick(Sender: TObject);
     procedure CheckAllClick(Sender: TObject);
-    procedure ListView1DblClick(Sender: TObject);
     procedure BtnAVFListaClick(Sender: TObject);
     procedure RadCombClick(Sender: TObject);
     procedure RadProgresivoClick(Sender: TObject);
@@ -123,6 +128,12 @@ type
     procedure ListView2AdvancedCustomDrawSubItem(Sender: TCustomListView;
       Item: TListItem; SubItem: Integer; State: TCustomDrawState;
       Stage: TCustomDrawStage; var DefaultDraw: Boolean);
+    procedure RadioButton1Click(Sender: TObject);
+    procedure RadioButton2Click(Sender: TObject);
+    procedure Edit4Change(Sender: TObject);
+    procedure ListView1DblClick(Sender: TObject);
+    procedure ListView1Change(Sender: TObject; Item: TListItem;
+      Change: TItemChange);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -197,16 +208,7 @@ end;
 
 procedure TForm1.BIniciarChClick(Sender: TObject);
 begin
-  if not FileExists(EdFichero.Text) or not System.SysUtils.DirectoryExists
-    (EdDir.Text) then
-  begin
-    Form1.Estado.Caption := 'Fichero o Ruta inexistente.';
-    Exit;
-  end
-  else
-  begin
-    ListarFicheros;
-  end;
+  ListarFicheros;
   BDetenerCh.Visible := True;
   TChecker := HChecker.Create(False);
   TChecker.WaitFor;
@@ -409,6 +411,11 @@ begin
   EdInicio.Text := '1000';
 end;
 
+procedure TForm1.Edit4Change(Sender: TObject);
+begin
+  ListarFicheros;
+end;
+
 procedure TForm1.EdOriginalKeyPress(Sender: TObject; var Key: Char);
 begin
   HexChars := ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8];
@@ -485,7 +492,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
   Opt: TIniFile;
   Dir: string;
-  Recordar: Boolean;  ori, fin: integer;
+  Recordar: Boolean;
 begin
   Opt := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\UOS.ini');
   Try
@@ -502,6 +509,21 @@ begin
   // Cambia proporcionalmente el tamaño del form y controles según resolución en base al alto (800 px)
   ScaleBy(Screen.Height, 800);
   DragAcceptFiles(Handle, True);
+end;
+
+procedure TForm1.ListView1Change(Sender: TObject; Item: TListItem;
+  Change: TItemChange);
+var
+  i, Checks: integer;
+begin
+  Checks:= 0;
+  for i:= 0 to ListView1.Items.Count -1 do
+    if ListView1.Items.Item[i].Checked then
+      Inc(Checks);
+  if Checks > 0 then
+    form1.BtnAVFLista.Enabled:= True
+  else
+    BtnAVFLista.Enabled:= False;
 end;
 
 procedure TForm1.ListView1DblClick(Sender: TObject);
@@ -607,6 +629,24 @@ begin
     BtnMostrarLista.Enabled := True;
     GroupBox2.Visible := False;
   end;
+end;
+
+procedure TForm1.RadioButton1Click(Sender: TObject);
+begin
+  if Radiobutton1.Checked then
+    begin
+      Edit4.Enabled:= False;
+      ListarFicheros;
+    end;
+end;
+
+procedure TForm1.RadioButton2Click(Sender: TObject);
+begin
+  if Radiobutton2.Checked then
+    begin
+      Edit4.Enabled:= True;
+      ListarFicheros;
+    end;
 end;
 
 procedure TForm1.RadProgresivoClick(Sender: TObject);
