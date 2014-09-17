@@ -333,6 +333,7 @@ object Form1: TForm1
           Top = 69
           Width = 82
           Height = 21
+          NumbersOnly = True
           TabOrder = 2
           Text = '0'
         end
@@ -341,6 +342,7 @@ object Form1: TForm1
           Top = 69
           Width = 82
           Height = 21
+          NumbersOnly = True
           TabOrder = 3
           Text = '0'
         end
@@ -352,6 +354,7 @@ object Form1: TForm1
           TabOrder = 4
           Text = '0'
           Visible = False
+          OnKeyPress = Edit3KeyPress
         end
       end
     end
@@ -663,6 +666,65 @@ object Form1: TForm1
         TabOrder = 11
       end
     end
+    object TabSheet4: TTabSheet
+      Caption = 'Offsets Patcher'
+      ImageIndex = 3
+      OnShow = TabSheet4Show
+      object Label20: TLabel
+        Left = 3
+        Top = 33
+        Width = 219
+        Height = 13
+        Caption = 'Separa las offsets a parchear con ESPACIOS:'
+      end
+      object Label21: TLabel
+        Left = 286
+        Top = 33
+        Width = 52
+        Height = 13
+        Caption = 'Tapar con:'
+      end
+      object Label22: TLabel
+        Left = 3
+        Top = 86
+        Width = 170
+        Height = 11
+        Caption = 'Al pulsar aparecer'#225' un cuadro de di'#225'logo.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Tahoma'
+        Font.Style = [fsItalic]
+        ParentFont = False
+      end
+      object Edit6: TEdit
+        Left = 3
+        Top = 52
+        Width = 270
+        Height = 21
+        TabOrder = 0
+        OnKeyPress = Edit6KeyPress
+      end
+      object Button3: TButton
+        Left = 201
+        Top = 79
+        Width = 137
+        Height = 25
+        Caption = 'Guardar como..'
+        Enabled = False
+        TabOrder = 1
+        OnClick = Button3Click
+      end
+      object Edit7: TEdit
+        Left = 286
+        Top = 52
+        Width = 20
+        Height = 21
+        TabOrder = 2
+        Text = '90'
+        OnKeyPress = Edit7KeyPress
+      end
+    end
   end
   object EdFichero: TEdit
     Left = 8
@@ -672,6 +734,7 @@ object Form1: TForm1
     ReadOnly = True
     TabOrder = 1
     Text = 'Ruta del fichero'
+    OnChange = EdFicheroChange
   end
   object EdDir: TEdit
     Left = 8
@@ -712,12 +775,12 @@ object Form1: TForm1
     TabOrder = 5
   end
   object OpenDialog1: TOpenDialog
-    Left = 280
-    Top = 24
+    Left = 320
+    Top = 16
   end
   object MainMenu1: TMainMenu
-    Left = 240
-    Top = 32
+    Left = 296
+    Top = 144
     object Skin1: TMenuItem
       Caption = 'Skin'
       object N11: TMenuItem
@@ -746,5 +809,9 @@ object Form1: TForm1
         OnClick = N41Click
       end
     end
+  end
+  object SaveDialog1: TSaveDialog
+    Left = 320
+    Top = 96
   end
 end

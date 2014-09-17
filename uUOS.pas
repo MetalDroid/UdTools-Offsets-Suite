@@ -91,6 +91,14 @@ type
     CheckBox1: TCheckBox;
     Edit5: TEdit;
     CheckBox2: TCheckBox;
+    TabSheet4: TTabSheet;
+    Label20: TLabel;
+    Edit6: TEdit;
+    Button3: TButton;
+    Label21: TLabel;
+    Edit7: TEdit;
+    Label22: TLabel;
+    SaveDialog1: TSaveDialog;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -134,6 +142,12 @@ type
     procedure ListView1DblClick(Sender: TObject);
     procedure ListView1Change(Sender: TObject; Item: TListItem;
       Change: TItemChange);
+    procedure Edit3KeyPress(Sender: TObject; var Key: Char);
+    procedure TabSheet4Show(Sender: TObject);
+    procedure Edit6KeyPress(Sender: TObject; var Key: Char);
+    procedure EdFicheroChange(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Edit7KeyPress(Sender: TObject; var Key: Char);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -203,6 +217,45 @@ begin
     EdDir.Text := Dir;
     Form1.Estado.Caption := 'Directorio cargado.';
     ListarFicheros;
+  end;
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+var
+  OffsetsEspacios: String;
+  OffAct: String;
+  Fichero: AnsiString;
+  OffActAux: Integer;
+  TamFich: Integer;
+  Valor: Byte;
+begin
+  if SaveDialog1.Execute then
+  begin
+    OffsetsEspacios := Edit6.Text;
+    if Edit7.Text = '' then
+    begin
+      Estado.Caption := 'Error: Valor incorrecto.';
+      Exit;
+    end;
+    Valor := StrToInt('$' + Edit7.Text);
+    Fichero := AnsiString(FileToStr(EdFichero.Text));
+    TamFich := Length(Fichero);
+    repeat
+      OffsetsEspacios := Trim(OffsetsEspacios);
+      OffsetsEspacios := OffsetsEspacios + ' ';
+      OffAct := Copy(OffsetsEspacios, 1, pos(' ', OffsetsEspacios) - 1);
+      if OffAct <> '' then
+      begin
+        OffActAux := StrToInt(OffAct);
+        if NOT(OffActAux > TamFich) or (OffActAux < 0) then
+          Fichero[OffActAux + 1] := AnsiChar(Valor);
+      end;
+      Delete(OffsetsEspacios, 1, pos(' ', OffsetsEspacios));
+    until Length(OffAct) = 0;
+    if StrToFile(WideString(Fichero), SaveDialog1.FileName) then
+      Estado.Caption := 'Fichero guardado correctamente.'
+    else
+      Estado.Caption := 'Error: El fichero no se pudo guardar. ¿Fichero en uso?';
   end;
 end;
 
@@ -399,6 +452,14 @@ begin
   EdBytes.Text := '1000';
 end;
 
+procedure TForm1.EdFicheroChange(Sender: TObject);
+begin
+  if FileExists(EdFichero.Text) then
+    Button3.Enabled:= True
+  else
+    Button3.Enabled:= False;
+end;
+
 procedure TForm1.EdFinDblClick(Sender: TObject);
 begin
   if FileExists(EdFichero.Text) then
@@ -411,11 +472,32 @@ begin
   EdInicio.Text := '1000';
 end;
 
+procedure TForm1.Edit3KeyPress(Sender: TObject; var Key: Char);
+begin
+  HexChars := ['0' .. '9', ' ', #8];
+  if not(CharInSet(Key, HexChars)) then
+    Key := #0;
+end;
+
 procedure TForm1.Edit4Change(Sender: TObject);
 begin
   Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
     ExtractFileExt(Edit4.Text);
   ListarFicheros;
+end;
+
+procedure TForm1.Edit6KeyPress(Sender: TObject; var Key: Char);
+begin
+  HexChars := ['0' .. '9', ' ', #8];
+  if not(CharInSet(Key, HexChars)) then
+    Key := #0;
+end;
+
+procedure TForm1.Edit7KeyPress(Sender: TObject; var Key: Char);
+begin
+  HexChars := ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8];
+  if not(CharInSet(Key, HexChars)) then
+    Key := #0;
 end;
 
 procedure TForm1.EdOriginalKeyPress(Sender: TObject; var Key: Char);
@@ -704,6 +786,8 @@ procedure TForm1.TabSheet1Show(Sender: TObject);
 var
   Escala: Real;
 begin
+  EdDir.Visible:= True;
+  Button2.Visible:= True;
   Escala:= (Screen.Height * 100) / 800;
   Form1.ClientHeight := Round((490 * Escala) / 100);
 end;
@@ -712,6 +796,8 @@ procedure TForm1.TabSheet2Show(Sender: TObject);
 var
   Escala: Real;
 begin
+  EdDir.Visible:= True;
+  Button2.Visible:= True;
   Escala:= (Screen.Height * 100) / 800;
   Form1.ClientHeight := Round((225 * Escala) / 100);
 end;
@@ -720,9 +806,21 @@ procedure TForm1.TabSheet3Show(Sender: TObject);
 var
   Escala: Real;
 begin
+  EdDir.Visible:= True;
+  Button2.Visible:= True;
   Escala:= (Screen.Height * 100) / 800;
   Form1.ClientHeight := Round((490 * Escala) / 100);
   ListarFicheros;
+end;
+
+procedure TForm1.TabSheet4Show(Sender: TObject);
+var
+  Escala: Real;
+begin
+  EdDir.Visible:= False;
+  Button2.Visible:= False;
+  Escala:= (Screen.Height * 100) / 800;
+  Form1.ClientHeight := Round((155 * Escala) / 100);
 end;
 
 end.
