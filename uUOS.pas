@@ -413,6 +413,8 @@ end;
 
 procedure TForm1.Edit4Change(Sender: TObject);
 begin
+  Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
+    ExtractFileExt(Edit4.Text);
   ListarFicheros;
 end;
 
@@ -636,6 +638,8 @@ begin
   if Radiobutton1.Checked then
     begin
       Edit4.Enabled:= False;
+      Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
+        ExtractFileExt(EdFichero.Text);
       ListarFicheros;
     end;
 end;
@@ -645,6 +649,8 @@ begin
   if Radiobutton2.Checked then
     begin
       Edit4.Enabled:= True;
+      Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
+        ExtractFileExt(Edit4.Text);
       ListarFicheros;
     end;
 end;

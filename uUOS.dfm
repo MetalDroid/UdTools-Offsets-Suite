@@ -631,6 +631,7 @@ object Form1: TForm1
         Top = 55
         Width = 47
         Height = 21
+        Enabled = False
         TabOrder = 8
         Text = '.exe'
         OnChange = Edit4Change
