@@ -687,9 +687,9 @@ object Form1: TForm1
       object Label22: TLabel
         Left = 3
         Top = 86
-        Width = 170
+        Width = 123
         Height = 11
-        Caption = 'Al pulsar aparecer'#225' un cuadro de di'#225'logo.'
+        Caption = 'El fichero se guardar'#225' como...'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -9
@@ -710,7 +710,7 @@ object Form1: TForm1
         Top = 79
         Width = 137
         Height = 25
-        Caption = 'Guardar como..'
+        Caption = 'Generar'
         Enabled = False
         TabOrder = 1
         OnClick = Button3Click

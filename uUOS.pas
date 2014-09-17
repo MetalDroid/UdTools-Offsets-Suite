@@ -229,34 +229,31 @@ var
   TamFich: Integer;
   Valor: Byte;
 begin
-  if SaveDialog1.Execute then
+  OffsetsEspacios := Edit6.Text;
+  if Edit7.Text = '' then
   begin
-    OffsetsEspacios := Edit6.Text;
-    if Edit7.Text = '' then
-    begin
-      Estado.Caption := 'Error: Valor incorrecto.';
-      Exit;
-    end;
-    Valor := StrToInt('$' + Edit7.Text);
-    Fichero := AnsiString(FileToStr(EdFichero.Text));
-    TamFich := Length(Fichero);
-    repeat
-      OffsetsEspacios := Trim(OffsetsEspacios);
-      OffsetsEspacios := OffsetsEspacios + ' ';
-      OffAct := Copy(OffsetsEspacios, 1, pos(' ', OffsetsEspacios) - 1);
-      if OffAct <> '' then
-      begin
-        OffActAux := StrToInt(OffAct);
-        if NOT(OffActAux > TamFich) or (OffActAux < 0) then
-          Fichero[OffActAux + 1] := AnsiChar(Valor);
-      end;
-      Delete(OffsetsEspacios, 1, pos(' ', OffsetsEspacios));
-    until Length(OffAct) = 0;
-    if StrToFile(WideString(Fichero), SaveDialog1.FileName) then
-      Estado.Caption := 'Fichero guardado correctamente.'
-    else
-      Estado.Caption := 'Error: El fichero no se pudo guardar. ¿Fichero en uso?';
+    Estado.Caption := 'Error: Valor incorrecto.';
+    Exit;
   end;
+  Valor := StrToInt('$' + Edit7.Text);
+  Fichero := AnsiString(FileToStr(EdFichero.Text));
+  TamFich := Length(Fichero);
+  repeat
+    OffsetsEspacios := Trim(OffsetsEspacios);
+    OffsetsEspacios := OffsetsEspacios + ' ';
+    OffAct := Copy(OffsetsEspacios, 1, pos(' ', OffsetsEspacios) - 1);
+    if OffAct <> '' then
+    begin
+      OffActAux := StrToInt(OffAct);
+      if NOT(OffActAux > TamFich) or (OffActAux < 0) then
+        Fichero[OffActAux + 1] := AnsiChar(Valor);
+    end;
+    Delete(OffsetsEspacios, 1, pos(' ', OffsetsEspacios));
+  until Length(OffAct) = 0;
+  if StrToFile(WideString(Fichero), IncludeTrailingPathDelimiter(ExtractFilePath(EdFichero.Text)) + 'Patched' + ExtractFileExt(EdFichero.Text)) then
+    Estado.Caption := 'Fichero guardado correctamente.'
+  else
+    Estado.Caption := 'Error: El fichero no se pudo guardar. ¿Fichero en uso?';
 end;
 
 procedure TForm1.BIniciarChClick(Sender: TObject);
@@ -458,6 +455,7 @@ begin
     Button3.Enabled:= True
   else
     Button3.Enabled:= False;
+  Label22.Caption:= 'El fichero se guardará como Patched' + ExtractFileExt(EdFichero.Text);
 end;
 
 procedure TForm1.EdFinDblClick(Sender: TObject);
