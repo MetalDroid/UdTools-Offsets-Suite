@@ -254,7 +254,16 @@ end;
 Procedure HPrincipal.AvFuckListado;
 var
   i: Integer;
+  Bytes: integer;
 begin
+  if Form1.EdBytes.Text = '' then
+    Exit;
+
+  if Form1.ChkAv1Byte.Checked then
+    Bytes:= 1
+  else
+    Bytes:= StrToInt(Form1.EdBytes.Text);
+
   if Form1.ListView1.Items.Count > 0 then
   begin // Esto resta bytes automáticamente, no me gusta usarlo en el listado.
     // if Length(Form1.EdBytes.Text) > 1 then
@@ -268,7 +277,7 @@ begin
         AvFucker(Form1.EdFichero.Text, Form1.EdDir.Text,
           StrToInt(Form1.ListView1.Items.Item[i].Caption),
           StrToInt(Form1.ListView1.Items.Item[i].SubItems[0]),
-          StrToInt(Form1.EdBytes.Text), Form1.EdValor.Text);
+          Bytes, Form1.EdValor.Text);
       end;
       Form1.CheckVaciar.Checked := False;
     end;

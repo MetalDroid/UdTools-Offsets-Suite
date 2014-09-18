@@ -3,7 +3,7 @@ object Form2: TForm2
   Top = 0
   BorderStyle = bsSingle
   Caption = 'A'#241'adir Offsets'
-  ClientHeight = 260
+  ClientHeight = 273
   ClientWidth = 248
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,6 +15,7 @@ object Form2: TForm2
   Position = poDesktopCenter
   PrintScale = poNone
   Scaled = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -31,7 +32,7 @@ object Form2: TForm2
     Height = 13
     Caption = 'Fin:'
   end
-  object RadioButton1: TRadioButton
+  object RadProgresivo: TRadioButton
     Left = 16
     Top = 16
     Width = 113
@@ -40,32 +41,34 @@ object Form2: TForm2
     Checked = True
     TabOrder = 0
     TabStop = True
+    OnClick = RadProgresivoClick
   end
-  object RadioButton2: TRadioButton
+  object RadSelectivo: TRadioButton
     Left = 16
     Top = 96
     Width = 177
     Height = 17
     Caption = 'Selectivo (separa con espacios)'
     TabOrder = 1
+    OnClick = RadSelectivoClick
   end
-  object RichEdit1: TRichEdit
+  object RichEdSelectivo: TRichEdit
     Left = 24
     Top = 119
     Width = 193
     Height = 89
+    Enabled = False
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
-    Lines.Strings = (
-      'RichEdit1')
     ParentFont = False
     TabOrder = 2
     Zoom = 100
+    OnKeyPress = RichEdSelectivoKeyPress
   end
-  object Edit1: TEdit
+  object EdInicio: TEdit
     Left = 24
     Top = 56
     Width = 81
@@ -74,7 +77,7 @@ object Form2: TForm2
     TabOrder = 3
     Text = '0'
   end
-  object Edit2: TEdit
+  object EdFin: TEdit
     Left = 136
     Top = 56
     Width = 81
@@ -90,5 +93,18 @@ object Form2: TForm2
     Height = 25
     Caption = 'A'#241'adir al Listado'
     TabOrder = 5
+    OnClick = Button1Click
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 256
+    Width = 248
+    Height = 17
+    Align = alBottom
+    BevelOuter = bvLowered
+    TabOrder = 6
+    ExplicitLeft = 32
+    ExplicitTop = 248
+    ExplicitWidth = 185
   end
 end

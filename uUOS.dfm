@@ -173,6 +173,7 @@ object Form1: TForm1
             Caption = 'Fin'
           end>
         GridLines = True
+        MultiSelect = True
         ReadOnly = True
         RowSelect = True
         PopupMenu = PopupMenu1
@@ -349,7 +350,7 @@ object Form1: TForm1
         end
         object Edit3: TEdit
           Left = 14
-          Top = 70
+          Top = 69
           Width = 305
           Height = 21
           TabOrder = 4
@@ -358,12 +359,13 @@ object Form1: TForm1
           OnKeyPress = Edit3KeyPress
         end
       end
-      object CheckBox3: TCheckBox
+      object ChkAv1Byte: TCheckBox
         Left = 3
         Top = 419
         Width = 150
         Height = 17
         Caption = 'AvFuck Listado a 1 byte.'
+        Enabled = False
         TabOrder = 15
       end
     end
@@ -554,9 +556,9 @@ object Form1: TForm1
       end
       object ListView2: TListView
         Left = 4
-        Top = 144
+        Top = 164
         Width = 334
-        Height = 259
+        Height = 221
         Columns = <
           item
             Caption = 'Fichero'
@@ -610,7 +612,7 @@ object Form1: TForm1
       end
       object BDetenerCh: TButton
         Left = 193
-        Top = 409
+        Top = 410
         Width = 145
         Height = 32
         Caption = 'Detener'
@@ -673,6 +675,22 @@ object Form1: TForm1
         Checked = True
         State = cbChecked
         TabOrder = 11
+      end
+      object ChkRevFinal: TCheckBox
+        Left = 3
+        Top = 141
+        Width = 282
+        Height = 17
+        Caption = 'Revisar funcionales al finalizar y no en tiempo real.'
+        TabOrder = 12
+      end
+      object ChkElimNoF: TCheckBox
+        Left = 3
+        Top = 393
+        Width = 184
+        Height = 17
+        Caption = 'Eliminar ficheros no funcionales.'
+        TabOrder = 13
       end
     end
     object TabSheet4: TTabSheet
@@ -784,7 +802,7 @@ object Form1: TForm1
     TabOrder = 5
   end
   object OpenDialog1: TOpenDialog
-    Left = 320
+    Left = 296
     Top = 16
   end
   object MainMenu1: TMainMenu
@@ -824,6 +842,7 @@ object Form1: TForm1
     Top = 96
   end
   object PopupMenu1: TPopupMenu
+    OnPopup = PopupMenu1Popup
     Left = 168
     Top = 256
     object Aadir1: TMenuItem
@@ -832,9 +851,11 @@ object Form1: TForm1
     end
     object Eliminarseleccionados1: TMenuItem
       Caption = 'Eliminar Seleccionado/s'
+      OnClick = Eliminarseleccionados1Click
     end
     object Limpiar1: TMenuItem
       Caption = 'Limpiar Lista'
+      OnClick = Limpiar1Click
     end
   end
 end

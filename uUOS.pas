@@ -103,7 +103,9 @@ type
     Aadir1: TMenuItem;
     Eliminarseleccionados1: TMenuItem;
     Limpiar1: TMenuItem;
-    CheckBox3: TCheckBox;
+    ChkAv1Byte: TCheckBox;
+    ChkRevFinal: TCheckBox;
+    ChkElimNoF: TCheckBox;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -154,6 +156,9 @@ type
     procedure Button3Click(Sender: TObject);
     procedure Edit7KeyPress(Sender: TObject; var Key: Char);
     procedure Aadir1Click(Sender: TObject);
+    procedure Limpiar1Click(Sender: TObject);
+    procedure PopupMenu1Popup(Sender: TObject);
+    procedure Eliminarseleccionados1Click(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -530,6 +535,12 @@ begin
     Key := #0;
 end;
 
+procedure TForm1.Eliminarseleccionados1Click(Sender: TObject);
+begin
+  if listview1.SelCount > 0 then
+    ListView1.DeleteSelected;
+end;
+
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
 var
   Opt: TIniFile;
@@ -604,6 +615,11 @@ begin
   DragAcceptFiles(Handle, True);
 end;
 
+procedure TForm1.Limpiar1Click(Sender: TObject);
+begin
+  Listview1.Clear;
+end;
+
 procedure TForm1.ListView1Change(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 var
@@ -614,9 +630,15 @@ begin
     if ListView1.Items.Item[i].Checked then
       Inc(Checks);
   if Checks > 0 then
-    form1.BtnAVFLista.Enabled:= True
-  else
-    BtnAVFLista.Enabled:= False;
+    begin
+      BtnAVFLista.Enabled:= True;
+      ChkAv1Byte.Enabled:= True;
+    end
+    else
+    begin
+      BtnAVFLista.Enabled:= False;
+      ChkAv1Byte.Enabled:= False;
+    end;
 end;
 
 procedure TForm1.ListView1DblClick(Sender: TObject);
@@ -662,6 +684,25 @@ procedure TForm1.N41Click(Sender: TObject);
 begin
   N41.Checked := True;
   TStyleManager.TrySetStyle('Metropolis UI Black');
+end;
+
+// Popupmenu Lotator-Lisview
+procedure TForm1.PopupMenu1Popup(Sender: TObject);
+begin
+  if FileExists(EdFichero.Text) then
+    PopupMenu1.Items.Items[0].Enabled:= True
+  else
+    PopupMenu1.Items.Items[0].Enabled:= False;
+
+  if ListView1.SelCount > 0 then
+    PopupMenu1.Items.Items[1].Enabled:= True
+  else
+    PopupMenu1.Items.Items[1].Enabled:= False;
+
+  if ListView1.Items.Count = 0 then
+    PopupMenu1.Items.Items[2].Enabled:= False
+  else
+    PopupMenu1.Items.Items[2].Enabled:= True;
 end;
 
 procedure TForm1.RadAvFuckerClick(Sender: TObject);
