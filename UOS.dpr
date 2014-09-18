@@ -8,7 +8,8 @@ uses
   uThreadLocator in 'uThreadLocator.pas',
   uThreadReplacer in 'uThreadReplacer.pas',
   uFuncCompartidas in 'uFuncCompartidas.pas',
-  uThreadChecker in 'uThreadChecker.pas';
+  uThreadChecker in 'uThreadChecker.pas',
+  uAddToList in 'uAddToList.pas' {Form2};
 
 {$R *.res}
 
@@ -17,5 +18,6 @@ begin
   Application.MainFormOnTaskbar := True;
   TStyleManager.TrySetStyle('Smokey Quartz Kamri');
   Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TForm2, Form2);
   Application.Run;
 end.

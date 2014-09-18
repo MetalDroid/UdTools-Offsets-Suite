@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls,
   uThreadLocator, Vcl.FileCtrl, System.IOUtils, Vcl.ExtCtrls, System.IniFiles,
   Winapi.ShellApi, uThreadReplacer, Vcl.Menus, Vcl.Themes, Vcl.Styles,
-  Winapi.TlHelp32, uFuncCompartidas, uThreadChecker;
+  Winapi.TlHelp32, uFuncCompartidas, uThreadChecker, uAddToList;
 
 type
   TForm1 = class(TForm)
@@ -99,6 +99,11 @@ type
     Edit7: TEdit;
     Label22: TLabel;
     SaveDialog1: TSaveDialog;
+    PopupMenu1: TPopupMenu;
+    Aadir1: TMenuItem;
+    Eliminarseleccionados1: TMenuItem;
+    Limpiar1: TMenuItem;
+    CheckBox3: TCheckBox;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -148,6 +153,7 @@ type
     procedure EdFicheroChange(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Edit7KeyPress(Sender: TObject; var Key: Char);
+    procedure Aadir1Click(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -166,6 +172,11 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm1.Aadir1Click(Sender: TObject);
+begin
+  Form2.ShowModal;
+end;
 
 procedure TForm1.BDetenerChClick(Sender: TObject);
 begin

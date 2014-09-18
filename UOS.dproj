@@ -96,6 +96,10 @@
         <DCCReference Include="uThreadReplacer.pas"/>
         <DCCReference Include="uFuncCompartidas.pas"/>
         <DCCReference Include="uThreadChecker.pas"/>
+        <DCCReference Include="uAddToList.pas">
+            <Form>Form2</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -173,6 +177,12 @@
             </Delphi.Personality>
             <Deployment>
                 <DeployFile LocalName="Win32\Debug\UOS.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>UOS.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Release\UOS.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>UOS.exe</RemoteName>
                         <Overwrite>true</Overwrite>

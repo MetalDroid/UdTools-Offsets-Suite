@@ -175,6 +175,7 @@ object Form1: TForm1
         GridLines = True
         ReadOnly = True
         RowSelect = True
+        PopupMenu = PopupMenu1
         TabOrder = 7
         ViewStyle = vsReport
         OnChange = ListView1Change
@@ -356,6 +357,14 @@ object Form1: TForm1
           Visible = False
           OnKeyPress = Edit3KeyPress
         end
+      end
+      object CheckBox3: TCheckBox
+        Left = 3
+        Top = 419
+        Width = 150
+        Height = 17
+        Caption = 'AvFuck Listado a 1 byte.'
+        TabOrder = 15
       end
     end
     object TabSheet2: TTabSheet
@@ -813,5 +822,19 @@ object Form1: TForm1
   object SaveDialog1: TSaveDialog
     Left = 320
     Top = 96
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 168
+    Top = 256
+    object Aadir1: TMenuItem
+      Caption = 'A'#241'adir Offsets'
+      OnClick = Aadir1Click
+    end
+    object Eliminarseleccionados1: TMenuItem
+      Caption = 'Eliminar Seleccionado/s'
+    end
+    object Limpiar1: TMenuItem
+      Caption = 'Limpiar Lista'
+    end
   end
 end
