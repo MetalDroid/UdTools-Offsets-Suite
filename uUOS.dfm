@@ -847,9 +847,11 @@ object Form1: TForm1
       Caption = 'Ayuda'
       object Visitarenlacedelproyecto1: TMenuItem
         Caption = 'Visitar enlace del proyecto'
+        OnClick = Visitarenlacedelproyecto1Click
       end
       object Acercade2: TMenuItem
         Caption = 'Acerca de UdTools Offset Suite'
+        OnClick = Acercade2Click
       end
     end
   end
@@ -872,6 +874,14 @@ object Form1: TForm1
     object Limpiar1: TMenuItem
       Caption = 'Limpiar Lista'
       OnClick = Limpiar1Click
+    end
+    object GuardarSeleccionadosenListaaparte1: TMenuItem
+      Caption = 'Guardar Seleccionados (NO los Checked) en Lista Aparte'
+      OnClick = GuardarSeleccionadosenListaaparte1Click
+    end
+    object MostrarListaAlmacenada1: TMenuItem
+      Caption = 'Mostrar Lista Almacenada'
+      OnClick = MostrarListaAlmacenada1Click
     end
   end
 end

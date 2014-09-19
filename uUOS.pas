@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls,
   uThreadLocator, Vcl.FileCtrl, System.IOUtils, Vcl.ExtCtrls, System.IniFiles,
   Winapi.ShellApi, uThreadReplacer, Vcl.Menus, Vcl.Themes, Vcl.Styles,
-  Winapi.TlHelp32, uFuncCompartidas, uThreadChecker, uAddToList;
+  Winapi.TlHelp32, uFuncCompartidas, uThreadChecker, uAddToList, About, uListaGuardada;
 
 type
   TForm1 = class(TForm)
@@ -111,6 +111,8 @@ type
     Eliminartodoslosajustesyresetearaplicacin1: TMenuItem;
     Visitarenlacedelproyecto1: TMenuItem;
     Acercade2: TMenuItem;
+    GuardarSeleccionadosenListaaparte1: TMenuItem;
+    MostrarListaAlmacenada1: TMenuItem;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -165,6 +167,10 @@ type
     procedure PopupMenu1Popup(Sender: TObject);
     procedure Eliminarseleccionados1Click(Sender: TObject);
     procedure Eliminartodoslosajustesyresetearaplicacin1Click(Sender: TObject);
+    procedure Acercade2Click(Sender: TObject);
+    procedure Visitarenlacedelproyecto1Click(Sender: TObject);
+    procedure MostrarListaAlmacenada1Click(Sender: TObject);
+    procedure GuardarSeleccionadosenListaaparte1Click(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -206,6 +212,11 @@ begin
   Form2.ShowModal;
 end;
 
+procedure TForm1.Acercade2Click(Sender: TObject);
+begin
+  AboutBox.ShowModal;
+end;
+
 procedure TForm1.BDetenerChClick(Sender: TObject);
 begin
   if TChecker <> nil then
@@ -233,6 +244,7 @@ begin
       FichTam :=
         IntToStr(Integer(GetCompressedFileSize(PChar(OpenDialog1.FileName), nil)
         ) - 1); // Tamaño del fichero (offset final)
+      EdInicio.Text:= '1000';
       EdFin.Text := FichTam;
       Label8.Caption := 'Máx: ' + FichTam;
       Label9.Caption := 'Máx: ' + FichTam;
@@ -599,6 +611,7 @@ begin
     begin
       FichTam := IntToStr(GetCompressedFileSize(sName, nil) - 1);
       EdFichero.Text := sName;
+      EdInicio.Text:= '1000';
       EdFin.Text := FichTam;
       Label8.Caption := 'Máx: ' + FichTam;
       Label9.Caption := 'Máx: ' + FichTam;
@@ -660,6 +673,21 @@ end;
 
 
 
+procedure TForm1.GuardarSeleccionadosenListaaparte1Click(Sender: TObject);
+var
+  i: integer;
+begin
+  for I := 0 to ListView1.Items.Count -1 do
+    if ListView1.Items.Item[i].Selected then
+      with Form3.ListView1.Items.Add do
+        begin
+          Caption:= ListView1.Items.Item[i].Caption;
+          SubItems.Add(ListView1.Items.Item[i].SubItems[0]);
+          SubItems.Add(EdBytes.Text);
+        end;
+  Estado.Caption:= 'Se añadieron offsets a la Lista Almacenada.';
+end;
+
 procedure TForm1.Limpiar1Click(Sender: TObject);
 begin
   Listview1.Clear;
@@ -705,6 +733,11 @@ begin
     Sender.Canvas.Font.Color := clGreen
   else
     Sender.Canvas.Font.Color := clRed;
+end;
+
+procedure TForm1.MostrarListaAlmacenada1Click(Sender: TObject);
+begin
+  Form3.ShowModal;
 end;
 
 procedure TForm1.N11Click(Sender: TObject);
@@ -764,9 +797,15 @@ begin
     PopupMenu1.Items.Items[0].Enabled:= False;
 
   if ListView1.SelCount > 0 then
-    PopupMenu1.Items.Items[1].Enabled:= True
-  else
-    PopupMenu1.Items.Items[1].Enabled:= False;
+    begin
+      PopupMenu1.Items.Items[1].Enabled:= True;
+      PopupMenu1.Items.Items[3].Enabled:= True;
+    end
+    else
+    begin
+      PopupMenu1.Items.Items[1].Enabled:= False;
+      PopupMenu1.Items.Items[3].Enabled:= False;
+    end;
 
   if ListView1.Items.Count = 0 then
     PopupMenu1.Items.Items[2].Enabled:= False
@@ -940,6 +979,11 @@ begin
   Button2.Visible:= False;
   Escala:= (Screen.Height * 100) / 800;
   Form1.ClientHeight := Round((155 * Escala) / 100);
+end;
+
+procedure TForm1.Visitarenlacedelproyecto1Click(Sender: TObject);
+begin
+  ShellExecute(0, 'OPEN', 'https://github.com/MetalUDT/UdTools-Offsets-Suite', nil, nil, SW_SHOW);
 end;
 
 end.

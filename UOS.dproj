@@ -99,6 +99,14 @@
         <DCCReference Include="uAddToList.pas">
             <Form>Form2</Form>
         </DCCReference>
+        <DCCReference Include="ABOUT.pas">
+            <Form>AboutBox</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uListaGuardada.pas">
+            <Form>Form3</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

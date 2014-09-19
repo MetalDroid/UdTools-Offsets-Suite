@@ -11,7 +11,9 @@ uses
   uThreadReplacer in 'uThreadReplacer.pas',
   uFuncCompartidas in 'uFuncCompartidas.pas',
   uThreadChecker in 'uThreadChecker.pas',
-  uAddToList in 'uAddToList.pas' {Form2};
+  uAddToList in 'uAddToList.pas' {Form2},
+  ABOUT in 'ABOUT.pas' {AboutBox},
+  uListaGuardada in 'uListaGuardada.pas' {Form3};
 
 {$R *.res}
 {$R Anotador.res}
@@ -31,5 +33,7 @@ begin
   //  TStyleManager.TrySetStyle('Smokey Quartz Kamri');
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TForm3, Form3);
+  Application.CreateForm(TAboutBox, AboutBox);
   Application.Run;
 end.

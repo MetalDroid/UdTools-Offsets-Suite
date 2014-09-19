@@ -88,7 +88,7 @@ object Form2: TForm2
   end
   object Button1: TButton
     Left = 72
-    Top = 221
+    Top = 225
     Width = 97
     Height = 25
     Caption = 'A'#241'adir al Listado'
@@ -103,8 +103,5 @@ object Form2: TForm2
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 6
-    ExplicitLeft = 32
-    ExplicitTop = 248
-    ExplicitWidth = 185
   end
 end
