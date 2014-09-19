@@ -6,8 +6,8 @@
         <MainSource>UOS.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Release</Config>
-        <Platform Condition="'$(Platform)'==''">Win32</Platform>
-        <TargetedPlatforms>1</TargetedPlatforms>
+        <Platform Condition="'$(Platform)'==''">Win64</Platform>
+        <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -61,6 +61,11 @@
         <DCC_UsePackage>IndyIPClient;JvGlobus;JvMM;JvManagedThreads;DBXSqliteDriver;JvDlgs;IndySystem;JvCrypt;inetdbbde;DBXInterBaseDriver;DataSnapClient;DataSnapCommon;DataSnapServer;JvNet;DataSnapProviderClient;acntDelphiXE5_R;DBXSybaseASEDriver;JvDotNetCtrls;DbxCommonDriver;vclimg;dbxcds;DatasnapConnectorsFreePascal;MetropolisUILiveTile;JvXPCtrls;vcldb;vcldsnap;sndkey32;DBXDb2Driver;DBXOracleDriver;CustomIPTransport;JvCore;dsnap;IndyIPServer;IndyCore;vcl;IndyIPCommon;CloudService;DBXMSSQLDriver;Package1;JvAppFrm;JvDB;JvRuntimeDesign;TVidGrab;inetdbxpress;JclDeveloperTools;JvDocking;adortl;JvWizards;JvHMI;bindcompfmx;JvBands;vcldbx;rtl;dbrtl;DbxClientDriver;bindcomp;inetdb;JvPluginSystem;JclContainers;DBXOdbcDriver;JvCmp;JvSystem;xmlrtl;svnui;JvTimeFramework;JvControls;IndyProtocols;DBXMySQLDriver;bindcompdbx;vclactnband;soaprtl;bindengine;JvJans;JvPageComps;bindcompvcl;JvStdCtrls;JvCustom;Jcl;vclie;JvPrintPreview;vcltouch;VclSmp;VCLRESTComponents;DBXInformixDriver;DataSnapConnectors;dsnapcon;DBXFirebirdDriver;inet;JclVcl;JvPascalInterpreter;vclx;svn;DBXSybaseASADriver;RESTComponents;bdertl;dbexpress;DataSnapIndy10ServerTransport;JvBDE;$(DCC_UsePackage)</DCC_UsePackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <DCC_UsePackage>IndyIPClient;DBXSqliteDriver;IndySystem;DBXInterBaseDriver;DataSnapClient;DataSnapCommon;DataSnapServer;DataSnapProviderClient;acntDelphiXE5_R;DBXSybaseASEDriver;DbxCommonDriver;vclimg;dbxcds;DatasnapConnectorsFreePascal;MetropolisUILiveTile;vcldb;vcldsnap;DBXDb2Driver;DBXOracleDriver;CustomIPTransport;dsnap;IndyIPServer;IndyCore;vcl;IndyIPCommon;CloudService;DBXMSSQLDriver;TVidGrab;inetdbxpress;adortl;bindcompfmx;rtl;dbrtl;DbxClientDriver;bindcomp;inetdb;DBXOdbcDriver;xmlrtl;IndyProtocols;DBXMySQLDriver;bindcompdbx;vclactnband;soaprtl;bindengine;bindcompvcl;vclie;vcltouch;VclSmp;VCLRESTComponents;DBXInformixDriver;DataSnapConnectors;dsnapcon;DBXFirebirdDriver;inet;vclx;DBXSybaseASADriver;RESTComponents;dbexpress;DataSnapIndy10ServerTransport;$(DCC_UsePackage)</DCC_UsePackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
@@ -527,7 +532,7 @@
             </Deployment>
             <Platforms>
                 <Platform value="Win32">True</Platform>
-                <Platform value="Win64">False</Platform>
+                <Platform value="Win64">True</Platform>
             </Platforms>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
