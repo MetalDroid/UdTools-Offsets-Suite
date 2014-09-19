@@ -37,6 +37,7 @@ begin
   if FindFirst('*', faArchive, SearchResult) = 0 then
   begin
     repeat
+      Application.ProcessMessages;
       if (SearchResult.Attr and faArchive = faArchive) and
         (SearchResult.Attr and faDirectory <> faDirectory) then
         Deletefile(PChar(Form1.EdDir.Text + '\' + SearchResult.Name));
@@ -259,15 +260,21 @@ begin
   if Form1.EdBytes.Text = '' then
     Exit;
 
+  // Esto resta bytes automáticamente, OPCIONAL.
+  if Form1.ChkRestar.Checked then
+    if Length(Form1.EdBytes.Text) > 1 then
+      begin
+        Form1.EdBytes.Text := Copy(Form1.EdBytes.Text, 1, Length(Form1.EdBytes.Text) - 1);
+        Application.ProcessMessages;
+      end;
+
   if Form1.ChkAv1Byte.Checked then
     Bytes:= 1
   else
     Bytes:= StrToInt(Form1.EdBytes.Text);
 
   if Form1.ListView1.Items.Count > 0 then
-  begin // Esto resta bytes automáticamente, no me gusta usarlo en el listado.
-    // if Length(Form1.EdBytes.Text) > 1 then
-    // Form1.EdBytes.Text := Copy(Form1.EdBytes.Text, 1, Length(Form1.EdBytes.Text) - 1);
+  begin
     for i := 0 to Form1.ListView1.Items.Count - 1 do
     begin
       if Terminated then

@@ -28,7 +28,7 @@ object AboutBox: TAboutBox
       Left = 8
       Top = 8
       Width = 65
-      Height = 57
+      Height = 66
       Picture.Data = {
         0A544A504547496D6167653F2A0000FFD8FFE000104A46494600010101006000
         600000FFE1005A4578696600004D4D002A000000080005030100050000000100
@@ -404,7 +404,7 @@ object AboutBox: TAboutBox
       Caption = 
         'Agradecimientos a toda la Comunidad de UdTools.net por toda la a' +
         'yuda brindada incluyendo muchas de las caracter'#237'sticas sugeridas' +
-        '.'
+        ' y correcci'#243'n de errores.'
       WordWrap = True
       IsControl = True
     end

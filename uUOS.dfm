@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'UdTools Offset Suite'
+  Caption = 'UdTools Offsets Suite'
   ClientHeight = 490
   ClientWidth = 358
   Color = clBtnFace
@@ -30,7 +30,7 @@ object Form1: TForm1
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
-      Caption = 'Offset Locator'
+      Caption = 'Locator'
       OnShow = TabSheet1Show
       object Label1: TLabel
         Left = 3
@@ -188,12 +188,13 @@ object Form1: TForm1
         Width = 150
         Height = 25
         Caption = 'Iniciar'
+        Enabled = False
         TabOrder = 8
         OnClick = BtnIniciarClick
       end
       object CheckAll: TCheckBox
         Left = 3
-        Top = 401
+        Top = 399
         Width = 102
         Height = 17
         Caption = 'Seleccionar todos.'
@@ -203,10 +204,10 @@ object Form1: TForm1
         OnClick = CheckAllClick
       end
       object BtnAVFLista: TButton
-        Left = 168
-        Top = 401
+        Left = 169
+        Top = 417
         Width = 169
-        Height = 32
+        Height = 24
         Caption = 'AvFuck al listado'
         Enabled = False
         TabOrder = 10
@@ -361,16 +362,36 @@ object Form1: TForm1
       end
       object ChkAv1Byte: TCheckBox
         Left = 3
-        Top = 419
+        Top = 424
         Width = 150
         Height = 17
         Caption = 'AvFuck Listado a 1 byte.'
         Enabled = False
         TabOrder = 15
       end
+      object ChkRestar: TCheckBox
+        Left = 169
+        Top = 399
+        Width = 169
+        Height = 17
+        Caption = 'Restar Bytes autom'#225'ticamente.'
+        Checked = True
+        State = cbChecked
+        TabOrder = 16
+      end
+      object BtnDetenerLista: TButton
+        Left = 169
+        Top = 417
+        Width = 168
+        Height = 24
+        Caption = 'Detener'
+        TabOrder = 17
+        Visible = False
+        OnClick = BtnDetenerListaClick
+      end
     end
     object TabSheet2: TTabSheet
-      Caption = 'Offsets Replacer'
+      Caption = 'Replacer'
       ImageIndex = 1
       OnShow = TabSheet2Show
       object Label11: TLabel
@@ -524,7 +545,7 @@ object Form1: TForm1
       end
     end
     object TabSheet3: TTabSheet
-      Caption = 'Offsets Checker'
+      Caption = 'Checker'
       ImageIndex = 2
       OnShow = TabSheet3Show
       object Label17: TLabel
@@ -694,7 +715,7 @@ object Form1: TForm1
       end
     end
     object TabSheet4: TTabSheet
-      Caption = 'Offsets Patcher'
+      Caption = 'Patcher'
       ImageIndex = 3
       OnShow = TabSheet4Show
       object Label20: TLabel
@@ -868,7 +889,7 @@ object Form1: TForm1
       OnClick = Aadir1Click
     end
     object Eliminarseleccionados1: TMenuItem
-      Caption = 'Eliminar Seleccionado/s'
+      Caption = 'Eliminar L'#237'nea/s Seleccionada/s'
       OnClick = Eliminarseleccionados1Click
     end
     object Limpiar1: TMenuItem
@@ -876,8 +897,12 @@ object Form1: TForm1
       OnClick = Limpiar1Click
     end
     object GuardarSeleccionadosenListaaparte1: TMenuItem
-      Caption = 'Guardar Seleccionados (NO los Checked) en Lista Aparte'
+      Caption = 'Guardar L'#237'nea/s en Lista Aparte'
       OnClick = GuardarSeleccionadosenListaaparte1Click
+    end
+    object GuardarTodasenListaAparte1: TMenuItem
+      Caption = 'Guardar Todas en Lista Aparte'
+      OnClick = GuardarTodasenListaAparte1Click
     end
     object MostrarListaAlmacenada1: TMenuItem
       Caption = 'Mostrar Lista Almacenada'

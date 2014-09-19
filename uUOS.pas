@@ -113,6 +113,9 @@ type
     Acercade2: TMenuItem;
     GuardarSeleccionadosenListaaparte1: TMenuItem;
     MostrarListaAlmacenada1: TMenuItem;
+    GuardarTodasenListaAparte1: TMenuItem;
+    ChkRestar: TCheckBox;
+    BtnDetenerLista: TButton;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -171,6 +174,8 @@ type
     procedure Visitarenlacedelproyecto1Click(Sender: TObject);
     procedure MostrarListaAlmacenada1Click(Sender: TObject);
     procedure GuardarSeleccionadosenListaaparte1Click(Sender: TObject);
+    procedure GuardarTodasenListaAparte1Click(Sender: TObject);
+    procedure BtnDetenerListaClick(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -443,12 +448,22 @@ begin
   BtnListado := True;
   Vaciar := CheckVaciar.Checked;
   BDetener.Visible := True;
+  BtnDetenerLista.Visible := True;
   TIniciar := HPrincipal.Create(False);
   TIniciar.WaitFor;
   ListView1.clear;
   BDetener.Visible := False;
   CheckVaciar.Checked := Vaciar;
   BtnListado := False;
+  BtnDetenerLista.Visible := False;
+end;
+
+procedure TForm1.BtnDetenerListaClick(Sender: TObject);
+begin
+  if TIniciar <> nil then
+    TIniciar.Terminate;
+  Estado.Caption := 'Proceso detenido.';
+  BtnDetenerLista.Visible := False;
 end;
 
 procedure TForm1.BtnDetenerRClick(Sender: TObject);
@@ -503,9 +518,15 @@ end;
 procedure TForm1.EdFicheroChange(Sender: TObject);
 begin
   if FileExists(EdFichero.Text) then
-    Button3.Enabled:= True
-  else
-    Button3.Enabled:= False;
+    begin
+      Button3.Enabled:= True;
+      BtnIniciar.Enabled:= True;
+    end
+    else
+    begin
+      Button3.Enabled:= False;
+      BtnIniciar.Enabled:= False;
+    end;
   Label22.Caption:= 'El fichero se guardará como Patched' + ExtractFileExt(EdFichero.Text);
 end;
 
@@ -688,6 +709,20 @@ begin
   Estado.Caption:= 'Se añadieron offsets a la Lista Almacenada.';
 end;
 
+procedure TForm1.GuardarTodasenListaAparte1Click(Sender: TObject);
+var
+  i: integer;
+begin
+  for I := 0 to ListView1.Items.Count -1 do
+    with Form3.ListView1.Items.Add do
+      begin
+        Caption:= ListView1.Items.Item[i].Caption;
+        SubItems.Add(ListView1.Items.Item[i].SubItems[0]);
+        SubItems.Add(EdBytes.Text);
+      end;
+  Estado.Caption:= 'Se añadieron offsets a la Lista Almacenada.';
+end;
+
 procedure TForm1.Limpiar1Click(Sender: TObject);
 begin
   Listview1.Clear;
@@ -808,9 +843,15 @@ begin
     end;
 
   if ListView1.Items.Count = 0 then
-    PopupMenu1.Items.Items[2].Enabled:= False
-  else
-    PopupMenu1.Items.Items[2].Enabled:= True;
+    begin
+      PopupMenu1.Items.Items[2].Enabled:= False;
+      PopupMenu1.Items.Items[4].Enabled:= False;
+    end
+    else
+    begin
+      PopupMenu1.Items.Items[2].Enabled:= True;
+      PopupMenu1.Items.Items[4].Enabled:= True;
+    end;
 end;
 
 procedure TForm1.RadAvFuckerClick(Sender: TObject);
@@ -983,7 +1024,7 @@ end;
 
 procedure TForm1.Visitarenlacedelproyecto1Click(Sender: TObject);
 begin
-  ShellExecute(0, 'OPEN', 'https://github.com/MetalUDT/UdTools-Offsets-Suite', nil, nil, SW_SHOW);
+  ShellExecute(0, 'OPEN', 'http://foro.udtools.net/forumdisplay.php?110-UdTools-Offset-Suite-(Object-Pascal)', nil, nil, SW_SHOW);
 end;
 
 end.
