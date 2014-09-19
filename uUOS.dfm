@@ -808,32 +808,48 @@ object Form1: TForm1
   object MainMenu1: TMainMenu
     Left = 296
     Top = 144
-    object Skin1: TMenuItem
-      Caption = 'Skin'
-      object N11: TMenuItem
-        AutoCheck = True
-        Caption = 'Smokey Quartz Kamri'
-        Checked = True
-        RadioItem = True
-        OnClick = N11Click
+    object Ajustes1: TMenuItem
+      Caption = 'Herramientas'
+      object Eliminartodoslosajustesyresetearaplicacin1: TMenuItem
+        Caption = 'Generar Anotador.exe'
+        OnClick = Eliminartodoslosajustesyresetearaplicacin1Click
       end
-      object N21: TMenuItem
-        AutoCheck = True
-        Caption = 'Amethyst Kamri'
-        RadioItem = True
-        OnClick = N21Click
+      object Skin1: TMenuItem
+        Caption = 'Skin'
+        object N11: TMenuItem
+          AutoCheck = True
+          Caption = 'Smokey Quartz Kamri'
+          Checked = True
+          RadioItem = True
+          OnClick = N11Click
+        end
+        object N21: TMenuItem
+          AutoCheck = True
+          Caption = 'Amethyst Kamri'
+          RadioItem = True
+          OnClick = N21Click
+        end
+        object N31: TMenuItem
+          AutoCheck = True
+          Caption = 'Carbon'
+          RadioItem = True
+          OnClick = N31Click
+        end
+        object N41: TMenuItem
+          AutoCheck = True
+          Caption = 'Metropolis UI Black'
+          RadioItem = True
+          OnClick = N41Click
+        end
       end
-      object N31: TMenuItem
-        AutoCheck = True
-        Caption = 'Carbon'
-        RadioItem = True
-        OnClick = N31Click
+    end
+    object Acercade1: TMenuItem
+      Caption = 'Ayuda'
+      object Visitarenlacedelproyecto1: TMenuItem
+        Caption = 'Visitar enlace del proyecto'
       end
-      object N41: TMenuItem
-        AutoCheck = True
-        Caption = 'Metropolis UI Black'
-        RadioItem = True
-        OnClick = N41Click
+      object Acercade2: TMenuItem
+        Caption = 'Acerca de UdTools Offset Suite'
       end
     end
   end

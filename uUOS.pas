@@ -106,6 +106,11 @@ type
     ChkAv1Byte: TCheckBox;
     ChkRevFinal: TCheckBox;
     ChkElimNoF: TCheckBox;
+    Ajustes1: TMenuItem;
+    Acercade1: TMenuItem;
+    Eliminartodoslosajustesyresetearaplicacin1: TMenuItem;
+    Visitarenlacedelproyecto1: TMenuItem;
+    Acercade2: TMenuItem;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -159,6 +164,7 @@ type
     procedure Limpiar1Click(Sender: TObject);
     procedure PopupMenu1Popup(Sender: TObject);
     procedure Eliminarseleccionados1Click(Sender: TObject);
+    procedure Eliminartodoslosajustesyresetearaplicacin1Click(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -173,10 +179,27 @@ var
   Form1: TForm1;
   BtnListado: Boolean;
   HexChars: TSysCharSet;
+  Skin: String;
 
 implementation
 
 {$R *.dfm}
+
+procedure EscribeIni;
+var
+  Opt: TIniFile;
+begin
+  if Skin = '' then
+    Skin:= 'Smokey Quartz Kamri';
+  Opt := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\UOS.ini');
+  Try
+    Opt.WriteString('Locator', 'Dir', Form1.EdDir.Text);
+    Opt.WriteBool('Locator', 'Recordar', Form1.ChkRecordar.Checked);
+    Opt.WriteString('UOS', 'Skin', Skin);
+  Finally
+    Opt.Free;
+  End;
+end;
 
 procedure TForm1.Aadir1Click(Sender: TObject);
 begin
@@ -541,17 +564,26 @@ begin
     ListView1.DeleteSelected;
 end;
 
-procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TForm1.Eliminartodoslosajustesyresetearaplicacin1Click(Sender: TObject);
 var
-  Opt: TIniFile;
+  ResAnotador: TResourceStream;
 begin
-  Opt := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\UOS.ini');
-  Try
-    Opt.WriteString('Locator', 'Dir', EdDir.Text);
-    Opt.WriteBool('Locator', 'Recordar', ChkRecordar.Checked);
-  Finally
-    Opt.Free;
-  End;
+  try
+    ResAnotador:= TResourceStream.Create(HInstance, 'ANOTADOR', RT_RCDATA);
+      try
+        ResAnotador.SaveToFile('Anotador.exe');
+      finally
+        Estado.Caption:= 'Anotador.exe generado.';
+        ResAnotador.Free;
+      end;
+  except
+    Estado.Caption:= 'No se pudo generar el Anotador.exe';
+  end;
+end;
+
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  EscribeIni;
 end;
 
 // Procedimiento para arrastrar y soltar
@@ -602,6 +634,16 @@ begin
   Try
     Dir := Opt.ReadString('Locator', 'Dir', 'Directorio de trabajo');
     Recordar := Opt.ReadBool('Locator', 'Recordar', False);
+//    Skin := Opt.ReadString('UOS', 'Skin', 'Smokey Quartz Kamri');
+    if Skin = 'Smokey Quartz Kamri' then
+      N11.Checked := True;
+    if Skin = 'Amethyst Kamri' then
+      N21.Checked := True;
+    if Skin = 'Carbon' then
+      N31.Checked := True;
+    if Skin = 'Metropolis UI Black' then
+      N41.Checked := True;
+
     if Recordar then
     begin
       EdDir.Text := Dir;
@@ -610,10 +652,13 @@ begin
   Finally
     Opt.Free;
   End;
-  // Cambia proporcionalmente el tamaño del form y controles según resolución en base al alto (800 px)
+
+// Cambia proporcionalmente el tamaño del form y controles según resolución en base al alto (800 px)  ScaleBy(Screen.Height, 800);
   ScaleBy(Screen.Height, 800);
   DragAcceptFiles(Handle, True);
 end;
+
+
 
 procedure TForm1.Limpiar1Click(Sender: TObject);
 begin
@@ -664,26 +709,50 @@ end;
 
 procedure TForm1.N11Click(Sender: TObject);
 begin
-  N11.Checked := True;
-  TStyleManager.TrySetStyle('Smokey Quartz Kamri');
+  if Application.MessageBox('El programa se reiniciará para aplicar el Skin.', '', MB_YESNO + MB_ICONWARNING) = ID_YES then
+    begin
+      N11.Checked := True;
+      Skin:= 'Smokey Quartz Kamri';
+      EscribeIni;
+      ShellExecute(0, nil, PChar(ParamStr(0)), nil, nil, SW_NORMAL);
+      Application.Terminate;
+    end;
 end;
 
 procedure TForm1.N21Click(Sender: TObject);
 begin
-  N21.Checked := True;
-  TStyleManager.TrySetStyle('Amethyst Kamri');
+  if Application.MessageBox('El programa se reiniciará para aplicar el Skin.', '', MB_YESNO + MB_ICONWARNING) = ID_YES then
+    begin
+      N21.Checked := True;
+      Skin:= 'Amethyst Kamri';
+      EscribeIni;
+      ShellExecute(0, nil, PChar(ParamStr(0)), nil, nil, SW_NORMAL);
+      Application.Terminate;
+    end;
 end;
 
 procedure TForm1.N31Click(Sender: TObject);
 begin
-  N31.Checked := True;
-  TStyleManager.TrySetStyle('Carbon');
+  if Application.MessageBox('El programa se reiniciará para aplicar el Skin.', '', MB_YESNO + MB_ICONWARNING) = ID_YES then
+    begin
+      N31.Checked := True;
+      Skin:= 'Carbon';
+      EscribeIni;
+      ShellExecute(0, nil, PChar(ParamStr(0)), nil, nil, SW_NORMAL);
+      Application.Terminate;
+    end;
 end;
 
 procedure TForm1.N41Click(Sender: TObject);
 begin
-  N41.Checked := True;
-  TStyleManager.TrySetStyle('Metropolis UI Black');
+  if Application.MessageBox('El programa se reiniciará para aplicar el Skin.', '', MB_YESNO + MB_ICONWARNING) = ID_YES then
+    begin
+      N41.Checked := True;
+      Skin:= 'Metropolis UI Black';
+      EscribeIni;
+      ShellExecute(0, nil, PChar(ParamStr(0)), nil, nil, SW_NORMAL);
+      Application.Terminate;
+    end;
 end;
 
 // Popupmenu Lotator-Lisview

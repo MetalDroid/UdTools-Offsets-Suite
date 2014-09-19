@@ -98,7 +98,6 @@
         <DCCReference Include="uThreadChecker.pas"/>
         <DCCReference Include="uAddToList.pas">
             <Form>Form2</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
