@@ -98,7 +98,6 @@ type
     Label21: TLabel;
     Edit7: TEdit;
     Label22: TLabel;
-    SaveDialog1: TSaveDialog;
     PopupMenu1: TPopupMenu;
     Aadir1: TMenuItem;
     Eliminarseleccionados1: TMenuItem;
@@ -176,6 +175,7 @@ type
     procedure GuardarSeleccionadosenListaaparte1Click(Sender: TObject);
     procedure GuardarTodasenListaAparte1Click(Sender: TObject);
     procedure BtnDetenerListaClick(Sender: TObject);
+    procedure ChkRevFinalClick(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -486,6 +486,21 @@ begin
   else if not(CheckAll.Checked) and (Form1.ListView1.Items.Count > 0) then
     for i := 0 to Form1.ListView1.Items.Count - 1 do
       Form1.ListView1.Items.Item[i].Checked := False;
+end;
+
+procedure TForm1.ChkRevFinalClick(Sender: TObject);
+begin
+  if ChkRevFinal.Checked then
+  begin
+    CheckBox1.Enabled:= False;
+    CheckBox1.Checked:= False;
+    Edit5.Enabled:= False;
+  end
+  else
+  begin
+    CheckBox1.Enabled:= True;
+    Edit5.Enabled:= True;
+  end;
 end;
 
 procedure TForm1.BtnIniciarClick(Sender: TObject);

@@ -26,7 +26,7 @@ object Form1: TForm1
     Top = 0
     Width = 358
     Height = 472
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -395,10 +395,6 @@ object Form1: TForm1
       Caption = 'Replacer'
       ImageIndex = 1
       OnShow = TabSheet2Show
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label11: TLabel
         Left = 4
         Top = 65
@@ -553,10 +549,6 @@ object Form1: TForm1
       Caption = 'Checker'
       ImageIndex = 2
       OnShow = TabSheet3Show
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label17: TLabel
         Left = 3
         Top = 98
@@ -610,7 +602,12 @@ object Form1: TForm1
         Top = 95
         Width = 41
         Height = 21
+        Hint = 
+          'Al introducir este valor, ten en cuenta si tu fichero tiene Dela' +
+          'y.'
         NumbersOnly = True
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 1
         Text = '750'
       end
@@ -675,7 +672,10 @@ object Form1: TForm1
         Top = 55
         Width = 47
         Height = 21
+        Hint = 'Especifica la extensi'#243'n del fichero incluyendo el punto (.xxx)'
         Enabled = False
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 8
         Text = '.exe'
         OnChange = Edit4Change
@@ -685,7 +685,12 @@ object Form1: TForm1
         Top = 409
         Width = 142
         Height = 17
+        Hint = 
+          'El proceso de comprobaci'#243'n se detendr'#225' al alcanzar este n'#250'mero (' +
+          'Solo si se revisan funcionales en tiempo real)'
         Caption = 'Detener si funcionales = '
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 9
       end
       object Edit5: TEdit
@@ -715,6 +720,7 @@ object Form1: TForm1
         Checked = True
         State = cbChecked
         TabOrder = 12
+        OnClick = ChkRevFinalClick
       end
       object ChkElimNoF: TCheckBox
         Left = 3
@@ -729,10 +735,6 @@ object Form1: TForm1
       Caption = 'Patcher'
       ImageIndex = 3
       OnShow = TabSheet4Show
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label20: TLabel
         Left = 3
         Top = 33
@@ -794,7 +796,10 @@ object Form1: TForm1
     Top = 27
     Width = 305
     Height = 21
+    Hint = 'Arrastra el fichero o pulsa el bot'#243'n para a'#241'adir el fichero.'
+    ParentShowHint = False
     ReadOnly = True
+    ShowHint = True
     TabOrder = 1
     Text = 'Ruta del fichero'
     OnChange = EdFicheroChange
@@ -804,7 +809,10 @@ object Form1: TForm1
     Top = 54
     Width = 305
     Height = 21
+    Hint = 'Arrastra el fichero o pulsa el bot'#243'n para a'#241'adir el Directorio.'
+    ParentShowHint = False
     ReadOnly = True
+    ShowHint = True
     TabOrder = 2
     Text = 'Directorio de trabajo'
   end
@@ -890,10 +898,6 @@ object Form1: TForm1
         OnClick = Acercade2Click
       end
     end
-  end
-  object SaveDialog1: TSaveDialog
-    Left = 320
-    Top = 96
   end
   object PopupMenu1: TPopupMenu
     OnPopup = PopupMenu1Popup
