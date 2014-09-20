@@ -81,14 +81,15 @@ begin
         Exit;
       inc(Coincidencias);
       FicheroF[i] := AnsiChar(Reemplazo);
-      StrToFile(WideString(FicheroF), Directorio + '\' + IntToStr(i - 1) + Extension);
-      Form1.Estado.Caption := 'Procesando fichero ' + IntToStr(i - 1) +
+      StrToFile(WideString(FicheroF), Directorio + '\' + (i - 1).ToString +
+        Extension);
+      Form1.Estado.Caption := 'Procesando fichero ' + (i - 1).ToString +
         Extension;
       Application.ProcessMessages;
     end;
   end;
   Form1.Estado.Caption := 'Proceso completado. Encontradas ' +
-    IntToStr(Coincidencias) + ' coincidencias.';
+    Coincidencias.ToString + ' coincidencias.';
 end;
 
 { HReplacer }
