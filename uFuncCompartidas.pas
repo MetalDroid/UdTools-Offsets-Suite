@@ -21,7 +21,6 @@ var
   dwRet: DWORD;
   iSize: DWORD;
   Buff: AnsiString;
-  // El buffer DEBE ser AnsiString y NO WideString, responsable: Microsoft (?)
 begin
   hFile := CreateFile(PChar(mFile), GENERIC_READ, FILE_SHARE_READ, nil,
     OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
@@ -42,7 +41,6 @@ var
   iSize: DWORD;
   dwRet: DWORD;
   Buff: AnsiString;
-  // El buffer DEBE ser AnsiString y NO WideString, responsable: Microsoft (?)
 begin
   Result := False;
   Buff := AnsiString(Str);
