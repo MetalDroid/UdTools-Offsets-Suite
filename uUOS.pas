@@ -176,6 +176,8 @@ type
     procedure GuardarTodasenListaAparte1Click(Sender: TObject);
     procedure BtnDetenerListaClick(Sender: TObject);
     procedure ChkRevFinalClick(Sender: TObject);
+    procedure EdEsperaDblClick(Sender: TObject);
+    procedure EdValorDblClick(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -532,6 +534,11 @@ begin
   EdBytes.Text := '1000';
 end;
 
+procedure TForm1.EdEsperaDblClick(Sender: TObject);
+begin
+  EdEspera.Text:= '750';
+end;
+
 procedure TForm1.EdFicheroChange(Sender: TObject);
 begin
   if FileExists(EdFichero.Text) then
@@ -599,6 +606,11 @@ begin
   HexChars := ['0' .. '9', 'A' .. 'F', 'a' .. 'f', #8];
   if not(CharInSet(Key, HexChars)) then
     Key := #0;
+end;
+
+procedure TForm1.EdValorDblClick(Sender: TObject);
+begin
+  EdValor.Text:= '90';
 end;
 
 procedure TForm1.EdValorKeyPress(Sender: TObject; var Key: Char);

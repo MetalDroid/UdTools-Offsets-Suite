@@ -26,11 +26,15 @@ object Form1: TForm1
     Top = 0
     Width = 358
     Height = 472
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
+    ParentShowHint = False
+    ShowHint = False
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Locator'
+      ParentShowHint = False
+      ShowHint = False
       OnShow = TabSheet1Show
       object Label1: TLabel
         Left = 3
@@ -65,8 +69,11 @@ object Form1: TForm1
         Top = 57
         Width = 113
         Height = 17
+        Hint = 'Selecciona para realizar AvFucker.'
         Caption = 'AvFucker'
         Checked = True
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
         TabStop = True
         OnClick = RadAvFuckerClick
@@ -76,7 +83,10 @@ object Form1: TForm1
         Top = 57
         Width = 54
         Height = 17
+        Hint = 'Selecciona para realizar DSplit.'
         Caption = 'DSplit'
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 1
         OnClick = RadDSplitClick
       end
@@ -85,7 +95,10 @@ object Form1: TForm1
         Top = 88
         Width = 83
         Height = 21
+        Hint = 'Doble click para resetear el valor (1000).'
         NumbersOnly = True
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 2
         Text = '1000'
         OnDblClick = EdInicioDblClick
@@ -95,7 +108,10 @@ object Form1: TForm1
         Top = 115
         Width = 83
         Height = 21
+        Hint = 'Doble click para resetear el valor (Tama'#241'o del Fichero -1).'
         NumbersOnly = True
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 3
         Text = '0'
         OnDblClick = EdFinDblClick
@@ -105,7 +121,10 @@ object Form1: TForm1
         Top = 142
         Width = 83
         Height = 21
+        Hint = 'Doble click para resetear el valor (1000).'
         NumbersOnly = True
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 4
         Text = '1000'
         OnDblClick = EdBytesDblClick
@@ -115,10 +134,14 @@ object Form1: TForm1
         Top = 169
         Width = 20
         Height = 21
+        Hint = 'Doble click para resetear el valor (90).'
         CharCase = ecUpperCase
         MaxLength = 2
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 5
         Text = '90'
+        OnDblClick = EdValorDblClick
         OnKeyPress = EdValorKeyPress
       end
       object GroupBox1: TGroupBox
@@ -237,7 +260,10 @@ object Form1: TForm1
         Top = 57
         Width = 84
         Height = 17
+        Hint = 'Selecciona para realizar las 256 Combinaciones.'
         Caption = '256 Combin.'
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 13
         OnClick = RadCombClick
       end
@@ -529,8 +555,11 @@ object Form1: TForm1
         Top = 64
         Width = 102
         Height = 17
+        Hint = 'Buscar y generar Offsets reemplazadas en fichero completo.'
         Caption = 'Fichero completo'
         Checked = True
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 5
         TabStop = True
         OnClick = RadCompletoClick
@@ -540,7 +569,12 @@ object Form1: TForm1
         Top = 100
         Width = 113
         Height = 17
+        Hint = 
+          'Buscar y generar Offsets reemplazadas en un rango espec'#237'fico del' +
+          ' fichero.'
         Caption = 'Rango'
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 6
         OnClick = RadRangoClick
       end
@@ -604,12 +638,13 @@ object Form1: TForm1
         Height = 21
         Hint = 
           'Al introducir este valor, ten en cuenta si tu fichero tiene Dela' +
-          'y.'
+          'y. Doble click para reset.'
         NumbersOnly = True
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1
         Text = '750'
+        OnDblClick = EdEsperaDblClick
       end
       object EdFuncionales: TEdit
         Left = 167
@@ -727,7 +762,12 @@ object Form1: TForm1
         Top = 393
         Width = 184
         Height = 17
+        Hint = 
+          'Usar con precauci'#243'n asegurando un tiempo suficiente entre ejecuc' +
+          'iones.'
         Caption = 'Eliminar ficheros no funcionales.'
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 13
       end
     end
