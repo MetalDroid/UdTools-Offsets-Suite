@@ -909,6 +909,7 @@ begin
     EdValor.Enabled := False;
     CheckAll.Enabled := False;
     BtnAVFLista.Enabled := False;
+    BtnDetenerLista.Enabled := False;
     Label1.Visible := True;
     Label2.Visible := True;
     Label3.Visible := True;
