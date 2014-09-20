@@ -704,6 +704,8 @@ object Form1: TForm1
         Width = 282
         Height = 17
         Caption = 'Revisar funcionales al finalizar y no en tiempo real.'
+        Checked = True
+        State = cbChecked
         TabOrder = 12
       end
       object ChkElimNoF: TCheckBox
