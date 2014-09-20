@@ -741,15 +741,40 @@ begin
   for i:= 0 to ListView1.Items.Count -1 do
     if ListView1.Items.Item[i].Checked then
       Inc(Checks);
+
   if Checks > 0 then
     begin
-      BtnAVFLista.Enabled:= True;
-      ChkAv1Byte.Enabled:= True;
+      ChkRestar.Enabled := True;
+      ChkAv1Byte.Enabled := True;
+      if RadAvFucker.Checked then
+        begin
+          BtnAVFLista.Enabled:= True;
+          BtnDetenerLista.Enabled:= True;
+          ChkAv1Byte.Enabled:= True;
+        end
+        else
+        begin
+          BtnAVFLista.Enabled:= False;
+          BtnDetenerLista.Enabled:= False;
+          ChkAv1Byte.Enabled:= False;
+        end;
     end
     else
     begin
-      BtnAVFLista.Enabled:= False;
-      ChkAv1Byte.Enabled:= False;
+      ChkRestar.Enabled := False;
+      ChkAv1Byte.Enabled := False;
+      if RadAvFucker.Checked then
+        begin
+          BtnAVFLista.Enabled:= True;
+          BtnDetenerLista.Enabled:= True;
+          ChkAv1Byte.Enabled:= True;
+        end
+        else
+        begin
+          BtnAVFLista.Enabled:= False;
+          BtnDetenerLista.Enabled:= False;
+          ChkAv1Byte.Enabled:= False;
+        end;
     end;
 end;
 
@@ -862,9 +887,13 @@ procedure TForm1.RadAvFuckerClick(Sender: TObject);
 begin
   if RadAvFucker.Checked then
   begin
+    ListView1.Clear;
     EdValor.Enabled := True;
     CheckAll.Enabled := True;
-    BtnAVFLista.Enabled := True;
+    BtnAVFLista.Enabled := False;
+    BtnDetenerLista.Enabled := False;
+    ChkAv1Byte.Enabled := False;
+    ChkRestar.Enabled := False;
     Label1.Visible := True;
     Label2.Visible := True;
     Label3.Visible := True;
@@ -878,12 +907,14 @@ procedure TForm1.RadCombClick(Sender: TObject);
 begin
   if RadComb.Checked then
   begin
+    ListView1.Clear;
     Label1.Visible := False;
     Label2.Visible := False;
     Label3.Visible := False;
     Label4.Visible := False;
     BtnMostrarLista.Enabled := False;
     CheckAll.Enabled := False;
+    ChkRestar.Enabled := False;
     BtnAVFLista.Enabled := False;
     GroupBox2.Visible := True;
   end;
@@ -906,10 +937,13 @@ procedure TForm1.RadDSplitClick(Sender: TObject);
 begin
   if RadDSplit.Checked then
   begin
+    ListView1.Clear;
     EdValor.Enabled := False;
-    CheckAll.Enabled := False;
+    CheckAll.Enabled := True;
     BtnAVFLista.Enabled := False;
     BtnDetenerLista.Enabled := False;
+    ChkAv1Byte.Enabled := False;
+    ChkRestar.Enabled := False;
     Label1.Visible := True;
     Label2.Visible := True;
     Label3.Visible := True;

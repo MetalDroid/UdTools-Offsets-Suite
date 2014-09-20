@@ -374,8 +374,9 @@ object Form1: TForm1
         Top = 399
         Width = 169
         Height = 17
-        Caption = 'Restar Bytes autom'#225'ticamente.'
+        Caption = 'Restar Bytes autom. (Lista). '
         Checked = True
+        Enabled = False
         State = cbChecked
         TabOrder = 16
       end
