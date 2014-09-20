@@ -118,8 +118,11 @@ begin
   if IniAux > TamFichero then
     IniAux := TamFichero;
 
-  if IniAux < Bytes then
-    IniAux := Bytes;
+  if IniAux < (Bytes +1) then
+    IniAux := Bytes +1;
+
+  //if Bytes > IniAux then
+
 
   Ultimo := False;
 

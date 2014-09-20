@@ -385,12 +385,16 @@ begin
   Fin := Form1.EdFin.Text;
   sBytes := Form1.EdBytes.Text;
   TamFich := GetCompressedFileSize(PChar(Form1.EdFichero.Text), nil) - 1;
-  Ficheros := StrToInt(Fin) - StrToInt(Inicio);
+  Ficheros := Fin.ToInteger - Inicio.ToInteger;
+
+  if Form1.RadDSplit.Checked then
+    if Inicio.ToInteger < sBytes.ToInteger then
+      Inicio:= sBytes;
 
   if Ficheros <= 0 then
     Ficheros := 1
   else
-    Ficheros := (StrToInt(Fin) - StrToInt(Inicio)) div StrToInt(sBytes);
+    Ficheros := (Fin.ToInteger - Inicio.ToInteger) div sBytes.ToInteger;
 
   for i := 0 to Ficheros + 2 do
   begin // Podríamos buscar por "_1000, _2000", etc (sBytes), pero no funcionaría debido al RESTO (último fichero);
@@ -401,7 +405,7 @@ begin
     end
     else
     begin // Tenemos en cuenta el último fichero válido encontrado para añadir con éxito "Fin"
-      if FindFirst(Dir + IntToStr(StrToInt(Inicio) - StrToInt(sBytes)) + '_*',
+      if FindFirst(Dir + (Inicio.ToInteger - sBytes.ToInteger).ToString + '_*',
         faAnyFile, SearchResult) = 0 then
         if IsValidOffsetFileName(SearchResult.Name, IniAux, FinAux) then
         begin
@@ -409,19 +413,19 @@ begin
           begin
             if Form1.RadAvFucker.Checked then
             begin
-              Caption := IntToStr(StrToInt(Inicio) - Acumulados);
-              SubItems.Add(IntToStr((StrToInt(IniAux) + StrToInt(FinAux)) - 1));
+              Caption := (Inicio.ToInteger - Acumulados).ToString;
+              SubItems.Add(((IniAux.ToInteger + FinAux.ToInteger)-1).ToString);
             end
             else
+            if Form1.RadDSplit.Checked then
             begin
-              Caption := IntToStr(StrToInt(Inicio) - StrToInt(sBytes));
-              if ((StrToInt(IniAux) + StrToInt(FinAux)) - 1 > TamFich) then
-                SubItems.Add(IntToStr((StrToInt(Inicio) - StrToInt(sBytes)) +
-                  StrToInt(sBytes) - ((StrToInt(Inicio) - StrToInt(sBytes)) +
-                  ((StrToInt(FinAux) - 1) - TamFich)) - 1))
+              Caption := (Inicio.ToInteger - sBytes.ToInteger).ToString;
+              if ((IniAux.ToInteger + FinAux.ToInteger)-1 > TamFich) then
+                SubItems.Add(((Inicio.ToInteger - sBytes.ToInteger) +
+                  sBytes.ToInteger - ((Inicio.ToInteger - sBytes.ToInteger) +
+                  ((FinAux.ToInteger -1) - TamFich))-1).ToString)
               else
-                SubItems.Add
-                  (IntToStr((StrToInt(IniAux) + StrToInt(FinAux)) - 1));
+                SubItems.Add(((IniAux.ToInteger + FinAux.ToInteger)-1).ToString);
             end;
           end;
           Application.ProcessMessages;
@@ -429,7 +433,7 @@ begin
       Acumulados := 0;
     end;
     FindClose(SearchResult);
-    Inicio := IntToStr(StrToInt(Inicio) + StrToInt(sBytes));
+    Inicio := (Inicio.ToInteger + sBytes.ToInteger).ToString;
   end;
   if (Form1.CheckAll.Checked) and (Form1.ListView1.Items.Count > 0) then
     for i := 0 to Form1.ListView1.Items.Count - 1 do
