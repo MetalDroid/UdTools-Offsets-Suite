@@ -68,7 +68,7 @@ begin
     Aux := AnsiString(Fichero);
     if Inicio + Bytes <= Tam then
     begin
-      sBytes := IntToStr(Bytes);
+      sBytes := Bytes.ToString;
       for o := Inicio to Inicio + Bytes - 1 do
         Aux[o + 1] := AnsiChar(Rell);
     end
@@ -80,7 +80,7 @@ begin
         Aux[o + 1] := AnsiChar(Rell);
     end;
 
-    OffIni := IntToStr(Inicio);
+    OffIni := Inicio.ToString;
     // sBytes := IntToStr(Bytes);
 
     Form1.Estado.Caption := 'Procesando fichero: ' + OffIni + '_' + sBytes +
@@ -138,8 +138,8 @@ begin
     end;
     FichFinal := '';
     FichFinal := Copy(Fichero, 1, IniAux);
-    Form1.Estado.Caption := 'Procesando fichero: ' + IntToStr(IniAux - 1) +
-      '_' + IntToStr(Bytes) + ExtractFileExt(FichAux);
+    Form1.Estado.Caption := 'Procesando fichero: ' + (IniAux - 1).ToString +
+      '_' + Bytes.ToString + ExtractFileExt(FichAux);
     Application.ProcessMessages;
     if not(Ultimo) then
       StrToFile(FichFinal, RutaOffsets + '\' + IntToStr(IniAux - 1) + '_' +
@@ -183,15 +183,15 @@ begin
   begin
     OffIni := Form1.Edit1.Text;
     OffFin := Form1.Edit2.Text;
-    if (StrToInt(OffIni) > TamFich) or (StrToInt(OffFin) > TamFich) or
-      (StrToInt(OffIni) < 0) or (StrToInt(OffFin) < 0) or
-      (StrToInt(OffFin) < StrToInt(OffIni)) then
+    if (OffIni.ToInteger > TamFich) or (OffFin.ToInteger > TamFich) or
+      (OffIni.ToInteger < 0) or (OffFin.ToInteger < 0) or
+      (OffFin.ToInteger < OffIni.ToInteger) then
     begin
       Form1.Estado.Caption := 'Secuencia no válida.';
       Exit;
     end;
-    IniAux := StrToInt(OffIni);
-    FinAux := StrToInt(OffFin);
+    IniAux := OffIni.ToInteger;
+    FinAux := OffFin.ToInteger;
     for i := IniAux to FinAux do
       for j := 0 to 255 do
       begin
@@ -202,7 +202,7 @@ begin
         Form1.Estado.Caption := 'Procesando fichero: ' + IntToStr(i) + '_' +
           IntToHex(j, 2) + Extension;
         Application.ProcessMessages;
-        StrToFile(WideString(FichAux), Ruta + '\' + IntToStr(i) + '_' + IntToHex(j, 2) +
+        StrToFile(WideString(FichAux), Ruta + '\' + i.ToString + '_' + j.ToHexString(2) +
           Extension);
       end;
     Form1.Estado.Caption := 'Proceso terminado.';
@@ -217,7 +217,7 @@ begin
       OffAct := Copy(OffsetsEspacios, 1, pos(' ', OffsetsEspacios) - 1);
       if OffAct <> '' then
       begin
-        OffActAux := StrToInt(OffAct);
+        OffActAux := OffAct.ToInteger;
         if NOT(OffActAux > TamFich) or (OffActAux < 0) then
         // Con NOT ignoramos las offsets no válidas
         begin
@@ -226,10 +226,10 @@ begin
           begin
             FichAux[OffActAux + 1] := AnsiChar(i);
             Form1.Estado.Caption := 'Procesando fichero: ' +
-              IntToStr(OffActAux) + '_' + IntToHex(i, 2) + Extension;
+              OffActAux.ToString + '_' + i.ToHexString(2) + Extension;
             Application.ProcessMessages;
-            StrToFile(WideString(FichAux), Ruta + '\' + IntToStr(OffActAux) + '_' +
-              IntToHex(i, 2) + Extension);
+            StrToFile(WideString(FichAux), Ruta + '\' + OffActAux.ToString + '_' +
+              i.ToHexString(2) + Extension);
           end;
         end;
       end;
