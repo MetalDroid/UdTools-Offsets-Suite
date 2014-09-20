@@ -246,9 +246,7 @@ begin
     if FileExists(OpenDialog1.FileName) then
     begin
       EdFichero.Text := OpenDialog1.FileName;
-      FichTam :=
-        IntToStr(Integer(GetCompressedFileSize(PChar(OpenDialog1.FileName), nil)
-        ) - 1); // Tamaño del fichero (offset final)
+      FichTam := (GetCompressedFileSize(PChar(OpenDialog1.FileName), nil)-1).ToString;
       EdInicio.Text:= '1000';
       EdFin.Text := FichTam;
       Label8.Caption := 'Máx: ' + FichTam;
