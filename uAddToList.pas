@@ -61,9 +61,9 @@ begin
     if (OffIni = '') or (OffFin = '') then
       raise Exception.Create('Secuencia no permitida.');
 
-    if (StrToInt(OffIni) > TamFich) or (StrToInt(OffFin) > TamFich) or
-      (StrToInt(OffIni) < 0) or (StrToInt(OffFin) < 0) or
-      (StrToInt(OffFin) < StrToInt(OffIni)) then
+    if (OffIni.ToInteger > TamFich) or (OffFin.ToInteger > TamFich) or
+      (OffIni.ToInteger < 0) or (OffFin.ToInteger < 0) or
+      (OffFin.ToInteger < OffIni.ToInteger) then
       raise Exception.Create('Secuencia no permitida.');
 
     With Form1.ListView1.Items.Add do
@@ -84,7 +84,7 @@ begin
       OffAct := Copy(OffsetsEspacios, 1, pos(' ', OffsetsEspacios) - 1);
       if OffAct <> '' then
       begin
-        OffActAux := StrToInt(OffAct);
+        OffActAux := OffAct.ToInteger;
         if NOT(OffActAux > TamFich) or (OffActAux < 0) then
           // Con NOT ignoramos las offsets no válidas
           With Form1.ListView1.Items.Add do
