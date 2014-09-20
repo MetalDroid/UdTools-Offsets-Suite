@@ -925,6 +925,12 @@ object Form1: TForm1
           RadioItem = True
           OnClick = N41Click
         end
+        object N1: TMenuItem
+          AutoCheck = True
+          Caption = 'Windows Default'
+          RadioItem = True
+          OnClick = N1Click
+        end
       end
     end
     object Acercade1: TMenuItem

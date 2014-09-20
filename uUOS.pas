@@ -115,6 +115,7 @@ type
     GuardarTodasenListaAparte1: TMenuItem;
     ChkRestar: TCheckBox;
     BtnDetenerLista: TButton;
+    N1: TMenuItem;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -178,6 +179,7 @@ type
     procedure ChkRevFinalClick(Sender: TObject);
     procedure EdEsperaDblClick(Sender: TObject);
     procedure EdValorDblClick(Sender: TObject);
+    procedure N1Click(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -706,6 +708,8 @@ begin
       N31.Checked := True;
     if Skin = 'Metropolis UI Black' then
       N41.Checked := True;
+    if Skin = 'Windows' then
+      N1.Checked := True;
 
     if Recordar then
     begin
@@ -835,6 +839,18 @@ begin
     begin
       N11.Checked := True;
       Skin:= 'Smokey Quartz Kamri';
+      EscribeIni;
+      ShellExecute(0, nil, PChar(ParamStr(0)), nil, nil, SW_NORMAL);
+      Application.Terminate;
+    end;
+end;
+
+procedure TForm1.N1Click(Sender: TObject);
+begin
+  if Application.MessageBox('El programa se reiniciará para aplicar el Skin.', '', MB_YESNO + MB_ICONWARNING) = ID_YES then
+    begin
+      N1.Checked := True;
+      Skin:= 'Windows';
       EscribeIni;
       ShellExecute(0, nil, PChar(ParamStr(0)), nil, nil, SW_NORMAL);
       Application.Terminate;
