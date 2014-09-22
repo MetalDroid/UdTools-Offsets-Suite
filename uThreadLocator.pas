@@ -72,6 +72,7 @@ begin
       Rell := RandomRange(0, 255);
       Form1.EdValor.Text := Rell.ToHexString(2);
       TapadoCon:= '_' + Rell.ToHexString(2);
+      Application.ProcessMessages;
     end;
     Aux := AnsiString(Fichero);
     if Inicio + Bytes <= Tam then
