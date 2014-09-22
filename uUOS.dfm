@@ -416,6 +416,14 @@ object Form1: TForm1
         Visible = False
         OnClick = BtnDetenerListaClick
       end
+      object ChkAleatorio: TCheckBox
+        Left = 70
+        Top = 171
+        Width = 70
+        Height = 17
+        Caption = 'Aleatorio'
+        TabOrder = 18
+      end
     end
     object TabSheet2: TTabSheet
       Caption = 'Replacer'

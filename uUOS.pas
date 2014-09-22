@@ -116,6 +116,7 @@ type
     ChkRestar: TCheckBox;
     BtnDetenerLista: TButton;
     N1: TMenuItem;
+    ChkAleatorio: TCheckBox;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -941,6 +942,8 @@ begin
     Label4.Visible := True;
     BtnMostrarLista.Enabled := True;
     GroupBox2.Visible := False;
+    ChkAleatorio.Enabled := True;
+    ChkAleatorio.Visible := True;
   end;
 end;
 
@@ -958,6 +961,7 @@ begin
     ChkRestar.Enabled := False;
     BtnAVFLista.Enabled := False;
     GroupBox2.Visible := True;
+    ChkAleatorio.Visible := False;
   end;
 end;
 
@@ -991,6 +995,8 @@ begin
     Label4.Visible := True;
     BtnMostrarLista.Enabled := True;
     GroupBox2.Visible := False;
+    ChkAleatorio.Enabled := False;
+    ChkAleatorio.Visible := True;
   end;
 end;
 

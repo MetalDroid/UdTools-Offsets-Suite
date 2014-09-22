@@ -4,7 +4,7 @@ interface
 
 uses
   System.Classes, System.SysUtils, Winapi.Windows, Vcl.Forms, System.IOUtils,
-  uFuncCompartidas;
+  uFuncCompartidas, System.Math;
 
 type
   HPrincipal = class(TThread)
@@ -53,7 +53,9 @@ Procedure HPrincipal.AvFucker(Fichero, RutaOffsets: String;
 var
   o, Rell, Tam: Integer;
   Aux: AnsiString; Aux2, OffIni, sBytes: String;
+  TapadoCon: String;
 begin
+  TapadoCon:= '';
   Aux2 := Fichero;
   Fichero := FileToStr(Fichero);
   Rell := StrToInt('$' + RellenarCon);
@@ -65,6 +67,12 @@ begin
   Repeat
     if Terminated then
       Exit;
+    if Form1.ChkAleatorio.Checked then
+    begin
+      Rell := RandomRange(0, 255);
+      Form1.EdValor.Text := Rell.ToHexString(2);
+      TapadoCon:= '_' + Rell.ToHexString(2);
+    end;
     Aux := AnsiString(Fichero);
     if Inicio + Bytes <= Tam then
     begin
@@ -83,7 +91,7 @@ begin
     OffIni := Inicio.ToString;
     // sBytes := IntToStr(Bytes);
 
-    Form1.Estado.Caption := 'Procesando fichero: ' + OffIni + '_' + sBytes +
+    Form1.Estado.Caption := 'Procesando fichero: ' + OffIni + '_' + sBytes + TapadoCon +
       ExtractFileExt(Aux2);
     Application.ProcessMessages;
 
