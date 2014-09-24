@@ -26,7 +26,7 @@ object Form1: TForm1
     Top = 0
     Width = 358
     Height = 472
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alClient
     ParentShowHint = False
     ShowHint = False
@@ -662,14 +662,14 @@ object Form1: TForm1
         TabOrder = 2
         Text = 'funcionales.txt'
       end
-      object Button5: TButton
+      object BtnAyuda: TButton
         Left = 313
         Top = 117
         Width = 25
         Height = 21
         Caption = '?'
         TabOrder = 3
-        OnClick = Button5Click
+        OnClick = BtnAyudaClick
       end
       object BIniciarCh: TButton
         Left = 193
@@ -777,6 +777,15 @@ object Form1: TForm1
         ParentShowHint = False
         ShowHint = True
         TabOrder = 13
+      end
+      object Button4: TButton
+        Left = 214
+        Top = 95
+        Width = 25
+        Height = 21
+        Caption = '?'
+        TabOrder = 14
+        OnClick = Button4Click
       end
     end
     object TabSheet4: TTabSheet
@@ -898,8 +907,8 @@ object Form1: TForm1
     Top = 16
   end
   object MainMenu1: TMainMenu
-    Left = 296
-    Top = 144
+    Left = 248
+    Top = 168
     object Ajustes1: TMenuItem
       Caption = 'Herramientas'
       object Eliminartodoslosajustesyresetearaplicacin1: TMenuItem
