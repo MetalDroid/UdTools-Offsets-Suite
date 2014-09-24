@@ -242,7 +242,6 @@ procedure TForm1.BDetenerClick(Sender: TObject);
 begin
   if TIniciar <> nil then
     TIniciar.Terminate;
-  Estado.Caption := 'Proceso detenido.';
   BDetener.Visible := False;
 end;
 
@@ -372,11 +371,11 @@ var
 const
   Numeros = '0123456789';
 begin
-  Result := True;
+  Result := False;
   for i := 1 to Length(Str) - 1 do
-    if pos(Str[i], Numeros) = 0 then
+    if pos(Str[i], Numeros) <> 0 then
     begin
-      Result := False;
+      Result := True;
       Break;
     end;
 end;
@@ -384,12 +383,20 @@ end;
 // Función para comprobar los nombres de los ficheros (xxxx_xxxx.xxx)
 Function IsValidOffsetFileName(FName: String; var NumI, NumD: String): Boolean;
 begin
-  Result := True;
+  Result := False;
   FName := TPath.GetFileNameWithoutExtension(FName);
   NumI := Copy(FName, 1, pos('_', FName) - 1);
-  NumD := Copy(FName, pos('_', FName) + 1, Length(FName) - pos('_', FName));
-  if not(IsNumber(NumI)) or not(IsNumber(NumD)) then
-    Result := False;
+  if Form1.ChkAleatorio.Checked then
+  begin
+    Delete(FName, 1, pos('_', FName));
+    NumD := Copy(FName, 1, pos('_', FName) - 1);
+  end
+  else
+  begin
+    NumD := Copy(FName, pos('_', FName) + 1, Length(FName) - pos('_', FName));
+  end;
+  if (IsNumber(NumI)) and (IsNumber(NumD)) then
+    Result := True;
 end;
 
 // Función para añadir offsets al listado teniendo en cuenta ficheros consecutivos (Es un poco chapuza por ahora, pero funcional)
@@ -539,12 +546,14 @@ begin
   end;
   ListView1.clear;
   BDetener.Visible := True;
+  BtnMostrarLista.Enabled:= False;
   Vaciar := False;
   if RadComb.Checked then
     Vaciar := CheckVaciar.Checked;
   TIniciar := HPrincipal.Create(False);
   TIniciar.WaitFor;
   BDetener.Visible := False;
+  BtnMostrarLista.Enabled:= True;
   if (CheckGen.Checked) and NOT(RadComb.Checked) then
     AddToList;
   if RadComb.Checked then

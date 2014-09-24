@@ -70,7 +70,10 @@ begin
     Inicio := Tam;
   Repeat
     if Terminated then
-      Exit;
+      begin
+        Form1.Estado.Caption := 'Proceso detenido.';
+        Exit;
+      end;
     if Form1.ChkAleatorio.Checked then
     begin
       Rell := RandomRange(0, 255);
@@ -99,10 +102,10 @@ begin
       TapadoCon + ExtractFileExt(Aux2);
     Application.ProcessMessages;
 
-    if not StrToFile(WideString(Aux), RutaOffsets + '\' + OffIni + '_' + sBytes
-      + ExtractFileExt(Aux2)) then
+    if not StrToFile(WideString(Aux), RutaOffsets + '\' + OffIni + '_' + sBytes +
+      TapadoCon + ExtractFileExt(Aux2)) then
       Log.Add('Error AvFucker: ' + RutaOffsets + '\' + OffIni + '_' + sBytes +
-        ExtractFileExt(Aux2));
+        TapadoCon +  ExtractFileExt(Aux2));
 
     Inc(Inicio, Bytes);
   until Inicio > Fin;
