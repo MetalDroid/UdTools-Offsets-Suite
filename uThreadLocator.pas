@@ -26,6 +26,8 @@ implementation
 
 uses
   uUOS;
+var
+  Log: TStringList;
 
 // Función para eliminar todos los ficheros existentes en el Directorio de trabajo
 Procedure HPrincipal.VaciarCarpeta;
@@ -40,7 +42,8 @@ begin
       Application.ProcessMessages;
       if (SearchResult.Attr and faArchive = faArchive) and
         (SearchResult.Attr and faDirectory <> faDirectory) then
-        Deletefile(PChar(Form1.EdDir.Text + '\' + SearchResult.Name));
+        if not Deletefile(PChar(Form1.EdDir.Text + '\' + SearchResult.Name)) then
+          Log.Add('Error eliminando: ' + Form1.EdDir.Text + '\' + SearchResult.Name);
     until FindNext(SearchResult) <> 0;
     System.SysUtils.FindClose(SearchResult);
   end;
@@ -55,10 +58,7 @@ var
   Aux: AnsiString;
   Aux2, OffIni, sBytes: String;
   TapadoCon: String;
-  Log: TStringList;
 begin
-  Log := nil;
-  Log := TStringList.Create;
   TapadoCon := '';
   Aux2 := Fichero;
   Fichero := FileToStr(Fichero);
@@ -109,20 +109,7 @@ begin
 
     Inc(Inicio, Bytes);
   until Inicio > Fin;
-  if Log.Count > 0 then
-  begin
-    try
-      ErrorLog(Log, ExtractFilePath(ParamStr(0)) + '\LogAvFucker.txt');
-    finally
-      Form1.Estado.Caption :=
-        'Proceso terminado con errores (ver LogAvFucker.txt)';
-      Log.Free;
-    end;
-  end
-  else
-  begin
-    Form1.Estado.Caption := 'Proceso terminado.';
-  end;
+  Form1.Estado.Caption := 'Proceso terminado.';
 end;
 
 // Función para realizar DSplit
@@ -134,10 +121,7 @@ var
   IniAux, IniAuxUlt: Integer;
   TamFichero: Integer;
   Ultimo: Boolean;
-  Log: TStringList;
 begin
-  Log := nil;
-  Log := TStringList.Create;
   FichAux := Fichero;
   Fichero := FileToStr(Fichero);
   TamFichero := Length(Fichero);
@@ -188,39 +172,14 @@ begin
 
     If IniAux - 1 >= Fin then
     begin
-      if Log.Count > 0 then
-      begin
-        try
-          ErrorLog(Log, ExtractFilePath(ParamStr(0)) + '\LogDSplit.txt');
-        finally
-          Form1.Estado.Caption :=
-            'Proceso terminado con errores (ver LogDSplit.txt)';
-          Log.Free;
-        end;
-      end
-      else
-      begin
-        Form1.Estado.Caption := 'Proceso terminado.';
-      end;
+      Form1.Estado.Caption := 'Proceso terminado.';
       Exit;
     end;
 
     Inc(IniAux, Bytes);
   until Ultimo = True;
-  if Log.Count > 0 then
-  begin
-    try
-      ErrorLog(Log, ExtractFilePath(ParamStr(0)) + '\LogDSplit.txt');
-    finally
-      Form1.Estado.Caption :=
-        'Proceso terminado con errores (ver LogDSplit.txt)';
-      Log.Free;
-    end;
-  end
-  else
-  begin
-    Form1.Estado.Caption := 'Proceso terminado.';
-  end;
+
+  Form1.Estado.Caption := 'Proceso terminado.';
 end;
 
 Procedure HPrincipal.Combinaciones;
@@ -236,10 +195,7 @@ var
   TamFich: DWORD;
   IniAux, FinAux: Integer;
   OffActAux: Integer;
-  Log: TStringList;
 begin
-  Log := nil;
-  Log := TStringList.Create;
   Fichero := Form1.EdFichero.Text;
   Extension := ExtractFileExt(Fichero);
   Ruta := Form1.EdDir.Text;
@@ -307,20 +263,7 @@ begin
       end;
       Delete(OffsetsEspacios, 1, pos(' ', OffsetsEspacios));
     until Length(OffAct) = 0;
-    if Log.Count > 0 then
-    begin
-      try
-        ErrorLog(Log, ExtractFilePath(ParamStr(0)) + '\LogCombin.txt');
-      finally
-        Form1.Estado.Caption :=
-          'Proceso terminado con errores (ver LogCombin.txt)';
-        Log.Free;
-      end;
-    end
-    else
-    begin
-      Form1.Estado.Caption := 'Proceso terminado.';
-    end;
+    Form1.Estado.Caption := 'Proceso terminado.';
   end;
 end;
 
@@ -384,6 +327,9 @@ end;
 // Ejecución del Thread según proceda sincronizado con el form principal para mostrar el proceso en tiempo real
 procedure HPrincipal.Execute;
 begin
+  Log := nil;
+  Log := TStringList.Create;
+
   if Form1.CheckVaciar.Checked then
     Synchronize(VaciarCarpeta);
   if Form1.RadAvFucker.Checked then
@@ -395,6 +341,13 @@ begin
     Synchronize(Split);
   if Form1.RadComb.Checked then
     Synchronize(Combinaciones);
+  if Log.Count > 0 then
+    try
+      ErrorLog(Log, ExtractFilePath(ParamStr(0)) + '\LogErrores.txt');
+    finally
+      Form1.Estado.Caption := 'Proceso terminado con errores (ver LogErrores.txt)';
+      Log.Free;
+    end;
   { Place thread code here }
 end;
 
