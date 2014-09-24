@@ -344,7 +344,10 @@ begin
   Application.MessageBox
     ('Especifica el nombre del fichero que se genera al ejecutar tu fichero o anotador.'
     + #13#10 + 'Ejemplo: funcionales.txt' + #13#10#13#10 +
-    'Este fichero sirve de referencia para detectar los ficheros funcionales.',
+    'Este fichero sirve de referencia para detectar los ficheros funcionales.' +
+    #13#10#13#10 +
+    'Es fundamental que este txt sea generado automáticamente al ejecutar tu fichero (sin pulsar nada más), de lo contrario no funcionará correctamente.' + #13#10#13#10 +
+    'Si tienes dudas, usa el anotador incluido en el menú, no muestra ningún tipo de form, tan solo genera el txt si es funcional.',
     'Información Offsets Checker', MB_OK or MB_ICONINFORMATION);
 end;
 
