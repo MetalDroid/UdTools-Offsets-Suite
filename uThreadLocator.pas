@@ -54,7 +54,10 @@ var
   o, Rell, Tam: Integer;
   Aux: AnsiString; Aux2, OffIni, sBytes: String;
   TapadoCon: String;
+  Log: TStringList;
 begin
+  Log:= nil;
+  Log:= TStringList.Create;
   TapadoCon:= '';
   Aux2 := Fichero;
   Fichero := FileToStr(Fichero);
@@ -90,18 +93,30 @@ begin
     end;
 
     OffIni := Inicio.ToString;
-    // sBytes := IntToStr(Bytes);
 
     Form1.Estado.Caption := 'Procesando fichero: ' + OffIni + '_' + sBytes + TapadoCon +
       ExtractFileExt(Aux2);
     Application.ProcessMessages;
 
-    StrToFile(WideString(Aux), RutaOffsets + '\' + OffIni + '_' + sBytes +
-      ExtractFileExt(Aux2));
+    if not StrToFile(WideString(Aux), RutaOffsets + '\' + OffIni + '_' + sBytes +
+      ExtractFileExt(Aux2)) then
+      Log.Add('Error AvFucker: ' + RutaOffsets + '\' + OffIni + '_' + sBytes + ExtractFileExt(Aux2));
 
     Inc(Inicio, Bytes);
   until Inicio > Fin;
-  Form1.Estado.Caption := 'Proceso terminado.';
+  if Log.Count > 0 then
+    begin
+      try
+        ErrorLog(Log, ExtractFilePath(ParamStr(0)) + '\LogAvFucker.txt');
+      finally
+        Form1.Estado.Caption := 'Proceso terminado con errores (ver LogAvFucker.txt)';
+        Log.Free;
+      end;
+    end
+    else
+    begin
+      Form1.Estado.Caption := 'Proceso terminado.';
+    end;
 end;
 
 // Función para realizar DSplit
@@ -113,7 +128,10 @@ var
   IniAux, IniAuxUlt: Integer;
   TamFichero: Integer;
   Ultimo: Boolean;
+  Log: TStringList;
 begin
+  Log:= nil;
+  Log:= TStringList.Create;
   FichAux := Fichero;
   Fichero := FileToStr(Fichero);
   TamFichero := Length(Fichero);
@@ -129,9 +147,6 @@ begin
 
   if IniAux < (Bytes +1) then
     IniAux := Bytes +1;
-
-  //if Bytes > IniAux then
-
 
   Ultimo := False;
 
@@ -151,21 +166,53 @@ begin
       '_' + Bytes.ToString + ExtractFileExt(FichAux);
     Application.ProcessMessages;
     if not(Ultimo) then
-      StrToFile(FichFinal, RutaOffsets + '\' + IntToStr(IniAux - 1) + '_' +
-        IntToStr(Bytes) + ExtractFileExt(FichAux))
-    else
-      StrToFile(FichFinal, RutaOffsets + '\' + IntToStr(IniAux - 1) + '_' +
-        IntToStr(IniAuxUlt) + ExtractFileExt(FichAux));
+      begin
+        if not StrToFile(FichFinal, RutaOffsets + '\' + IntToStr(IniAux - 1) + '_' +
+          IntToStr(Bytes) + ExtractFileExt(FichAux)) then
+            Log.Add('Error DSplit: ' + RutaOffsets + '\' + IntToStr(IniAux - 1) + '_' +
+              IntToStr(Bytes) + ExtractFileExt(FichAux));
+      end
+      else
+      begin
+        if not StrToFile(FichFinal, RutaOffsets + '\' + IntToStr(IniAux - 1) + '_' +
+          IntToStr(IniAuxUlt) + ExtractFileExt(FichAux)) then
+            Log.Add('Error DSplit: ' + RutaOffsets + '\' + IntToStr(IniAux - 1) + '_' +
+            IntToStr(Bytes) + ExtractFileExt(FichAux));
+      end;
 
     If IniAux - 1 >= Fin then
     begin
-      Form1.Estado.Caption := 'Proceso terminado.';
+      if Log.Count > 0 then
+        begin
+          try
+            ErrorLog(Log, ExtractFilePath(ParamStr(0)) + '\LogDSplit.txt');
+          finally
+            Form1.Estado.Caption := 'Proceso terminado con errores (ver LogDSplit.txt)';
+            Log.Free;
+          end;
+        end
+        else
+        begin
+          Form1.Estado.Caption := 'Proceso terminado.';
+        end;
       Exit;
     end;
 
     Inc(IniAux, Bytes);
   until Ultimo = True;
-  Form1.Estado.Caption := 'Proceso terminado.';
+  if Log.Count > 0 then
+    begin
+      try
+        ErrorLog(Log, ExtractFilePath(ParamStr(0)) + '\LogDSplit.txt');
+      finally
+        Form1.Estado.Caption := 'Proceso terminado con errores (ver LogDSplit.txt)';
+        Log.Free;
+      end;
+    end
+    else
+    begin
+      Form1.Estado.Caption := 'Proceso terminado.';
+     end;
 end;
 
 Procedure HPrincipal.Combinaciones;
@@ -181,7 +228,10 @@ var
   TamFich: DWORD;
   IniAux, FinAux: Integer;
   OffActAux: Integer;
+  Log: TStringList;
 begin
+  Log:= nil;
+  Log:= TStringList.Create;
   Fichero := Form1.EdFichero.Text;
   Extension := ExtractFileExt(Fichero);
   Ruta := Form1.EdDir.Text;
@@ -211,8 +261,10 @@ begin
         Form1.Estado.Caption := 'Procesando fichero: ' + IntToStr(i) + '_' +
           IntToHex(j, 2) + Extension;
         Application.ProcessMessages;
-        StrToFile(WideString(FichAux), Ruta + '\' + i.ToString + '_' + j.ToHexString(2) +
-          Extension);
+        if not StrToFile(WideString(FichAux), Ruta + '\' + i.ToString + '_' + j.ToHexString(2) +
+          Extension) then
+          Log.Add('Error Combinaciones (Prog.): ' + Ruta + '\' + i.ToString + '_' + j.ToHexString(2) +
+            Extension);
       end;
     Form1.Estado.Caption := 'Proceso terminado.';
   end;
@@ -237,14 +289,28 @@ begin
             Form1.Estado.Caption := 'Procesando fichero: ' +
               OffActAux.ToString + '_' + i.ToHexString(2) + Extension;
             Application.ProcessMessages;
-            StrToFile(WideString(FichAux), Ruta + '\' + OffActAux.ToString + '_' +
+            if not StrToFile(WideString(FichAux), Ruta + '\' + OffActAux.ToString + '_' +
+              i.ToHexString(2) + Extension) then
+              Log.Add('Error Combinaciones (Select.): ' + Ruta + '\' + OffActAux.ToString + '_' +
               i.ToHexString(2) + Extension);
           end;
         end;
       end;
       Delete(OffsetsEspacios, 1, pos(' ', OffsetsEspacios));
     until Length(OffAct) = 0;
-    Form1.Estado.Caption := 'Proceso terminado.';
+      if Log.Count > 0 then
+    begin
+      try
+        ErrorLog(Log, ExtractFilePath(ParamStr(0)) + '\LogCombin.txt');
+      finally
+        Form1.Estado.Caption := 'Proceso terminado con errores (ver LogCombin.txt)';
+        Log.Free;
+      end;
+    end
+    else
+    begin
+      Form1.Estado.Caption := 'Proceso terminado.';
+    end;
   end;
 end;
 

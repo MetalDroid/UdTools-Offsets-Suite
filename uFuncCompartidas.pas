@@ -3,16 +3,23 @@ unit uFuncCompartidas;
 interface
 
 uses
-  System.SysUtils, Winapi.Windows;
+  System.SysUtils, Winapi.Windows, System.Classes;
 
 Function FileToStr(mFile: String): String;
 Function StrToFile(Str, Ruta: String): Boolean;
 Procedure ListarFicheros;
+Procedure ErrorLog(Errores: TStringList; mFile: String);
 
 implementation
 
 uses
   uUOS;
+
+//Guarda Log en caso de errores
+procedure ErrorLog(Errores: TStringList; mFile: String);
+begin
+  Errores.SaveToFile(mFile);
+end;
 
 // Función para almacenar los bytes del fichero en una cadena
 Function FileToStr(mFile: String): String;
