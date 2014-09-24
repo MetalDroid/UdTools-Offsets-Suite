@@ -43,7 +43,7 @@ begin
       if (SearchResult.Attr and faArchive = faArchive) and
         (SearchResult.Attr and faDirectory <> faDirectory) then
         if not Deletefile(PChar(Form1.EdDir.Text + '\' + SearchResult.Name)) then
-          Log.Add('Error eliminando: ' + Form1.EdDir.Text + '\' + SearchResult.Name);
+          Log.Add('Error Vaciando Carpeta: ' + Form1.EdDir.Text + '\' + SearchResult.Name);
     until FindNext(SearchResult) <> 0;
     System.SysUtils.FindClose(SearchResult);
   end;
@@ -104,7 +104,7 @@ begin
 
     if not StrToFile(WideString(Aux), RutaOffsets + '\' + OffIni + '_' + sBytes +
       TapadoCon + ExtractFileExt(Aux2)) then
-      Log.Add('Error AvFucker: ' + RutaOffsets + '\' + OffIni + '_' + sBytes +
+      Log.Add('Error de escritura AvFucker: ' + RutaOffsets + '\' + OffIni + '_' + sBytes +
         TapadoCon +  ExtractFileExt(Aux2));
 
     Inc(Inicio, Bytes);
@@ -159,14 +159,14 @@ begin
     begin
       if not StrToFile(FichFinal, RutaOffsets + '\' + IntToStr(IniAux - 1) + '_'
         + IntToStr(Bytes) + ExtractFileExt(FichAux)) then
-        Log.Add('Error DSplit: ' + RutaOffsets + '\' + IntToStr(IniAux - 1) +
+        Log.Add('Error de escritura DSplit: ' + RutaOffsets + '\' + IntToStr(IniAux - 1) +
           '_' + IntToStr(Bytes) + ExtractFileExt(FichAux));
     end
     else
     begin
       if not StrToFile(FichFinal, RutaOffsets + '\' + IntToStr(IniAux - 1) + '_'
         + IntToStr(IniAuxUlt) + ExtractFileExt(FichAux)) then
-        Log.Add('Error DSplit: ' + RutaOffsets + '\' + IntToStr(IniAux - 1) +
+        Log.Add('Error de escritura DSplit: ' + RutaOffsets + '\' + IntToStr(IniAux - 1) +
           '_' + IntToStr(Bytes) + ExtractFileExt(FichAux));
     end;
 
@@ -227,7 +227,7 @@ begin
         Application.ProcessMessages;
         if not StrToFile(WideString(FichAux), Ruta + '\' + i.ToString + '_' +
           j.ToHexString(2) + Extension) then
-          Log.Add('Error Combinaciones (Prog.): ' + Ruta + '\' + i.ToString +
+          Log.Add('Error e escritura Combinaciones (Prog.): ' + Ruta + '\' + i.ToString +
             '_' + j.ToHexString(2) + Extension);
       end;
     Form1.Estado.Caption := 'Proceso terminado.';
@@ -256,7 +256,7 @@ begin
             if not StrToFile(WideString(FichAux),
               Ruta + '\' + OffActAux.ToString + '_' + i.ToHexString(2) +
               Extension) then
-              Log.Add('Error Combinaciones (Select.): ' + Ruta + '\' +
+              Log.Add('Error de escritura Combinaciones (Select.): ' + Ruta + '\' +
                 OffActAux.ToString + '_' + i.ToHexString(2) + Extension);
           end;
         end;

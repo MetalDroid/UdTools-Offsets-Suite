@@ -19,6 +19,8 @@ implementation
 
 uses
   uUOS;
+var
+  Log: TStringList;
 
 // Función para eliminar todos los ficheros existentes en el Directorio de trabajo
 Procedure HReplacer.VaciarCarpeta;
@@ -32,7 +34,8 @@ begin
     repeat
       if (SearchResult.Attr and faArchive = faArchive) and
         (SearchResult.Attr and faDirectory <> faDirectory) then
-        Deletefile(PChar(Form1.EdDir.Text + '\' + SearchResult.Name));
+        if not Deletefile(PChar(Form1.EdDir.Text + '\' + SearchResult.Name)) then
+          Log.Add('Error Vaciando Carpeta: ' + Form1.EdDir.Text + '\' + SearchResult.Name);
     until FindNext(SearchResult) <> 0;
     System.SysUtils.FindClose(SearchResult);
   end;
@@ -81,8 +84,9 @@ begin
         Exit;
       inc(Coincidencias);
       FicheroF[i] := AnsiChar(Reemplazo);
-      StrToFile(WideString(FicheroF), Directorio + '\' + (i - 1).ToString +
-        Extension);
+      if not StrToFile(WideString(FicheroF), Directorio + '\' + (i - 1).ToString +
+        Extension) then
+        Log.Add('Error de escritura Replacer: ' + Directorio + '\' + (i - 1).ToString + Extension);
       Form1.Estado.Caption := 'Procesando fichero ' + (i - 1).ToString +
         Extension;
       Application.ProcessMessages;
@@ -96,9 +100,18 @@ end;
 
 procedure HReplacer.Execute;
 begin
+  Log := nil;
+  Log := TStringList.Create;
   if Form1.CheckVaciarR.Checked then
     Synchronize(VaciarCarpeta);
   Synchronize(Generar);
+  if Log.Count > 0 then
+    try
+      ErrorLog(Log, ExtractFilePath(ParamStr(0)) + '\LogErrores.txt');
+    finally
+      Form1.Estado.Caption := 'Proceso terminado con errores (ver LogErrores.txt)';
+      Log.Free;
+    end;
   { Place thread code here }
 end;
 
