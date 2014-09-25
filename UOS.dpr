@@ -13,7 +13,8 @@ uses
   uThreadChecker in 'uThreadChecker.pas',
   uAddToList in 'uAddToList.pas' {Form2},
   ABOUT in 'ABOUT.pas' {AboutBox},
-  uListaGuardada in 'uListaGuardada.pas' {Form3};
+  uListaGuardada in 'uListaGuardada.pas' {Form3},
+  uIdiomas in 'uIdiomas.pas';
 
 {$R *.res}
 {$R Anotador.res}
