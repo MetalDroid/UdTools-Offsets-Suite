@@ -584,6 +584,7 @@ begin
   begin
     Button3.Enabled := False;
     BtnIniciar.Enabled := False;
+    ListView1.Clear;
   end;
   Label22.Caption := 'El fichero se guardará como Patched' +
     ExtractFileExt(EdFichero.Text);
