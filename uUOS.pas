@@ -471,13 +471,16 @@ end;
 
 procedure TForm1.BtnMostrarListaClick(Sender: TObject);
 begin
-  AddToList;
+  if (FileExists(EdFichero.Text)) and (System.SysUtils.DirectoryExists(EdDir.Text)) then
+    AddToList;
 end;
 
 procedure TForm1.BtnAVFListaClick(Sender: TObject);
 var
   Vaciar: Boolean;
 begin
+  if not(FileExists(EdFichero.Text)) or not(System.SysUtils.DirectoryExists(EdDir.Text)) then
+    Exit;
   BtnListado := True;
   Vaciar := CheckVaciar.Checked;
   BDetener.Visible := True;

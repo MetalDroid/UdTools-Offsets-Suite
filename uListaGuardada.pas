@@ -21,6 +21,7 @@ type
     PopupMenu1: TPopupMenu;
     EliminarSeleccionados1: TMenuItem;
     LimpiarLista1: TMenuItem;
+    ChkRestar: TCheckBox;
     procedure LimpiarLista1Click(Sender: TObject);
     procedure EliminarSeleccionados1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -70,7 +71,13 @@ begin
   begin
     Form1.EdInicio.Text := ListView1.Selected.Caption;
     Form1.EdFin.Text := ListView1.Selected.SubItems[0];
-    Form1.EdBytes.Text := ListView1.Selected.SubItems[1];
+    if not ChkRestar.Checked then
+      Form1.EdBytes.Text := ListView1.Selected.SubItems[1]
+    else
+      if Length(ListView1.Selected.SubItems[1]) > 1 then
+        Form1.EdBytes.Text := Copy(ListView1.Selected.SubItems[1], 1, Length(ListView1.Selected.SubItems[1]) -1)
+      else
+        Form1.EdBytes.Text := ListView1.Selected.SubItems[1];
     if CheckBox1.Checked then
       ListView1.DeleteSelected;
   end;

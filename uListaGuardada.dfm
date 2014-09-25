@@ -3,7 +3,7 @@ object Form3: TForm3
   Top = 0
   BorderStyle = bsSingle
   Caption = 'Lista guardada'
-  ClientHeight = 272
+  ClientHeight = 293
   ClientWidth = 356
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -121,6 +121,14 @@ object Form3: TForm3
     Height = 21
     TabOrder = 5
     Text = '1000'
+  end
+  object ChkRestar: TCheckBox
+    Left = 8
+    Top = 266
+    Width = 264
+    Height = 17
+    Caption = 'Restar Bytes al a'#241'adir al Locator (1000 -> 100).'
+    TabOrder = 6
   end
   object PopupMenu1: TPopupMenu
     OnPopup = PopupMenu1Popup
