@@ -119,6 +119,9 @@ type
     N1: TMenuItem;
     ChkAleatorio: TCheckBox;
     Button4: TButton;
+    I1: TMenuItem;
+    C1: TMenuItem;
+    E1: TMenuItem;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);

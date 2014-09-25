@@ -949,6 +949,15 @@ object Form1: TForm1
         end
       end
     end
+    object I1: TMenuItem
+      Caption = 'Idioma'
+      object C1: TMenuItem
+        Caption = 'Cargar idioma'
+      end
+      object E1: TMenuItem
+        Caption = 'Escribir plantilla para idiomas en disco'
+      end
+    end
     object Acercade1: TMenuItem
       Caption = 'Ayuda'
       object Visitarenlacedelproyecto1: TMenuItem
