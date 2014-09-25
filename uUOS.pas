@@ -165,7 +165,6 @@ type
     procedure Edit3KeyPress(Sender: TObject; var Key: Char);
     procedure TabSheet4Show(Sender: TObject);
     procedure Edit6KeyPress(Sender: TObject; var Key: Char);
-    procedure EdFicheroChange(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Edit7KeyPress(Sender: TObject; var Key: Char);
     procedure Aadir1Click(Sender: TObject);
@@ -265,6 +264,10 @@ begin
       Form1.Estado.Caption := 'Fichero cargado.';
       Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
         ExtractFileExt(OpenDialog1.FileName);
+      Button3.Enabled := True;
+      BtnIniciar.Enabled := True;
+      ListView1.Clear;
+      Label22.Caption := 'El fichero se guardará como Patched' + ExtractFileExt(EdFichero.Text);
       if System.SysUtils.DirectoryExists(EdDir.Text) then
         ListarFicheros;
     end;
@@ -571,23 +574,6 @@ end;
 procedure TForm1.EdEsperaDblClick(Sender: TObject);
 begin
   EdEspera.Text := '750';
-end;
-
-procedure TForm1.EdFicheroChange(Sender: TObject);
-begin
-  if FileExists(EdFichero.Text) then
-  begin
-    Button3.Enabled := True;
-    BtnIniciar.Enabled := True;
-  end
-  else
-  begin
-    Button3.Enabled := False;
-    BtnIniciar.Enabled := False;
-    ListView1.Clear;
-  end;
-  Label22.Caption := 'El fichero se guardará como Patched' +
-    ExtractFileExt(EdFichero.Text);
 end;
 
 procedure TForm1.EdFinDblClick(Sender: TObject);

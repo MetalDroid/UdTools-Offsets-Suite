@@ -859,7 +859,6 @@ object Form1: TForm1
     ShowHint = True
     TabOrder = 1
     Text = 'Ruta del fichero'
-    OnChange = EdFicheroChange
   end
   object EdDir: TEdit
     Left = 8
