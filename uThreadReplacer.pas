@@ -3,7 +3,7 @@ unit uThreadReplacer;
 interface
 
 uses
-  System.Classes, System.SysUtils, uFuncCompartidas, Vcl.Forms, Winapi.Windows;
+  System.Classes, System.SysUtils, uFuncCompartidas, Vcl.Forms, Winapi.Windows, uIdiomas;
 
 type
   HReplacer = class(TThread)
@@ -28,18 +28,18 @@ var
   SearchResult: TSearchRec;
 begin
   SetCurrentDir(Form1.EdDir.Text);
-  Form1.Estado.Caption := 'Estado: Vaciando carpeta...';
+  Form1.Estado.Caption := Var15;
   if FindFirst('*', faArchive, SearchResult) = 0 then
   begin
     repeat
       if (SearchResult.Attr and faArchive = faArchive) and
         (SearchResult.Attr and faDirectory <> faDirectory) then
         if not Deletefile(PChar(Form1.EdDir.Text + '\' + SearchResult.Name)) then
-          Log.Add('Error Vaciando Carpeta:' + ' ' + Form1.EdDir.Text + '\' + SearchResult.Name);
+          Log.Add(Var16 + ' ' + Form1.EdDir.Text + '\' + SearchResult.Name);
     until FindNext(SearchResult) <> 0;
     System.SysUtils.FindClose(SearchResult);
   end;
-  Form1.Estado.Caption := 'Estado: Carpeta vaciada.';
+  Form1.Estado.Caption := Var17;
 end;
 
 // Esta Función busca byte a byte el valor que digamos dentro de un fichero y genera fichero nuevo con la offset modificada (NO sobreescribe el fichero original)
@@ -71,7 +71,7 @@ begin
     if (Inicio > TamFich) or (Fin > TamFich) or (Inicio < 0) or (Fin < 0) or
       (Fin < Inicio) then
     begin
-      Form1.Estado.Caption := 'Secuencia no válida.';
+      Form1.Estado.Caption := Var2;
       Exit;
     end;
   end;
@@ -86,14 +86,14 @@ begin
       FicheroF[i] := AnsiChar(Reemplazo);
       if not StrToFile(WideString(FicheroF), Directorio + '\' + (i - 1).ToString +
         Extension) then
-        Log.Add('Error de escritura Replacer:' + ' ' + Directorio + '\' + (i - 1).ToString + Extension);
-      Form1.Estado.Caption := 'Procesando fichero' + ' ' + (i - 1).ToString +
+        Log.Add(Var26 + ' ' + Directorio + '\' + (i - 1).ToString + Extension);
+      Form1.Estado.Caption := Var27 + ' ' + (i - 1).ToString +
         Extension;
       Application.ProcessMessages;
     end;
   end;
-  Form1.Estado.Caption := 'Proceso completado. Encontradas' + ' ' +
-    Coincidencias.ToString + ' ' + 'coincidencias.';
+  Form1.Estado.Caption := Var28 + ' ' +
+    Coincidencias.ToString + ' ' + Var29;
 end;
 
 { HReplacer }
@@ -109,7 +109,7 @@ begin
     try
       ErrorLog(Log, ExtractFilePath(ParamStr(0)) + '\LogErrores.txt');
     finally
-      Form1.Estado.Caption := 'Proceso terminado con errores (ver LogErrores.txt)';
+      Form1.Estado.Caption := Var24;
       Log.Free;
     end;
   { Place thread code here }

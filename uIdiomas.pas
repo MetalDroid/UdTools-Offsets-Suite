@@ -165,7 +165,7 @@ begin
     Var22:= Idioma.ReadString('Internal', 'Var22', 'Error e escritura Combinaciones (Prog.):');
     Var23:= Idioma.ReadString('Internal', 'Var23', 'Error de escritura Combinaciones (Select.):');
     Var24:= Idioma.ReadString('Internal', 'Var24', 'Proceso terminado con errores (ver LogErrores.txt)');
-    Var25:= Idioma.ReadString('Internal', 'Var25', 'Error Vaciando Carpeta:');
+    //Var25:= Idioma.ReadString('Internal', 'Var25', 'Error Vaciando Carpeta:');
     Var26:= Idioma.ReadString('Internal', 'Var26', 'Error de escritura Replacer:');
     Var27:= Idioma.ReadString('Internal', 'Var27', 'Procesando fichero');
     Var28:= Idioma.ReadString('Internal', 'Var28', 'Proceso completado. Encontradas');
@@ -187,7 +187,7 @@ begin
     Var44:= Idioma.ReadString('Internal', 'Var44', 'Este fichero sirve de referencia para detectar los ficheros funcionales.');
     Var45:= Idioma.ReadString('Internal', 'Var45', 'Es fundamental que este txt sea generado automáticamente al ejecutar tu fichero (sin pulsar nada más), de lo contrario no funcionará correctamente.');
     Var46:= Idioma.ReadString('Internal', 'Var46', 'Si tienes dudas, usa el anotador incluido en el menú, no muestra ningún tipo de form, tan solo genera el txt si es funcional.');
-    Var47:= Idioma.ReadString('Internal', 'Var47', 'Información Offsets Checker');
+    //Var47:= Idioma.ReadString('Internal', 'Var47', 'Información Offsets Checker');
     Var48:= Idioma.ReadString('Internal', 'Var48', 'Fichero o Ruta inexistente.');
     Var49:= Idioma.ReadString('Internal', 'Var49', 'Anotador.exe generado.');
     Var50:= Idioma.ReadString('Internal', 'Var50', 'No se pudo generar el Anotador.exe');

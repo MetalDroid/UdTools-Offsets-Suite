@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, uIdiomas;
 
 type
   TForm2 = class(TForm)
@@ -59,12 +59,12 @@ begin
     OffIni := Form2.EdInicio.Text;
     OffFin := Form2.EdFin.Text;
     if (OffIni = '') or (OffFin = '') then
-      raise Exception.Create('Secuencia no permitida.');
+      raise Exception.Create(Var2);
 
     if (OffIni.ToInteger > TamFich) or (OffFin.ToInteger > TamFich) or
       (OffIni.ToInteger < 0) or (OffFin.ToInteger < 0) or
       (OffFin.ToInteger < OffIni.ToInteger) then
-      raise Exception.Create('Secuencia no permitida.');
+      raise Exception.Create(Var2);
 
     With Form1.ListView1.Items.Add do
     begin
@@ -99,13 +99,13 @@ begin
     until Length(OffAct) = 0;
   end;
 
-  Form1.Estado.Caption := 'Se añadieron offsets a la lista.';
+  Form1.Estado.Caption := Var3;
   Form2.Close;
 end;
 
 procedure TForm2.FormShow(Sender: TObject);
 begin
-  Panel1.Caption := 'Info: Offset máxima permitida:' + ' ' +
+  Panel1.Caption := Var4 + ' ' +
     IntToStr(Integer(GetCompressedFileSize(PChar(Form1.EdFichero.Text),
     nil)) - 1);
 end;

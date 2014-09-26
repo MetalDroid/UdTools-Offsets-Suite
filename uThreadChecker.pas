@@ -5,7 +5,7 @@ interface
 uses
   System.Classes, Winapi.tlHelp32, Winapi.Windows, System.SysUtils,
   Winapi.Shellapi,
-  Winapi.Messages, Vcl.Forms, Vcl.Graphics;
+  Winapi.Messages, Vcl.Forms, Vcl.Graphics, uIdiomas;
 
 type
   HChecker = class(TThread)
@@ -68,7 +68,7 @@ begin
   TotalFiles := Form1.ListView2.Items.Count;
   if TotalFiles = 0 then
   begin
-    Form1.Estado.Caption := 'No hay ficheros para comprobar.';
+    Form1.Estado.Caption := Var5;
     Exit;
   end;
   for i := 0 to TotalFiles - 1 do
@@ -80,7 +80,7 @@ begin
         Break;
     FicheroActual := ExtractFileName(Form1.ListView2.Items.Item[i].Caption);
     RutaCompleta := Form1.ListView2.Items.Item[i].Caption;
-    Form1.Estado.Caption := 'Comprobando fichero:' + ' ' + FicheroActual;
+    Form1.Estado.Caption := Var6 + ' ' + FicheroActual;
     ShellExecute(0, 'open', PChar(RutaCompleta), nil, nil, SW_SHOW);
     Sleep(Espera);
 
@@ -90,19 +90,19 @@ begin
       begin
         while FileExists(Funcionales) do
           DeleteFile(Funcionales);
-        Form1.ListView2.Items.Item[i].SubItems[0] := 'Sí';
+        Form1.ListView2.Items.Item[i].SubItems[0] := Var7;
         Application.ProcessMessages;
         inc(OFuncionales);
       end
       else
       begin
-        Form1.ListView2.Items.Item[i].SubItems[0] := 'No';
+        Form1.ListView2.Items.Item[i].SubItems[0] := Var8;
         Application.ProcessMessages;
       end;
     end
     else
     begin
-      Form1.ListView2.Items.Item[i].SubItems[0] := 'En espera';
+      Form1.ListView2.Items.Item[i].SubItems[0] := Var9;
       Application.ProcessMessages;
     end;
 
@@ -136,14 +136,14 @@ begin
             if pos(TSFuncionales.Strings[o], Form1.ListView2.Items.Item[i]
               .Caption) <> 0 then
             begin
-              Form1.ListView2.Items.Item[i].SubItems[0] := 'Sí';
+              Form1.ListView2.Items.Item[i].SubItems[0] := Var7;
               inc(OFuncionales);
               Application.ProcessMessages;
               Break;
             end
             else
             begin
-              Form1.ListView2.Items.Item[i].SubItems[0] := 'No';
+              Form1.ListView2.Items.Item[i].SubItems[0] := Var8;
               Application.ProcessMessages;
             end;
           end;
@@ -160,7 +160,7 @@ begin
     begin
       if Terminated then
         Exit;
-      Form1.Estado.Caption := 'Buscando procesos no cerrados...';
+      Form1.Estado.Caption := Var10;
       Application.ProcessMessages;
       FicheroActual := ExtractFileName(Form1.ListView2.Items.Item[i].Caption);
       hFindW := 0;
@@ -176,22 +176,22 @@ begin
   // Si está marcado, eliminamos las no funcionales
   if Form1.ChkElimNoF.Checked then
     for i := 0 to TotalFiles - 1 do
-      if Form1.ListView2.Items.Item[i].SubItems[0] = 'No' then
+      if Form1.ListView2.Items.Item[i].SubItems[0] = Var8 then
       begin
         DeleteFile(Form1.ListView2.Items.Item[i].Caption);
-        Form1.Estado.Caption := 'Eliminando ficheros no funcionales...';
+        Form1.Estado.Caption := Var11;
         Application.ProcessMessages;
       end;
 
   if NOT Form1.CheckBox1.Checked then
-    Form1.Estado.Caption := 'Proceso completado. Se encontraron' + ' ' +
-      IntToStr(OFuncionales) + ' ' + 'funcionales.'
+    Form1.Estado.Caption := Var12 + ' ' +
+      IntToStr(OFuncionales) + ' ' + Var13
   else if OFuncionales = Max then
-    Form1.Estado.Caption := 'Proceso detenido al obtener' + ' ' +
-      IntToStr(OFuncionales) + ' ' + 'funcionales.'
+    Form1.Estado.Caption := Var14 + ' ' +
+      IntToStr(OFuncionales) + ' ' + Var13
   else
-    Form1.Estado.Caption := 'Proceso completado. Se encontraron' + ' ' +
-      IntToStr(OFuncionales) + ' ' + 'funcionales.';
+    Form1.Estado.Caption := Var12 + ' ' +
+      IntToStr(OFuncionales) + ' ' + Var13;
 end;
 
 { HChecker }

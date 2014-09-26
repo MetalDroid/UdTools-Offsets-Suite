@@ -429,6 +429,10 @@ object Form1: TForm1
       Caption = 'Replacer'
       ImageIndex = 1
       OnShow = TabSheet2Show
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label11: TLabel
         Left = 4
         Top = 65
@@ -591,6 +595,10 @@ object Form1: TForm1
       Caption = 'Checker'
       ImageIndex = 2
       OnShow = TabSheet3Show
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label17: TLabel
         Left = 3
         Top = 98
@@ -792,6 +800,10 @@ object Form1: TForm1
       Caption = 'Patcher'
       ImageIndex = 3
       OnShow = TabSheet4Show
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label20: TLabel
         Left = 3
         Top = 33

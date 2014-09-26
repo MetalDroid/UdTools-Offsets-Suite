@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.Menus;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.Menus, uIdiomas;
 
 type
   TForm3 = class(TForm)
@@ -81,7 +81,7 @@ begin
     if CheckBox1.Checked then
       ListView1.DeleteSelected;
   end;
-  Form1.Estado.Caption:= 'Cambios aplicados.';
+  Form1.Estado.Caption:= Var1;
   Form3.Close;
 end;
 

@@ -236,7 +236,7 @@ procedure TForm1.BDetenerChClick(Sender: TObject);
 begin
   if TChecker <> nil then
     TChecker.Terminate;
-  Estado.Caption := 'Proceso detenido.';
+  Estado.Caption := Var18;
   BDetenerCh.Visible := False;
 end;
 
@@ -259,18 +259,18 @@ begin
         1).ToString;
       EdInicio.Text := '1000';
       EdFin.Text := FichTam;
-      Label8.Caption := 'Máx: ' + FichTam;
-      Label9.Caption := 'Máx: ' + FichTam;
-      Label10.Caption := 'Máx: ' + FichTam;
-      Label15.Caption := 'Máx: ' + FichTam;
-      Label16.Caption := 'Máx: ' + FichTam;
-      Form1.Estado.Caption := 'Fichero cargado.';
-      Label18.Caption := 'Sólo se comprobarán ficheros con extensión:' + ' ' +
+      Label8.Caption := Var51 + ' ' + FichTam;
+      Label9.Caption := Var51 + ' ' + FichTam;
+      Label10.Caption := Var51 + ' ' + FichTam;
+      Label15.Caption := Var51 + ' ' + FichTam;
+      Label16.Caption := Var51 + ' ' + FichTam;
+      Form1.Estado.Caption := Var30;
+      Label18.Caption := Var31 + ' ' +
         ExtractFileExt(OpenDialog1.FileName);
       Button3.Enabled := True;
       BtnIniciar.Enabled := True;
       ListView1.Clear;
-      Label22.Caption := 'El fichero se guardará como' + ' Patched' + ExtractFileExt(EdFichero.Text);
+      Label22.Caption := Var32 + ' Patched' + ExtractFileExt(EdFichero.Text);
       if System.SysUtils.DirectoryExists(EdDir.Text) then
         ListarFicheros;
     end;
@@ -280,10 +280,10 @@ procedure TForm1.Button2Click(Sender: TObject);
 var
   Dir: string;
 begin
-  if SelectDirectory('Selecciona la carpeta de trabajo.', '', Dir) then
+  if SelectDirectory(Var33, '', Dir) then
   begin
     EdDir.Text := Dir;
-    Form1.Estado.Caption := 'Directorio cargado.';
+    Form1.Estado.Caption := Var34;
     ListarFicheros;
   end;
 end;
@@ -300,7 +300,7 @@ begin
   OffsetsEspacios := Edit6.Text;
   if Edit7.Text = '' then
   begin
-    Estado.Caption := 'Error: Valor incorrecto.';
+    Estado.Caption := Var35;
     Exit;
   end;
   Valor := StrToInt('$' + Edit7.Text);
@@ -321,18 +321,15 @@ begin
   if StrToFile(WideString(Fichero),
     IncludeTrailingPathDelimiter(ExtractFilePath(EdFichero.Text)) + 'Patched' +
     ExtractFileExt(EdFichero.Text)) then
-    Estado.Caption := 'Fichero guardado correctamente.'
+    Estado.Caption := Var36
   else
-    Estado.Caption := 'Error: El fichero no se pudo guardar. ¿Fichero en uso?';
+    Estado.Caption := Var37;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
 begin
-  Application.MessageBox('Especifica el tiempo entre ejecuciones.' + #13#10 +
-    #13#10 + 'Si tu fichero tiene algún tipo de retardo, aumenta el tiempo entre ejecuciones o no se detectarán funcionales.'
-    + #13#10 +
-    'Ten en cuenta que los ficheros NO deben inyectarse en procesos externos.',
-    'Información Offsets Checker', MB_OK or MB_ICONINFORMATION);
+  Application.MessageBox(PChar(Var38 + #13#10 + #13#10 + Var39 + #13#10 + Var40), PChar(Var41),
+    MB_OK or MB_ICONINFORMATION);
 end;
 
 procedure TForm1.BIniciarChClick(Sender: TObject);
@@ -346,14 +343,8 @@ end;
 
 procedure TForm1.BtnAyudaClick(Sender: TObject);
 begin
-  Application.MessageBox
-    ('Especifica el nombre del fichero que se genera al ejecutar tu fichero o anotador.'
-    + #13#10 + 'Ejemplo: funcionales.txt' + #13#10#13#10 +
-    'Este fichero sirve de referencia para detectar los ficheros funcionales.' +
-    #13#10#13#10 +
-    'Es fundamental que este txt sea generado automáticamente al ejecutar tu fichero (sin pulsar nada más), de lo contrario no funcionará correctamente.' + #13#10#13#10 +
-    'Si tienes dudas, usa el anotador incluido en el menú, no muestra ningún tipo de form, tan solo genera el txt si es funcional.',
-    'Información Offsets Checker', MB_OK or MB_ICONINFORMATION);
+  Application.MessageBox(PChar(Var42 + #13#10 + Var43 + #13#10#13#10 + Var44 + #13#10#13#10 +
+    Var45 + #13#10#13#10 + Var46), PChar(Var41), MB_OK or MB_ICONINFORMATION);
 end;
 
 procedure TForm1.BtnIniciarRClick(Sender: TObject);
@@ -361,7 +352,7 @@ begin
   if not FileExists(EdFichero.Text) or not System.SysUtils.DirectoryExists
     (EdDir.Text) then
   begin
-    Form1.Estado.Caption := 'Fichero o Ruta inexistente.';
+    Form1.Estado.Caption := Var48;
     Exit;
   end;
   BtnDetenerR.Visible := True;
@@ -504,7 +495,7 @@ procedure TForm1.BtnDetenerListaClick(Sender: TObject);
 begin
   if TIniciar <> nil then
     TIniciar.Terminate;
-  Estado.Caption := 'Proceso detenido.';
+  Estado.Caption := Var18;
   BtnDetenerLista.Visible := False;
 end;
 
@@ -512,7 +503,7 @@ procedure TForm1.BtnDetenerRClick(Sender: TObject);
 begin
   if TIniciarR <> nil then
     TIniciarR.Terminate;
-  Estado.Caption := 'Proceso detenido.';
+  Estado.Caption := Var18;
   BtnDetenerR.Visible := False;
 end;
 
@@ -550,7 +541,7 @@ begin
   if not FileExists(EdFichero.Text) or not System.SysUtils.DirectoryExists
     (EdDir.Text) then
   begin
-    Form1.Estado.Caption := 'Fichero o Ruta inexistente.';
+    Form1.Estado.Caption := Var48;
     Exit;
   end;
   ListView1.clear;
@@ -600,7 +591,7 @@ end;
 
 procedure TForm1.Edit4Change(Sender: TObject);
 begin
-  Label18.Caption := 'Sólo se comprobarán ficheros con extensión:' + ' ' +
+  Label18.Caption := Var31 + ' ' +
     ExtractFileExt(Edit4.Text);
   ListarFicheros;
 end;
@@ -661,11 +652,11 @@ begin
     try
       ResAnotador.SaveToFile('Anotador.exe');
     finally
-      Estado.Caption := 'Anotador.exe generado.';
+      Estado.Caption := Var49;
       ResAnotador.Free;
     end;
   except
-    Estado.Caption := 'No se pudo generar el Anotador.exe';
+    Estado.Caption := Var50;
   end;
 end;
 
@@ -689,14 +680,14 @@ begin
       EdFichero.Text := sName;
       EdInicio.Text := '1000';
       EdFin.Text := FichTam;
-      Label8.Caption := 'Máx:' + ' ' + FichTam;
-      Label9.Caption := 'Máx:' + ' ' + FichTam;
-      Label10.Caption := 'Máx:' + ' ' + FichTam;
-      Label15.Caption := 'Máx:' + ' ' + FichTam;
-      Label16.Caption := 'Máx:' + ' ' + FichTam;
-      Label18.Caption := 'Sólo se comprobarán ficheros con extensión:' + ' ' +
+      Label8.Caption := Var51 + ' ' + FichTam;
+      Label9.Caption := Var51 + ' ' + FichTam;
+      Label10.Caption := Var51 + ' ' + FichTam;
+      Label15.Caption := Var51 + ' ' + FichTam;
+      Label16.Caption := Var51 + ' ' + FichTam;
+      Label18.Caption := Var31 + ' ' +
         ExtractFileExt(OpenDialog1.FileName);
-      Estado.Caption := 'Fichero cargado.';
+      Estado.Caption := Var30;
       if System.SysUtils.DirectoryExists(EdDir.Text) then
         ListarFicheros;
     end;
@@ -708,7 +699,7 @@ begin
     begin
       EdDir.Text := sName;
       ListarFicheros;
-      Estado.Caption := 'Directorio cargado.';
+      Estado.Caption := Var34;
     end;
   end;
 end;
@@ -721,7 +712,7 @@ var
 begin
   Opt := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\UOS.ini');
   Try
-    Dir := Opt.ReadString('Locator', 'Dir', 'Directorio de trabajo');
+    Dir := Opt.ReadString('Locator', 'Dir', Var52);
     Recordar := Opt.ReadBool('Locator', 'Recordar', False);
     // Skin := Opt.ReadString('UOS', 'Skin', 'Smokey Quartz Kamri');
     if Skin = 'Smokey Quartz Kamri' then
@@ -761,7 +752,7 @@ begin
         SubItems.Add(ListView1.Items.Item[i].SubItems[0]);
         SubItems.Add(EdBytes.Text);
       end;
-  Estado.Caption := 'Se añadieron offsets a la Lista Almacenada.';
+  Estado.Caption := Var53;
 end;
 
 procedure TForm1.GuardarTodasenListaAparte1Click(Sender: TObject);
@@ -775,7 +766,7 @@ begin
       SubItems.Add(ListView1.Items.Item[i].SubItems[0]);
       SubItems.Add(EdBytes.Text);
     end;
-  Estado.Caption := 'Se añadieron offsets a la Lista Almacenada.';
+  Estado.Caption := Var53;
 end;
 
 procedure TForm1.Limpiar1Click(Sender: TObject);
@@ -844,7 +835,7 @@ procedure TForm1.ListView2AdvancedCustomDrawSubItem(Sender: TCustomListView;
   Item: TListItem; SubItem: Integer; State: TCustomDrawState;
   Stage: TCustomDrawStage; var DefaultDraw: Boolean);
 begin
-  if Item.SubItems[0] = 'Sí' then
+  if Item.SubItems[0] = Var7 then
     Sender.Canvas.Font.Color := clGreen
   else
     Sender.Canvas.Font.Color := clRed;
@@ -857,7 +848,7 @@ end;
 
 procedure TForm1.N11Click(Sender: TObject);
 begin
-  if Application.MessageBox('El programa se reiniciará para aplicar el Skin.',
+  if Application.MessageBox(PChar(Var54),
     '', MB_YESNO + MB_ICONWARNING) = ID_YES then
   begin
     N11.Checked := True;
@@ -870,7 +861,7 @@ end;
 
 procedure TForm1.N1Click(Sender: TObject);
 begin
-  if Application.MessageBox('El programa se reiniciará para aplicar el Skin.',
+  if Application.MessageBox(PChar(Var54),
     '', MB_YESNO + MB_ICONWARNING) = ID_YES then
   begin
     N1.Checked := True;
@@ -883,7 +874,7 @@ end;
 
 procedure TForm1.N21Click(Sender: TObject);
 begin
-  if Application.MessageBox('El programa se reiniciará para aplicar el Skin.',
+  if Application.MessageBox(PChar(Var54),
     '', MB_YESNO + MB_ICONWARNING) = ID_YES then
   begin
     N21.Checked := True;
@@ -896,7 +887,7 @@ end;
 
 procedure TForm1.N31Click(Sender: TObject);
 begin
-  if Application.MessageBox('El programa se reiniciará para aplicar el Skin.',
+  if Application.MessageBox(PChar(Var54),
     '', MB_YESNO + MB_ICONWARNING) = ID_YES then
   begin
     N31.Checked := True;
@@ -909,7 +900,7 @@ end;
 
 procedure TForm1.N41Click(Sender: TObject);
 begin
-  if Application.MessageBox('El programa se reiniciará para aplicar el Skin.',
+  if Application.MessageBox(PChar(Var54),
     '', MB_YESNO + MB_ICONWARNING) = ID_YES then
   begin
     N41.Checked := True;
@@ -975,7 +966,6 @@ end;
 
 procedure TForm1.RadCombClick(Sender: TObject);
 begin
-Traduce('C:\idiomas.ini');
   if RadComb.Checked then
   begin
     ListView1.clear;
@@ -1032,7 +1022,7 @@ begin
   if RadioButton1.Checked then
   begin
     Edit4.Enabled := False;
-    Label18.Caption := 'Sólo se comprobarán ficheros con extensión:' + ' ' +
+    Label18.Caption := Var31 + ' ' +
       ExtractFileExt(EdFichero.Text);
     ListarFicheros;
   end;
@@ -1043,7 +1033,7 @@ begin
   if RadioButton2.Checked then
   begin
     Edit4.Enabled := True;
-    Label18.Caption := 'Sólo se comprobarán ficheros con extensión:' + ' ' +
+    Label18.Caption := Var31 + ' ' +
       ExtractFileExt(Edit4.Text);
     ListarFicheros;
   end;
