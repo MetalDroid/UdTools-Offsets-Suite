@@ -80,7 +80,7 @@ begin
         Break;
     FicheroActual := ExtractFileName(Form1.ListView2.Items.Item[i].Caption);
     RutaCompleta := Form1.ListView2.Items.Item[i].Caption;
-    Form1.Estado.Caption := 'Comprobando fichero: ' + FicheroActual;
+    Form1.Estado.Caption := 'Comprobando fichero:' + ' ' + FicheroActual;
     ShellExecute(0, 'open', PChar(RutaCompleta), nil, nil, SW_SHOW);
     Sleep(Espera);
 
@@ -184,14 +184,14 @@ begin
       end;
 
   if NOT Form1.CheckBox1.Checked then
-    Form1.Estado.Caption := 'Proceso completado. Se encontraron ' +
-      IntToStr(OFuncionales) + ' funcionales.'
+    Form1.Estado.Caption := 'Proceso completado. Se encontraron' + ' ' +
+      IntToStr(OFuncionales) + ' ' + 'funcionales.'
   else if OFuncionales = Max then
-    Form1.Estado.Caption := 'Proceso detenido al obtener ' +
-      IntToStr(OFuncionales) + ' funcionales.'
+    Form1.Estado.Caption := 'Proceso detenido al obtener' + ' ' +
+      IntToStr(OFuncionales) + ' ' + 'funcionales.'
   else
-    Form1.Estado.Caption := 'Proceso completado. Se encontraron ' +
-      IntToStr(OFuncionales) + ' funcionales.';
+    Form1.Estado.Caption := 'Proceso completado. Se encontraron' + ' ' +
+      IntToStr(OFuncionales) + ' ' + 'funcionales.';
 end;
 
 { HChecker }

@@ -35,7 +35,7 @@ begin
       if (SearchResult.Attr and faArchive = faArchive) and
         (SearchResult.Attr and faDirectory <> faDirectory) then
         if not Deletefile(PChar(Form1.EdDir.Text + '\' + SearchResult.Name)) then
-          Log.Add('Error Vaciando Carpeta: ' + Form1.EdDir.Text + '\' + SearchResult.Name);
+          Log.Add('Error Vaciando Carpeta:' + ' ' + Form1.EdDir.Text + '\' + SearchResult.Name);
     until FindNext(SearchResult) <> 0;
     System.SysUtils.FindClose(SearchResult);
   end;
@@ -86,14 +86,14 @@ begin
       FicheroF[i] := AnsiChar(Reemplazo);
       if not StrToFile(WideString(FicheroF), Directorio + '\' + (i - 1).ToString +
         Extension) then
-        Log.Add('Error de escritura Replacer: ' + Directorio + '\' + (i - 1).ToString + Extension);
-      Form1.Estado.Caption := 'Procesando fichero ' + (i - 1).ToString +
+        Log.Add('Error de escritura Replacer:' + ' ' + Directorio + '\' + (i - 1).ToString + Extension);
+      Form1.Estado.Caption := 'Procesando fichero' + ' ' + (i - 1).ToString +
         Extension;
       Application.ProcessMessages;
     end;
   end;
-  Form1.Estado.Caption := 'Proceso completado. Encontradas ' +
-    Coincidencias.ToString + ' coincidencias.';
+  Form1.Estado.Caption := 'Proceso completado. Encontradas' + ' ' +
+    Coincidencias.ToString + ' ' + 'coincidencias.';
 end;
 
 { HReplacer }

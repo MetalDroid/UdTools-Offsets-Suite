@@ -9,7 +9,7 @@ uses
   uThreadLocator, Vcl.FileCtrl, System.IOUtils, Vcl.ExtCtrls, System.IniFiles,
   Winapi.ShellApi, uThreadReplacer, Vcl.Menus, Vcl.Themes, Vcl.Styles,
   Winapi.TlHelp32, uFuncCompartidas, uThreadChecker, uAddToList, About,
-  uListaGuardada;
+  uListaGuardada, uIdiomas;
 
 type
   TForm1 = class(TForm)
@@ -265,12 +265,12 @@ begin
       Label15.Caption := 'Máx: ' + FichTam;
       Label16.Caption := 'Máx: ' + FichTam;
       Form1.Estado.Caption := 'Fichero cargado.';
-      Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
+      Label18.Caption := 'Sólo se comprobarán ficheros con extensión:' + ' ' +
         ExtractFileExt(OpenDialog1.FileName);
       Button3.Enabled := True;
       BtnIniciar.Enabled := True;
       ListView1.Clear;
-      Label22.Caption := 'El fichero se guardará como Patched' + ExtractFileExt(EdFichero.Text);
+      Label22.Caption := 'El fichero se guardará como' + ' Patched' + ExtractFileExt(EdFichero.Text);
       if System.SysUtils.DirectoryExists(EdDir.Text) then
         ListarFicheros;
     end;
@@ -600,7 +600,7 @@ end;
 
 procedure TForm1.Edit4Change(Sender: TObject);
 begin
-  Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
+  Label18.Caption := 'Sólo se comprobarán ficheros con extensión:' + ' ' +
     ExtractFileExt(Edit4.Text);
   ListarFicheros;
 end;
@@ -689,12 +689,12 @@ begin
       EdFichero.Text := sName;
       EdInicio.Text := '1000';
       EdFin.Text := FichTam;
-      Label8.Caption := 'Máx: ' + FichTam;
-      Label9.Caption := 'Máx: ' + FichTam;
-      Label10.Caption := 'Máx: ' + FichTam;
-      Label15.Caption := 'Máx: ' + FichTam;
-      Label16.Caption := 'Máx: ' + FichTam;
-      Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
+      Label8.Caption := 'Máx:' + ' ' + FichTam;
+      Label9.Caption := 'Máx:' + ' ' + FichTam;
+      Label10.Caption := 'Máx:' + ' ' + FichTam;
+      Label15.Caption := 'Máx:' + ' ' + FichTam;
+      Label16.Caption := 'Máx:' + ' ' + FichTam;
+      Label18.Caption := 'Sólo se comprobarán ficheros con extensión:' + ' ' +
         ExtractFileExt(OpenDialog1.FileName);
       Estado.Caption := 'Fichero cargado.';
       if System.SysUtils.DirectoryExists(EdDir.Text) then
@@ -975,6 +975,7 @@ end;
 
 procedure TForm1.RadCombClick(Sender: TObject);
 begin
+Traduce('C:\idiomas.ini');
   if RadComb.Checked then
   begin
     ListView1.clear;
@@ -1031,7 +1032,7 @@ begin
   if RadioButton1.Checked then
   begin
     Edit4.Enabled := False;
-    Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
+    Label18.Caption := 'Sólo se comprobarán ficheros con extensión:' + ' ' +
       ExtractFileExt(EdFichero.Text);
     ListarFicheros;
   end;
@@ -1042,7 +1043,7 @@ begin
   if RadioButton2.Checked then
   begin
     Edit4.Enabled := True;
-    Label18.Caption := 'Sólo se comprobarán ficheros con extensión: ' +
+    Label18.Caption := 'Sólo se comprobarán ficheros con extensión:' + ' ' +
       ExtractFileExt(Edit4.Text);
     ListarFicheros;
   end;

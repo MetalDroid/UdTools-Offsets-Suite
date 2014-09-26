@@ -43,7 +43,7 @@ begin
       if (SearchResult.Attr and faArchive = faArchive) and
         (SearchResult.Attr and faDirectory <> faDirectory) then
         if not Deletefile(PChar(Form1.EdDir.Text + '\' + SearchResult.Name)) then
-          Log.Add('Error Vaciando Carpeta: ' + Form1.EdDir.Text + '\' + SearchResult.Name);
+          Log.Add('Error Vaciando Carpeta:' + ' ' + Form1.EdDir.Text + '\' + SearchResult.Name);
     until FindNext(SearchResult) <> 0;
     System.SysUtils.FindClose(SearchResult);
   end;
@@ -98,13 +98,13 @@ begin
 
     OffIni := Inicio.ToString;
 
-    Form1.Estado.Caption := 'Procesando fichero: ' + OffIni + '_' + sBytes +
+    Form1.Estado.Caption := 'Procesando fichero:' + ' ' + OffIni + '_' + sBytes +
       TapadoCon + ExtractFileExt(Aux2);
     Application.ProcessMessages;
 
     if not StrToFile(WideString(Aux), RutaOffsets + '\' + OffIni + '_' + sBytes +
       TapadoCon + ExtractFileExt(Aux2)) then
-      Log.Add('Error de escritura AvFucker: ' + RutaOffsets + '\' + OffIni + '_' + sBytes +
+      Log.Add('Error de escritura AvFucker:' + ' ' + RutaOffsets + '\' + OffIni + '_' + sBytes +
         TapadoCon +  ExtractFileExt(Aux2));
 
     Inc(Inicio, Bytes);
@@ -152,21 +152,21 @@ begin
     end;
     FichFinal := '';
     FichFinal := Copy(Fichero, 1, IniAux);
-    Form1.Estado.Caption := 'Procesando fichero: ' + (IniAux - 1).ToString + '_'
+    Form1.Estado.Caption := 'Procesando fichero:' + ' ' + (IniAux - 1).ToString + '_'
       + Bytes.ToString + ExtractFileExt(FichAux);
     Application.ProcessMessages;
     if not(Ultimo) then
     begin
       if not StrToFile(FichFinal, RutaOffsets + '\' + IntToStr(IniAux - 1) + '_'
         + IntToStr(Bytes) + ExtractFileExt(FichAux)) then
-        Log.Add('Error de escritura DSplit: ' + RutaOffsets + '\' + IntToStr(IniAux - 1) +
+        Log.Add('Error de escritura DSplit:' + ' ' + RutaOffsets + '\' + IntToStr(IniAux - 1) +
           '_' + IntToStr(Bytes) + ExtractFileExt(FichAux));
     end
     else
     begin
       if not StrToFile(FichFinal, RutaOffsets + '\' + IntToStr(IniAux - 1) + '_'
         + IntToStr(IniAuxUlt) + ExtractFileExt(FichAux)) then
-        Log.Add('Error de escritura DSplit: ' + RutaOffsets + '\' + IntToStr(IniAux - 1) +
+        Log.Add('Error de escritura DSplit:' + ' ' + RutaOffsets + '\' + IntToStr(IniAux - 1) +
           '_' + IntToStr(Bytes) + ExtractFileExt(FichAux));
     end;
 
@@ -222,12 +222,12 @@ begin
           Exit;
         FichAux := AnsiString(Fichero);
         FichAux[i + 1] := AnsiChar(j);
-        Form1.Estado.Caption := 'Procesando fichero: ' + IntToStr(i) + '_' +
+        Form1.Estado.Caption := 'Procesando fichero:' + ' ' + IntToStr(i) + '_' +
           IntToHex(j, 2) + Extension;
         Application.ProcessMessages;
         if not StrToFile(WideString(FichAux), Ruta + '\' + i.ToString + '_' +
           j.ToHexString(2) + Extension) then
-          Log.Add('Error e escritura Combinaciones (Prog.): ' + Ruta + '\' + i.ToString +
+          Log.Add('Error e escritura Combinaciones (Prog.):' + ' ' + Ruta + '\' + i.ToString +
             '_' + j.ToHexString(2) + Extension);
       end;
     Form1.Estado.Caption := 'Proceso terminado.';
@@ -250,13 +250,13 @@ begin
           for i := 0 to 255 do
           begin
             FichAux[OffActAux + 1] := AnsiChar(i);
-            Form1.Estado.Caption := 'Procesando fichero: ' + OffActAux.ToString
+            Form1.Estado.Caption := 'Procesando fichero:' + ' ' + OffActAux.ToString
               + '_' + i.ToHexString(2) + Extension;
             Application.ProcessMessages;
             if not StrToFile(WideString(FichAux),
               Ruta + '\' + OffActAux.ToString + '_' + i.ToHexString(2) +
               Extension) then
-              Log.Add('Error de escritura Combinaciones (Select.): ' + Ruta + '\' +
+              Log.Add('Error de escritura Combinaciones (Select.):' + ' ' + Ruta + '\' +
                 OffActAux.ToString + '_' + i.ToHexString(2) + Extension);
           end;
         end;

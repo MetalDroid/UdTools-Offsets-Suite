@@ -105,7 +105,7 @@ end;
 
 procedure TForm2.FormShow(Sender: TObject);
 begin
-  Panel1.Caption := 'Info: Offset máxima permitida: ' +
+  Panel1.Caption := 'Info: Offset máxima permitida:' + ' ' +
     IntToStr(Integer(GetCompressedFileSize(PChar(Form1.EdFichero.Text),
     nil)) - 1);
 end;
