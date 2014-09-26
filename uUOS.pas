@@ -122,6 +122,7 @@ type
     I1: TMenuItem;
     C1: TMenuItem;
     E1: TMenuItem;
+    OpenDialog2: TOpenDialog;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -186,6 +187,7 @@ type
     procedure EdValorDblClick(Sender: TObject);
     procedure N1Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure C1Click(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -200,7 +202,8 @@ var
   Form1: TForm1;
   BtnListado: Boolean;
   HexChars: TSysCharSet;
-  Skin: String;
+  Skin: String = '';
+  RutaIdioma: String = '';
 
 implementation
 
@@ -217,6 +220,7 @@ begin
     Opt.WriteString('Locator', 'Dir', Form1.EdDir.Text);
     Opt.WriteBool('Locator', 'Recordar', Form1.ChkRecordar.Checked);
     Opt.WriteString('UOS', 'Skin', Skin);
+    Opt.WriteString('UOS', 'RutaIdioma', RutaIdioma);
   Finally
     Opt.Free;
   End;
@@ -507,6 +511,16 @@ begin
   BtnDetenerR.Visible := False;
 end;
 
+procedure TForm1.C1Click(Sender: TObject);
+begin
+  if OpenDialog2.Execute then
+    Try
+      Traduce(OpenDialog2.FileName);
+      RutaIdioma:= OpenDialog2.FileName;
+    Except
+    End;
+end;
+
 procedure TForm1.CheckAllClick(Sender: TObject);
 var
   i: Integer;
@@ -714,6 +728,7 @@ begin
   Try
     Dir := Opt.ReadString('Locator', 'Dir', Var52);
     Recordar := Opt.ReadBool('Locator', 'Recordar', False);
+    RutaIdioma:= Opt.ReadString('UOS', 'RutaIdioma', RutaIdioma);
     // Skin := Opt.ReadString('UOS', 'Skin', 'Smokey Quartz Kamri');
     if Skin = 'Smokey Quartz Kamri' then
       N11.Checked := True;
@@ -733,6 +748,11 @@ begin
     end;
   Finally
     Opt.Free;
+  End;
+
+  Try
+    Traduce(RutaIdioma);
+  Except
   End;
 
   // Cambia proporcionalmente el tamaño del form y controles según resolución en base al alto (800 px)  ScaleBy(Screen.Height, 800);
