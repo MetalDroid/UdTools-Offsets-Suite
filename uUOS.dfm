@@ -19,6 +19,7 @@ object Form1: TForm1
   Scaled = False
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object PageControl1: TPageControl
@@ -957,6 +958,7 @@ object Form1: TForm1
       end
       object E1: TMenuItem
         Caption = 'Escribir plantilla para idiomas en disco'
+        OnClick = E1Click
       end
     end
     object Acercade1: TMenuItem

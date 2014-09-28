@@ -188,6 +188,8 @@ type
     procedure N1Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure C1Click(Sender: TObject);
+    procedure E1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -514,11 +516,10 @@ end;
 procedure TForm1.C1Click(Sender: TObject);
 begin
   if OpenDialog2.Execute then
-    Try
+    begin
       Traduce(OpenDialog2.FileName);
       RutaIdioma:= OpenDialog2.FileName;
-    Except
-    End;
+    end;
 end;
 
 procedure TForm1.CheckAllClick(Sender: TObject);
@@ -572,6 +573,23 @@ begin
     AddToList;
   if RadComb.Checked then
     CheckVaciar.Checked := Vaciar;
+end;
+
+procedure TForm1.E1Click(Sender: TObject);
+var
+  ResIdiomas: TResourceStream;
+begin
+  try
+    ResIdiomas := TResourceStream.Create(HInstance, 'PLIDIOMAS', RT_RCDATA);
+    try
+      ResIdiomas.SaveToFile('PLang.ini');
+    finally
+      Estado.Caption := Var25;
+      ResIdiomas.Free;
+    end;
+  except
+    Estado.Caption := Var47;
+  end;
 end;
 
 procedure TForm1.EdBytesDblClick(Sender: TObject);
@@ -702,6 +720,10 @@ begin
       Label18.Caption := Var31 + ' ' +
         ExtractFileExt(OpenDialog1.FileName);
       Estado.Caption := Var30;
+      Button3.Enabled := True;
+      BtnIniciar.Enabled := True;
+      ListView1.Clear;
+      Label22.Caption := Var32 + ' Patched' + ExtractFileExt(EdFichero.Text);
       if System.SysUtils.DirectoryExists(EdDir.Text) then
         ListarFicheros;
     end;
@@ -750,14 +772,14 @@ begin
     Opt.Free;
   End;
 
-  Try
-    Traduce(RutaIdioma);
-  Except
-  End;
-
   // Cambia proporcionalmente el tamaño del form y controles según resolución en base al alto (800 px)  ScaleBy(Screen.Height, 800);
   ScaleBy(Screen.Height, 800);
   DragAcceptFiles(Handle, True);
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+  Traduce(RutaIdioma);
 end;
 
 procedure TForm1.GuardarSeleccionadosenListaaparte1Click(Sender: TObject);

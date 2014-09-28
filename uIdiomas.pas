@@ -24,7 +24,7 @@ Procedure Traduce(LangFile: String);
 begin
   Idioma := TIniFile.Create(LangFile);
   Try
-    //[Principal]  [[[Falta añadir el menú Idioma]]]
+    //[Principal]
     Form1.Label1.Caption:= Idioma.ReadString('Principal', 'Label1Caption', 'Inicio:');
     Form1.Label2.Caption:= Idioma.ReadString('Principal', 'Label2Caption', 'Fin:');
     Form1.Label3.Caption:= Idioma.ReadString('Principal', 'Label3Caption', 'Bytes:');
@@ -111,6 +111,9 @@ begin
     Form1.GuardarSeleccionadosenListaaparte1.Caption:= Idioma.ReadString('Principal', 'GuardarSeleccionadosenListaaparte1Caption', 'Guardar Línea/s en Lista Aparte');
     Form1.GuardarTodasenListaAparte1.Caption:= Idioma.ReadString('Principal', 'GuardarTodasenListaAparte1Caption', 'Guardar Todas en Lista Aparte');
     Form1.MostrarListaAlmacenada1.Caption:= Idioma.ReadString('Principal', 'MostrarListaAlmacenada1Caption', 'Mostrar Lista Almacenada');
+    Form1.I1.Caption:= Idioma.ReadString('Principal', 'I1Caption', 'Idioma');
+    Form1.E1.Caption:= Idioma.ReadString('Principal', 'E1Caption', 'Escribir plantilla para idiomas en disco');
+    Form1.C1.Caption:= Idioma.ReadString('Principal', 'C1Caption', 'Cargar idioma');
 
     //[About]
     AboutBox.Version.Caption:= Idioma.ReadString('About', 'VersionCaption', 'Versión 1.0 Final');
@@ -165,7 +168,7 @@ begin
     Var22:= Idioma.ReadString('Internal', 'Var22', 'Error e escritura Combinaciones (Prog.):');
     Var23:= Idioma.ReadString('Internal', 'Var23', 'Error de escritura Combinaciones (Select.):');
     Var24:= Idioma.ReadString('Internal', 'Var24', 'Proceso terminado con errores (ver LogErrores.txt)');
-    //Var25:= Idioma.ReadString('Internal', 'Var25', 'Error Vaciando Carpeta:');
+    Var25:= Idioma.ReadString('Internal', 'Var25', 'PLang.ini generado.');
     Var26:= Idioma.ReadString('Internal', 'Var26', 'Error de escritura Replacer:');
     Var27:= Idioma.ReadString('Internal', 'Var27', 'Procesando fichero');
     Var28:= Idioma.ReadString('Internal', 'Var28', 'Proceso completado. Encontradas');
@@ -187,7 +190,7 @@ begin
     Var44:= Idioma.ReadString('Internal', 'Var44', 'Este fichero sirve de referencia para detectar los ficheros funcionales.');
     Var45:= Idioma.ReadString('Internal', 'Var45', 'Es fundamental que este txt sea generado automáticamente al ejecutar tu fichero (sin pulsar nada más), de lo contrario no funcionará correctamente.');
     Var46:= Idioma.ReadString('Internal', 'Var46', 'Si tienes dudas, usa el anotador incluido en el menú, no muestra ningún tipo de form, tan solo genera el txt si es funcional.');
-    //Var47:= Idioma.ReadString('Internal', 'Var47', 'Información Offsets Checker');
+    Var47:= Idioma.ReadString('Internal', 'Var47', 'No se pudo generar el PLang.ini');
     Var48:= Idioma.ReadString('Internal', 'Var48', 'Fichero o Ruta inexistente.');
     Var49:= Idioma.ReadString('Internal', 'Var49', 'Anotador.exe generado.');
     Var50:= Idioma.ReadString('Internal', 'Var50', 'No se pudo generar el Anotador.exe');
