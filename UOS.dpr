@@ -18,6 +18,7 @@ uses
 
 {$R *.res}
 {$R Anotador.res}
+{$R Idiomas.res}
 
 var
   Opt: TIniFile;
