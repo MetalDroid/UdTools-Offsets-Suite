@@ -464,6 +464,9 @@ begin
       FindClose(SearchResult);
       inc(ini, sbytes.ToInteger);
     end;
+  if (Form1.CheckAll.Checked) and (Form1.ListView1.Items.Count > 0) then
+    for i := 0 to Form1.ListView1.Items.Count - 1 do
+      Form1.ListView1.Items.Item[i].Checked := True;
 end;
 
 procedure TForm1.BtnMostrarListaClick(Sender: TObject);

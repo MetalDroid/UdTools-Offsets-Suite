@@ -421,7 +421,7 @@ object Form1: TForm1
         TabOrder = 16
       end
       object BtnDetenerLista: TButton
-        Left = 159
+        Left = 169
         Top = 417
         Width = 168
         Height = 24
