@@ -123,6 +123,7 @@ type
     C1: TMenuItem;
     E1: TMenuItem;
     OpenDialog2: TOpenDialog;
+    CheckVaciar2: TCheckBox;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -191,6 +192,8 @@ type
     procedure E1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ChkAv1ByteClick(Sender: TObject);
+    procedure CheckVaciarClick(Sender: TObject);
+    procedure CheckVaciar2Click(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -523,6 +526,22 @@ begin
   else if not(CheckAll.Checked) and (Form1.ListView1.Items.Count > 0) then
     for i := 0 to Form1.ListView1.Items.Count - 1 do
       Form1.ListView1.Items.Item[i].Checked := False;
+end;
+
+procedure TForm1.CheckVaciar2Click(Sender: TObject);
+begin
+  if CheckVaciar2.Checked then
+    CheckVaciar.Checked:= True
+  else
+    CheckVaciar.Checked:= False;
+end;
+
+procedure TForm1.CheckVaciarClick(Sender: TObject);
+begin
+  if CheckVaciar.Checked then
+    CheckVaciar2.Checked:= True
+  else
+    CheckVaciar2.Checked:= False;
 end;
 
 procedure TForm1.ChkAv1ByteClick(Sender: TObject);
@@ -1091,6 +1110,7 @@ begin
     Label8.Visible := True;
     Label9.Visible := True;
     Label10.Visible := False;
+    CheckVaciar2.Left:= Edit1.Left;
   end;
 end;
 
@@ -1120,6 +1140,7 @@ begin
     Label8.Visible := False;
     Label9.Visible := False;
     Label10.Visible := True;
+    CheckVaciar2.Left:= Edit3.Left;
   end;
 end;
 

@@ -161,6 +161,7 @@ object Form1: TForm1
           Checked = True
           State = cbChecked
           TabOrder = 0
+          OnClick = CheckVaciarClick
         end
         object CheckGen: TCheckBox
           Left = 16
@@ -270,29 +271,29 @@ object Form1: TForm1
       end
       object GroupBox2: TGroupBox
         Left = 3
-        Top = 80
+        Top = 75
         Width = 334
-        Height = 110
+        Height = 117
         Caption = 'Opciones'
         TabOrder = 14
         Visible = False
         object Label5: TLabel
           Left = 37
-          Top = 50
+          Top = 40
           Width = 29
           Height = 13
           Caption = 'Inicio:'
         end
         object Label6: TLabel
           Left = 199
-          Top = 50
+          Top = 40
           Width = 18
           Height = 13
           Caption = 'Fin:'
         end
         object Label7: TLabel
           Left = 14
-          Top = 53
+          Top = 43
           Width = 219
           Height = 13
           Caption = 'Escribe las Offsets separadas con ESPACIOS:'
@@ -300,7 +301,7 @@ object Form1: TForm1
         end
         object Label8: TLabel
           Left = 37
-          Top = 89
+          Top = 79
           Width = 23
           Height = 11
           Caption = 'M'#225'x: '
@@ -313,7 +314,7 @@ object Form1: TForm1
         end
         object Label9: TLabel
           Left = 199
-          Top = 89
+          Top = 79
           Width = 23
           Height = 11
           Caption = 'M'#225'x: '
@@ -326,7 +327,7 @@ object Form1: TForm1
         end
         object Label10: TLabel
           Left = 14
-          Top = 90
+          Top = 80
           Width = 23
           Height = 11
           Caption = 'M'#225'x: '
@@ -339,8 +340,8 @@ object Form1: TForm1
           Visible = False
         end
         object RadProgresivo: TRadioButton
-          Left = 54
-          Top = 25
+          Left = 35
+          Top = 17
           Width = 81
           Height = 17
           Caption = 'Progresivo'
@@ -350,8 +351,8 @@ object Form1: TForm1
           OnClick = RadProgresivoClick
         end
         object RadSelectivo: TRadioButton
-          Left = 199
-          Top = 25
+          Left = 195
+          Top = 17
           Width = 72
           Height = 17
           Caption = 'Selectivo'
@@ -360,7 +361,7 @@ object Form1: TForm1
         end
         object Edit1: TEdit
           Left = 37
-          Top = 69
+          Top = 59
           Width = 82
           Height = 21
           NumbersOnly = True
@@ -369,7 +370,7 @@ object Form1: TForm1
         end
         object Edit2: TEdit
           Left = 199
-          Top = 69
+          Top = 59
           Width = 82
           Height = 21
           NumbersOnly = True
@@ -378,13 +379,24 @@ object Form1: TForm1
         end
         object Edit3: TEdit
           Left = 14
-          Top = 69
+          Top = 59
           Width = 305
           Height = 21
           TabOrder = 4
           Text = '0'
           Visible = False
           OnKeyPress = Edit3KeyPress
+        end
+        object CheckVaciar2: TCheckBox
+          Left = 37
+          Top = 94
+          Width = 163
+          Height = 17
+          Caption = 'Vaciar directorio de trabajo.'
+          Checked = True
+          State = cbChecked
+          TabOrder = 5
+          OnClick = CheckVaciar2Click
         end
       end
       object ChkAv1Byte: TCheckBox
@@ -431,10 +443,6 @@ object Form1: TForm1
       Caption = 'Replacer'
       ImageIndex = 1
       OnShow = TabSheet2Show
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label11: TLabel
         Left = 4
         Top = 65
@@ -597,10 +605,6 @@ object Form1: TForm1
       Caption = 'Checker'
       ImageIndex = 2
       OnShow = TabSheet3Show
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label17: TLabel
         Left = 3
         Top = 98
@@ -802,10 +806,6 @@ object Form1: TForm1
       Caption = 'Patcher'
       ImageIndex = 3
       OnShow = TabSheet4Show
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label20: TLabel
         Left = 3
         Top = 33
