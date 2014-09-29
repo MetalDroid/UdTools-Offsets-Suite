@@ -418,7 +418,6 @@ begin
 
   for I := 1 to Ficheros +1 do
     begin
-      form1.Estado.Caption:= ini.ToString();
       Res := FindFirst(Dir + Ini.ToString + '_*', faAnyFile, SearchResult);
       if Res = 0 then
       begin
