@@ -395,6 +395,7 @@ object Form1: TForm1
         Caption = 'AvFuck Listado a 1 byte.'
         Enabled = False
         TabOrder = 15
+        OnClick = ChkAv1ByteClick
       end
       object ChkRestar: TCheckBox
         Left = 169
@@ -408,7 +409,7 @@ object Form1: TForm1
         TabOrder = 16
       end
       object BtnDetenerLista: TButton
-        Left = 169
+        Left = 159
         Top = 417
         Width = 168
         Height = 24

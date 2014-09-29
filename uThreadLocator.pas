@@ -292,7 +292,7 @@ begin
     Exit;
 
   // Esto resta bytes automáticamente, OPCIONAL.
-  if Form1.ChkRestar.Checked then
+  if (Form1.ChkRestar.Checked) and (Form1.ChkRestar.Enabled) then
     if Length(Form1.EdBytes.Text) > 1 then
     begin
       Form1.EdBytes.Text := Copy(Form1.EdBytes.Text, 1,

@@ -190,6 +190,7 @@ type
     procedure C1Click(Sender: TObject);
     procedure E1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure ChkAv1ByteClick(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -383,31 +384,12 @@ begin
     end;
 end;
 
-// Función para comprobar los nombres de los ficheros (xxxx_xxxx.xxx)
-Function IsValidOffsetFileName(FName: String; var NumI, NumD: String): Boolean;
-begin
-  Result := False;
-  FName := TPath.GetFileNameWithoutExtension(FName);
-  NumI := Copy(FName, 1, pos('_', FName) - 1);
-  if Form1.ChkAleatorio.Checked then
-  begin
-    Delete(FName, 1, pos('_', FName));
-    NumD := Copy(FName, 1, pos('_', FName) - 1);
-  end
-  else
-  begin
-    NumD := Copy(FName, pos('_', FName) + 1, Length(FName) - pos('_', FName));
-  end;
-  if (IsNumber(NumI)) and (IsNumber(NumD)) then
-    Result := True;
-end;
-
 // Función para añadir offsets al listado teniendo en cuenta ficheros consecutivos (Es un poco chapuza por ahora, pero funcional)
 Procedure AddToList;
 var
   SearchResult: TSearchRec;
-  Dir, Inicio, Fin, sBytes, IniAux, FinAux: String;
-  Acumulados, i, Ficheros, Res, TamFich: Integer;
+  Dir, Inicio, Fin, sBytes: String;
+  Acumulados, i, Ficheros, Res, TamFich, ini: Integer;
 begin
   Form1.ListView1.clear;
   Acumulados := 0;
@@ -425,51 +407,61 @@ begin
   if Ficheros <= 0 then
     Ficheros := 1
   else
-    Ficheros := (Fin.ToInteger - Inicio.ToInteger) div sBytes.ToInteger;
+    Ficheros := ((Fin.ToInteger - Inicio.ToInteger) div sBytes.ToInteger) +1;
 
-  for i := 0 to Ficheros + 2 do
-  begin // Podríamos buscar por "_1000, _2000", etc (sBytes), pero no funcionaría debido al RESTO (último fichero);
-    Res := FindFirst(Dir + Inicio + '_*', faAnyFile, SearchResult);
-    if Res = 0 then
+  If Fin.ToInteger > TamFich then
+    Fin := TamFich.ToString;
+  if Inicio.ToInteger > TamFich then
+    Inicio := TamFich.ToString;
+
+  ini:= Inicio.ToInteger();
+
+  for I := 1 to Ficheros +1 do
     begin
-      Acumulados := Acumulados + StrToInt(sBytes);
-    end
-    else
-    begin // Tenemos en cuenta el último fichero válido encontrado para añadir con éxito "Fin"
-      if FindFirst(Dir + (Inicio.ToInteger - sBytes.ToInteger).ToString + '_*',
-        faAnyFile, SearchResult) = 0 then
-        if IsValidOffsetFileName(SearchResult.Name, IniAux, FinAux) then
+      form1.Estado.Caption:= ini.ToString();
+      Res := FindFirst(Dir + Ini.ToString + '_*', faAnyFile, SearchResult);
+      if Res = 0 then
+      begin
+        Acumulados := Acumulados + sBytes.ToInteger;
+      end
+      else
+      if Acumulados > 0 then
+      begin
+        with form1.ListView1.Items.Add do
         begin
-          with Form1.ListView1.Items.Add do
+          if Form1.RadAvFucker.Checked then
           begin
-            if Form1.RadAvFucker.Checked then
+            Caption:= (ini-acumulados).ToString;
+            if ini > TamFich then
             begin
-              Caption := (Inicio.ToInteger - Acumulados).ToString;
-              SubItems.Add(((IniAux.ToInteger + FinAux.ToInteger) - 1)
-                .ToString);
+              SubItems.Add(TamFich.ToString);
+              Break;
             end
-            else if Form1.RadDSplit.Checked then
+            else
             begin
-              Caption := (Inicio.ToInteger - sBytes.ToInteger).ToString;
-              if ((IniAux.ToInteger + FinAux.ToInteger) - 1 > TamFich) then
-                SubItems.Add(((Inicio.ToInteger - sBytes.ToInteger) +
-                  sBytes.ToInteger - ((Inicio.ToInteger - sBytes.ToInteger) +
-                  ((FinAux.ToInteger - 1) - TamFich)) - 1).ToString)
-              else
-                SubItems.Add(((IniAux.ToInteger + FinAux.ToInteger) - 1)
-                  .ToString);
+              subitems.Add(ini.ToString);
+            end;
+          end
+          else
+          if Form1.RadDSplit.Checked then
+          begin
+            Caption:= (ini-sbytes.ToInteger).ToString;
+            if ini > TamFich then
+            begin
+              SubItems.Add(TamFich.ToString);
+              Break;
+            end
+            else
+            begin
+              SubItems.Add(ini.ToString);
             end;
           end;
-          Application.ProcessMessages;
         end;
-      Acumulados := 0;
+        acumulados:= 0;
+      end;
+      FindClose(SearchResult);
+      inc(ini, sbytes.ToInteger);
     end;
-    FindClose(SearchResult);
-    Inicio := (Inicio.ToInteger + sBytes.ToInteger).ToString;
-  end;
-  if (Form1.CheckAll.Checked) and (Form1.ListView1.Items.Count > 0) then
-    for i := 0 to Form1.ListView1.Items.Count - 1 do
-      Form1.ListView1.Items.Item[i].Checked := True;
 end;
 
 procedure TForm1.BtnMostrarListaClick(Sender: TObject);
@@ -532,6 +524,14 @@ begin
   else if not(CheckAll.Checked) and (Form1.ListView1.Items.Count > 0) then
     for i := 0 to Form1.ListView1.Items.Count - 1 do
       Form1.ListView1.Items.Item[i].Checked := False;
+end;
+
+procedure TForm1.ChkAv1ByteClick(Sender: TObject);
+begin
+  if ChkAv1Byte.Checked then
+    ChkRestar.Enabled:= False
+  else
+    ChkRestar.Enabled:= True;
 end;
 
 procedure TForm1.ChkRevFinalClick(Sender: TObject);
@@ -741,6 +741,13 @@ begin
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
+begin
+  // Cambia proporcionalmente el tamaño del form y controles según resolución en base al alto (800 px)  ScaleBy(Screen.Height, 800);
+  ScaleBy(Screen.Height, 800);
+  DragAcceptFiles(Handle, True);
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
 var
   Opt: TIniFile;
   Dir: string;
@@ -762,24 +769,15 @@ begin
       N41.Checked := True;
     if Skin = 'Windows' then
       N1.Checked := True;
-
-    if Recordar then
+  Finally
+    Opt.Free;
+  End;
+  Traduce(RutaIdioma);
+  if Recordar then
     begin
       EdDir.Text := Dir;
       ChkRecordar.Checked := True;
     end;
-  Finally
-    Opt.Free;
-  End;
-
-  // Cambia proporcionalmente el tamaño del form y controles según resolución en base al alto (800 px)  ScaleBy(Screen.Height, 800);
-  ScaleBy(Screen.Height, 800);
-  DragAcceptFiles(Handle, True);
-end;
-
-procedure TForm1.FormShow(Sender: TObject);
-begin
-  Traduce(RutaIdioma);
 end;
 
 procedure TForm1.GuardarSeleccionadosenListaaparte1Click(Sender: TObject);
