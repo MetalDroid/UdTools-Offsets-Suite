@@ -218,7 +218,7 @@ var
 begin
   if Skin = '' then
     Skin := 'Smokey Quartz Kamri';
-  Opt := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\UOS.ini');
+  Opt := TIniFile.Create(GetEnvironmentVariable('TEMP') + '\UOS.ini');
   Try
     Opt.WriteString('Locator', 'Dir', Form1.EdDir.Text);
     Opt.WriteBool('Locator', 'Recordar', Form1.ChkRecordar.Checked);
@@ -752,7 +752,7 @@ var
   Dir: string;
   Recordar: Boolean;
 begin
-  Opt := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\UOS.ini');
+  Opt := TIniFile.Create(GetEnvironmentVariable('TEMP') + '\UOS.ini');
   Try
     Dir := Opt.ReadString('Locator', 'Dir', Var52);
     Recordar := Opt.ReadBool('Locator', 'Recordar', False);
