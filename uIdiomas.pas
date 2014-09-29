@@ -37,6 +37,7 @@ begin
     Form1.EdValor.Hint:= Idioma.ReadString('Principal', 'EdValorHint', 'Doble click para resetear el valor (90).');
     Form1.GroupBox1.Caption:= Idioma.ReadString('Principal', 'GroupBox1Caption', 'Opciones');
     Form1.CheckVaciar.Caption:= Idioma.ReadString('Principal', 'CheckVaciarCaption', 'Vaciar directorio de trabajo.');
+    Form1.CheckVaciar2.Caption:= Idioma.ReadString('Principal', 'CheckVaciarCaption', 'Vaciar directorio de trabajo.');
     Form1.CheckGen.Caption:= Idioma.ReadString('Principal', 'CheckGenCaption', 'Generar lista al terminar.');
     Form1.ChkRecordar.Caption:= Idioma.ReadString('Principal', 'ChkRecordarCaption', 'Recordar directorio de trabajo.');
     Form1.ListView1.Columns[0].Caption:= Idioma.ReadString('Principal', 'ListView1Columns1Caption', 'Inicio');
