@@ -25,7 +25,7 @@ var
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Opt := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\UOS.ini');
+  Opt := TIniFile.Create(GetEnvironmentVariable('TEMP') + '\UOS.ini');
   Try
     Skin := Opt.ReadString('UOS', 'Skin', 'Smokey Quartz Kamri');
   Finally
