@@ -870,30 +870,22 @@ begin
       BtnAVFLista.Enabled := True;
       BtnDetenerLista.Enabled := True;
       ChkAv1Byte.Enabled := True;
+      ChkRestar.Enabled := True;
     end
     else
     begin
       BtnAVFLista.Enabled := False;
       BtnDetenerLista.Enabled := False;
       ChkAv1Byte.Enabled := False;
+      ChkRestar.Enabled := False;
     end;
   end
   else
   begin
     ChkRestar.Enabled := False;
     ChkAv1Byte.Enabled := False;
-    if RadAvFucker.Checked then
-    begin
-      BtnAVFLista.Enabled := True;
-      BtnDetenerLista.Enabled := True;
-      ChkAv1Byte.Enabled := True;
-    end
-    else
-    begin
-      BtnAVFLista.Enabled := False;
-      BtnDetenerLista.Enabled := False;
-      ChkAv1Byte.Enabled := False;
-    end;
+    BtnAVFLista.Enabled := False;
+    BtnDetenerLista.Enabled := False;
   end;
 end;
 
