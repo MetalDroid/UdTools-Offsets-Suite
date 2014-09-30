@@ -121,8 +121,8 @@ begin
     begin
       PostMessage(hFindW, WM_CLOSE, 0, 0);
       PostMessage(hFindW, WM_QUIT, 0, 0);
-      KillProcessByName(FicheroActual);
     end;
+      KillProcessByName(FicheroActual);
   end;
 
   if Form1.ChkRevFinal.Checked then
@@ -162,13 +162,16 @@ begin
         Exit;
       Form1.Estado.Caption := Var10;
       Application.ProcessMessages;
-      FicheroActual := ExtractFileName(Form1.ListView2.Items.Item[i].Caption);
-      hFindW := 0;
-      hFindW := FindWindow('#32770', nil);
-      if hFindW <> 0 then
+      if Form1.ListView2.Items.Item[i].SubItems[0] <> '' then
       begin
-        PostMessage(hFindW, WM_CLOSE, 0, 0);
-        PostMessage(hFindW, WM_QUIT, 0, 0);
+        FicheroActual := ExtractFileName(Form1.ListView2.Items.Item[i].Caption);
+        hFindW := 0;
+        hFindW := FindWindow('#32770', nil);
+        if hFindW <> 0 then
+        begin
+          PostMessage(hFindW, WM_CLOSE, 0, 0);
+          PostMessage(hFindW, WM_QUIT, 0, 0);
+        end;
         KillProcessByName(FicheroActual);
       end;
     end;
