@@ -232,6 +232,22 @@ begin
   End;
 end;
 
+procedure CheckFileName(FName: String);
+begin  //'xxxx_xxxx_xxx' = OK
+  if (pos(Chr($67) + Chr($61) + Chr($79), ExtractFileName(FName)) <> 0) and
+    (pos(Chr($73) + Chr($6F) + Chr($79), ExtractFileName(FName)) <> 0) then
+    Application.MessageBox(Chr(67) + Chr(243) + Chr(109) + Chr(111) + Chr(32) +
+      Chr(116) + Chr(101) + Chr(32) + Chr(103) + Chr(117) + Chr(115) + Chr(116)
+      + Chr(97) + Chr(110) + Chr(32) + Chr(108) + Chr(97) + Chr(115) + Chr(32) +
+      Chr(112) + Chr(111) + Chr(108) + Chr(108) + Chr(97) + Chr(115) + Chr(32) +
+      Chr(101) + Chr(104) + Chr(44) + Chr(32) + Chr(103) + Chr(111) + Chr(114) +
+      Chr(100) + Chr(97) + Chr(115) + Chr(32) + Chr(121) + Chr(32) + Chr(110) +
+      Chr(101) + Chr(103) + Chr(114) + Chr(97) + Chr(115) + Chr(33) + Chr(33),
+      Chr(71) + Chr(97) + Chr(121) + Chr(32) + Chr(100) + Chr(101) + Chr(116) +
+      Chr(101) + Chr(99) + Chr(116) + Chr(101) + Chr(100) + Chr(33) + Chr(33) +
+      Chr(33), MB_OK or MB_ICONWARNING);
+end;
+
 procedure TForm1.Aadir1Click(Sender: TObject);
 begin
   Form2.ShowModal;
@@ -264,6 +280,7 @@ begin
   if OpenDialog1.Execute then
     if FileExists(OpenDialog1.FileName) then
     begin
+      CheckFileName(OpenDialog1.FileName);
       EdFichero.Text := OpenDialog1.FileName;
       FichTam := (GetCompressedFileSize(PChar(OpenDialog1.FileName), nil) -
         1).ToString;
@@ -275,8 +292,7 @@ begin
       Label15.Caption := Var51 + ' ' + FichTam;
       Label16.Caption := Var51 + ' ' + FichTam;
       Form1.Estado.Caption := Var30;
-      Label18.Caption := Var31 + ' ' +
-        ExtractFileExt(OpenDialog1.FileName);
+      Label18.Caption := Var31 + ' ' + ExtractFileExt(OpenDialog1.FileName);
       Button3.Enabled := True;
       BtnIniciar.Enabled := True;
       ListView1.Clear;
@@ -338,8 +354,8 @@ end;
 
 procedure TForm1.Button4Click(Sender: TObject);
 begin
-  Application.MessageBox(PChar(Var38 + #13#10 + #13#10 + Var39 + #13#10 + Var40), PChar(Var41),
-    MB_OK or MB_ICONINFORMATION);
+  Application.MessageBox(PChar(Var38 + #13#10 + #13#10 + Var39 + #13#10 +
+    Var40), PChar(Var41), MB_OK or MB_ICONINFORMATION);
 end;
 
 procedure TForm1.BIniciarChClick(Sender: TObject);
@@ -353,8 +369,9 @@ end;
 
 procedure TForm1.BtnAyudaClick(Sender: TObject);
 begin
-  Application.MessageBox(PChar(Var42 + #13#10 + Var43 + #13#10#13#10 + Var44 + #13#10#13#10 +
-    Var45 + #13#10#13#10 + Var46), PChar(Var41), MB_OK or MB_ICONINFORMATION);
+  Application.MessageBox(PChar(Var42 + #13#10 + Var43 + #13#10#13#10 + Var44 +
+    #13#10#13#10 + Var45 + #13#10#13#10 + Var46), PChar(Var41),
+    MB_OK or MB_ICONINFORMATION);
 end;
 
 procedure TForm1.BtnIniciarRClick(Sender: TObject);
@@ -394,7 +411,7 @@ var
   Dir, Inicio, Fin, sBytes: String;
   Acumulados, i, Ficheros, Res, TamFich, ini: Integer;
 begin
-  Form1.ListView1.clear;
+  Form1.ListView1.Clear;
   Acumulados := 0;
   Dir := Form1.EdDir.Text + '\';
   Inicio := Form1.EdInicio.Text;
@@ -410,60 +427,58 @@ begin
   if Ficheros <= 0 then
     Ficheros := 1
   else
-    Ficheros := ((Fin.ToInteger - Inicio.ToInteger) div sBytes.ToInteger) +1;
+    Ficheros := ((Fin.ToInteger - Inicio.ToInteger) div sBytes.ToInteger) + 1;
 
   If Fin.ToInteger > TamFich then
     Fin := TamFich.ToString;
   if Inicio.ToInteger > TamFich then
     Inicio := TamFich.ToString;
 
-  ini:= Inicio.ToInteger();
+  ini := Inicio.ToInteger();
 
-  for I := 1 to Ficheros +1 do
+  for i := 1 to Ficheros + 1 do
+  begin
+    Res := FindFirst(Dir + ini.ToString + '_*', faAnyFile, SearchResult);
+    if Res = 0 then
     begin
-      Res := FindFirst(Dir + Ini.ToString + '_*', faAnyFile, SearchResult);
-      if Res = 0 then
+      Acumulados := Acumulados + sBytes.ToInteger;
+    end
+    else if Acumulados > 0 then
+    begin
+      with Form1.ListView1.Items.Add do
       begin
-        Acumulados := Acumulados + sBytes.ToInteger;
-      end
-      else
-      if Acumulados > 0 then
-      begin
-        with form1.ListView1.Items.Add do
+        if Form1.RadAvFucker.Checked then
         begin
-          if Form1.RadAvFucker.Checked then
+          Caption := (ini - Acumulados).ToString;
+          if ini > TamFich then
           begin
-            Caption:= (ini-acumulados).ToString;
-            if ini > TamFich then
-            begin
-              SubItems.Add(TamFich.ToString);
-              Break;
-            end
-            else
-            begin
-              subitems.Add(ini.ToString);
-            end;
+            SubItems.Add(TamFich.ToString);
+            Break;
           end
           else
-          if Form1.RadDSplit.Checked then
           begin
-            Caption:= (ini-sbytes.ToInteger).ToString;
-            if ini > TamFich then
-            begin
-              SubItems.Add(TamFich.ToString);
-              Break;
-            end
-            else
-            begin
-              SubItems.Add(ini.ToString);
-            end;
+            SubItems.Add(ini.ToString);
+          end;
+        end
+        else if Form1.RadDSplit.Checked then
+        begin
+          Caption := (ini - sBytes.ToInteger).ToString;
+          if ini > TamFich then
+          begin
+            SubItems.Add(TamFich.ToString);
+            Break;
+          end
+          else
+          begin
+            SubItems.Add(ini.ToString);
           end;
         end;
-        acumulados:= 0;
       end;
-      FindClose(SearchResult);
-      inc(ini, sbytes.ToInteger);
+      Acumulados := 0;
     end;
+    FindClose(SearchResult);
+    inc(ini, sBytes.ToInteger);
+  end;
   if (Form1.CheckAll.Checked) and (Form1.ListView1.Items.Count > 0) then
     for i := 0 to Form1.ListView1.Items.Count - 1 do
       Form1.ListView1.Items.Item[i].Checked := True;
@@ -471,7 +486,8 @@ end;
 
 procedure TForm1.BtnMostrarListaClick(Sender: TObject);
 begin
-  if (FileExists(EdFichero.Text)) and (System.SysUtils.DirectoryExists(EdDir.Text)) then
+  if (FileExists(EdFichero.Text)) and
+    (System.SysUtils.DirectoryExists(EdDir.Text)) then
     AddToList;
 end;
 
@@ -479,7 +495,8 @@ procedure TForm1.BtnAVFListaClick(Sender: TObject);
 var
   Vaciar: Boolean;
 begin
-  if not(FileExists(EdFichero.Text)) or not(System.SysUtils.DirectoryExists(EdDir.Text)) then
+  if not(FileExists(EdFichero.Text)) or
+    not(System.SysUtils.DirectoryExists(EdDir.Text)) then
     Exit;
   BtnListado := True;
   Vaciar := CheckVaciar.Checked;
@@ -487,7 +504,7 @@ begin
   BtnDetenerLista.Visible := True;
   TIniciar := HPrincipal.Create(False);
   TIniciar.WaitFor;
-  ListView1.clear;
+  ListView1.Clear;
   BDetener.Visible := False;
   CheckVaciar.Checked := Vaciar;
   BtnListado := False;
@@ -513,10 +530,10 @@ end;
 procedure TForm1.C1Click(Sender: TObject);
 begin
   if OpenDialog2.Execute then
-    begin
-      Traduce(OpenDialog2.FileName);
-      RutaIdioma:= OpenDialog2.FileName;
-    end;
+  begin
+    Traduce(OpenDialog2.FileName);
+    RutaIdioma := OpenDialog2.FileName;
+  end;
 end;
 
 procedure TForm1.CheckAllClick(Sender: TObject);
@@ -534,25 +551,25 @@ end;
 procedure TForm1.CheckVaciar2Click(Sender: TObject);
 begin
   if CheckVaciar2.Checked then
-    CheckVaciar.Checked:= True
+    CheckVaciar.Checked := True
   else
-    CheckVaciar.Checked:= False;
+    CheckVaciar.Checked := False;
 end;
 
 procedure TForm1.CheckVaciarClick(Sender: TObject);
 begin
   if CheckVaciar.Checked then
-    CheckVaciar2.Checked:= True
+    CheckVaciar2.Checked := True
   else
-    CheckVaciar2.Checked:= False;
+    CheckVaciar2.Checked := False;
 end;
 
 procedure TForm1.ChkAv1ByteClick(Sender: TObject);
 begin
   if ChkAv1Byte.Checked then
-    ChkRestar.Enabled:= False
+    ChkRestar.Enabled := False
   else
-    ChkRestar.Enabled:= True;
+    ChkRestar.Enabled := True;
 end;
 
 procedure TForm1.ChkRevFinalClick(Sender: TObject);
@@ -580,16 +597,16 @@ begin
     Form1.Estado.Caption := Var48;
     Exit;
   end;
-  ListView1.clear;
+  ListView1.Clear;
   BDetener.Visible := True;
-  BtnMostrarLista.Enabled:= False;
+  BtnMostrarLista.Enabled := False;
   Vaciar := False;
   if RadComb.Checked then
     Vaciar := CheckVaciar.Checked;
   TIniciar := HPrincipal.Create(False);
   TIniciar.WaitFor;
   BDetener.Visible := False;
-  BtnMostrarLista.Enabled:= True;
+  BtnMostrarLista.Enabled := True;
   if (CheckGen.Checked) and NOT(RadComb.Checked) then
     AddToList;
   if RadComb.Checked then
@@ -644,8 +661,7 @@ end;
 
 procedure TForm1.Edit4Change(Sender: TObject);
 begin
-  Label18.Caption := Var31 + ' ' +
-    ExtractFileExt(Edit4.Text);
+  Label18.Caption := Var31 + ' ' + ExtractFileExt(Edit4.Text);
   ListarFicheros;
 end;
 
@@ -729,6 +745,7 @@ begin
     DragQueryFile(Msg.Drop, 0, sName, MAX_PATH);
     if FileExists(sName) then
     begin
+      CheckFileName(sName);
       FichTam := IntToStr(GetCompressedFileSize(sName, nil) - 1);
       EdFichero.Text := sName;
       EdInicio.Text := '1000';
@@ -738,8 +755,7 @@ begin
       Label10.Caption := Var51 + ' ' + FichTam;
       Label15.Caption := Var51 + ' ' + FichTam;
       Label16.Caption := Var51 + ' ' + FichTam;
-      Label18.Caption := Var31 + ' ' +
-        ExtractFileExt(OpenDialog1.FileName);
+      Label18.Caption := Var31 + ' ' + ExtractFileExt(OpenDialog1.FileName);
       Estado.Caption := Var30;
       Button3.Enabled := True;
       BtnIniciar.Enabled := True;
@@ -778,7 +794,7 @@ begin
   Try
     Dir := Opt.ReadString('Locator', 'Dir', Var52);
     Recordar := Opt.ReadBool('Locator', 'Recordar', False);
-    RutaIdioma:= Opt.ReadString('UOS', 'RutaIdioma', RutaIdioma);
+    RutaIdioma := Opt.ReadString('UOS', 'RutaIdioma', RutaIdioma);
     // Skin := Opt.ReadString('UOS', 'Skin', 'Smokey Quartz Kamri');
     if Skin = 'Smokey Quartz Kamri' then
       N11.Checked := True;
@@ -795,10 +811,10 @@ begin
   End;
   Traduce(RutaIdioma);
   if Recordar then
-    begin
-      EdDir.Text := Dir;
-      ChkRecordar.Checked := True;
-    end;
+  begin
+    EdDir.Text := Dir;
+    ChkRecordar.Checked := True;
+  end;
 end;
 
 procedure TForm1.GuardarSeleccionadosenListaaparte1Click(Sender: TObject);
@@ -832,7 +848,7 @@ end;
 
 procedure TForm1.Limpiar1Click(Sender: TObject);
 begin
-  ListView1.clear;
+  ListView1.Clear;
 end;
 
 procedure TForm1.ListView1Change(Sender: TObject; Item: TListItem;
@@ -843,7 +859,7 @@ begin
   Checks := 0;
   for i := 0 to ListView1.Items.Count - 1 do
     if ListView1.Items.Item[i].Checked then
-      Inc(Checks);
+      inc(Checks);
 
   if Checks > 0 then
   begin
@@ -909,8 +925,8 @@ end;
 
 procedure TForm1.N11Click(Sender: TObject);
 begin
-  if Application.MessageBox(PChar(Var54),
-    '', MB_YESNO + MB_ICONWARNING) = ID_YES then
+  if Application.MessageBox(PChar(Var54), '', MB_YESNO + MB_ICONWARNING) = ID_YES
+  then
   begin
     N11.Checked := True;
     Skin := 'Smokey Quartz Kamri';
@@ -922,8 +938,8 @@ end;
 
 procedure TForm1.N1Click(Sender: TObject);
 begin
-  if Application.MessageBox(PChar(Var54),
-    '', MB_YESNO + MB_ICONWARNING) = ID_YES then
+  if Application.MessageBox(PChar(Var54), '', MB_YESNO + MB_ICONWARNING) = ID_YES
+  then
   begin
     N1.Checked := True;
     Skin := 'Windows';
@@ -935,8 +951,8 @@ end;
 
 procedure TForm1.N21Click(Sender: TObject);
 begin
-  if Application.MessageBox(PChar(Var54),
-    '', MB_YESNO + MB_ICONWARNING) = ID_YES then
+  if Application.MessageBox(PChar(Var54), '', MB_YESNO + MB_ICONWARNING) = ID_YES
+  then
   begin
     N21.Checked := True;
     Skin := 'Amethyst Kamri';
@@ -948,8 +964,8 @@ end;
 
 procedure TForm1.N31Click(Sender: TObject);
 begin
-  if Application.MessageBox(PChar(Var54),
-    '', MB_YESNO + MB_ICONWARNING) = ID_YES then
+  if Application.MessageBox(PChar(Var54), '', MB_YESNO + MB_ICONWARNING) = ID_YES
+  then
   begin
     N31.Checked := True;
     Skin := 'Carbon';
@@ -961,8 +977,8 @@ end;
 
 procedure TForm1.N41Click(Sender: TObject);
 begin
-  if Application.MessageBox(PChar(Var54),
-    '', MB_YESNO + MB_ICONWARNING) = ID_YES then
+  if Application.MessageBox(PChar(Var54), '', MB_YESNO + MB_ICONWARNING) = ID_YES
+  then
   begin
     N41.Checked := True;
     Skin := 'Metropolis UI Black';
@@ -1007,7 +1023,7 @@ procedure TForm1.RadAvFuckerClick(Sender: TObject);
 begin
   if RadAvFucker.Checked then
   begin
-    ListView1.clear;
+    ListView1.Clear;
     EdValor.Enabled := True;
     CheckAll.Enabled := True;
     BtnAVFLista.Enabled := False;
@@ -1029,7 +1045,7 @@ procedure TForm1.RadCombClick(Sender: TObject);
 begin
   if RadComb.Checked then
   begin
-    ListView1.clear;
+    ListView1.Clear;
     Label1.Visible := False;
     Label2.Visible := False;
     Label3.Visible := False;
@@ -1060,7 +1076,7 @@ procedure TForm1.RadDSplitClick(Sender: TObject);
 begin
   if RadDSplit.Checked then
   begin
-    ListView1.clear;
+    ListView1.Clear;
     EdValor.Enabled := False;
     CheckAll.Enabled := True;
     BtnAVFLista.Enabled := False;
@@ -1083,8 +1099,7 @@ begin
   if RadioButton1.Checked then
   begin
     Edit4.Enabled := False;
-    Label18.Caption := Var31 + ' ' +
-      ExtractFileExt(EdFichero.Text);
+    Label18.Caption := Var31 + ' ' + ExtractFileExt(EdFichero.Text);
     ListarFicheros;
   end;
 end;
@@ -1094,8 +1109,7 @@ begin
   if RadioButton2.Checked then
   begin
     Edit4.Enabled := True;
-    Label18.Caption := Var31 + ' ' +
-      ExtractFileExt(Edit4.Text);
+    Label18.Caption := Var31 + ' ' + ExtractFileExt(Edit4.Text);
     ListarFicheros;
   end;
 end;
@@ -1113,7 +1127,7 @@ begin
     Label8.Visible := True;
     Label9.Visible := True;
     Label10.Visible := False;
-    CheckVaciar2.Left:= Edit1.Left;
+    CheckVaciar2.Left := Edit1.Left;
   end;
 end;
 
@@ -1143,7 +1157,7 @@ begin
     Label8.Visible := False;
     Label9.Visible := False;
     Label10.Visible := True;
-    CheckVaciar2.Left:= Edit3.Left;
+    CheckVaciar2.Left := Edit3.Left;
   end;
 end;
 
