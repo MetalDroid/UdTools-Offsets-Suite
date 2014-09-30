@@ -422,7 +422,7 @@ object Form1: TForm1
       end
       object BtnDetenerLista: TButton
         Left = 169
-        Top = 417
+        Top = 418
         Width = 168
         Height = 24
         Caption = 'Detener'
@@ -512,9 +512,9 @@ object Form1: TForm1
       end
       object BtnDetenerR: TButton
         Left = 128
-        Top = 136
+        Top = 137
         Width = 209
-        Height = 38
+        Height = 36
         Caption = 'Detener'
         TabOrder = 8
         Visible = False
@@ -696,7 +696,7 @@ object Form1: TForm1
       end
       object BDetenerCh: TButton
         Left = 193
-        Top = 410
+        Top = 409
         Width = 145
         Height = 32
         Caption = 'Detener'
@@ -922,8 +922,8 @@ object Form1: TForm1
     Top = 16
   end
   object MainMenu1: TMainMenu
-    Left = 248
-    Top = 168
+    Left = 224
+    Top = 232
     object Ajustes1: TMenuItem
       Caption = 'Herramientas'
       object Eliminartodoslosajustesyresetearaplicacin1: TMenuItem
@@ -1018,7 +1018,7 @@ object Form1: TForm1
     end
   end
   object OpenDialog2: TOpenDialog
-    Left = 304
-    Top = 168
+    Left = 296
+    Top = 248
   end
 end

@@ -360,10 +360,13 @@ end;
 
 procedure TForm1.BIniciarChClick(Sender: TObject);
 begin
+  if (Assigned(TIniciar)) or (Assigned(TIniciarR)) or (Assigned(TChecker)) then
+    Exit;
   ListarFicheros;
   BDetenerCh.Visible := True;
   TChecker := HChecker.Create(False);
   TChecker.WaitFor;
+  TChecker := nil;
   BDetenerCh.Visible := False;
 end;
 
@@ -382,9 +385,12 @@ begin
     Form1.Estado.Caption := Var48;
     Exit;
   end;
+  if (Assigned(TIniciar)) or (Assigned(TIniciarR)) or (Assigned(TChecker)) then
+    Exit;
   BtnDetenerR.Visible := True;
   TIniciarR := HReplacer.Create(False);
   TIniciarR.WaitFor;
+  TIniciarR := nil;
   BtnDetenerR.Visible := False;
 end;
 
@@ -498,6 +504,8 @@ begin
   if not(FileExists(EdFichero.Text)) or
     not(System.SysUtils.DirectoryExists(EdDir.Text)) then
     Exit;
+  if (Assigned(TIniciar)) or (Assigned(TIniciarR)) or (Assigned(TChecker)) then
+    Exit;
   BtnListado := True;
   Vaciar := CheckVaciar.Checked;
   BDetener.Visible := True;
@@ -597,6 +605,8 @@ begin
     Form1.Estado.Caption := Var48;
     Exit;
   end;
+  if (Assigned(TIniciar)) or (Assigned(TIniciarR)) or (Assigned(TChecker)) then
+    Exit;
   ListView1.Clear;
   BDetener.Visible := True;
   BtnMostrarLista.Enabled := False;
@@ -605,6 +615,7 @@ begin
     Vaciar := CheckVaciar.Checked;
   TIniciar := HPrincipal.Create(False);
   TIniciar.WaitFor;
+  TIniciar := nil;
   BDetener.Visible := False;
   BtnMostrarLista.Enabled := True;
   if (CheckGen.Checked) and NOT(RadComb.Checked) then
