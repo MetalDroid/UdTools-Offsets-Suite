@@ -746,6 +746,7 @@ object Form1: TForm1
           'El proceso de comprobaci'#243'n se detendr'#225' al alcanzar este n'#250'mero (' +
           'Solo si se revisan funcionales en tiempo real)'
         Caption = 'Detener si funcionales = '
+        Enabled = False
         ParentShowHint = False
         ShowHint = True
         TabOrder = 9
@@ -755,6 +756,7 @@ object Form1: TForm1
         Top = 409
         Width = 25
         Height = 21
+        Enabled = False
         TabOrder = 10
         Text = '5'
       end
