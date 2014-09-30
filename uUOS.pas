@@ -260,7 +260,7 @@ end;
 
 procedure TForm1.BDetenerChClick(Sender: TObject);
 begin
-  if TChecker <> nil then
+  if Assigned(TChecker) then
     TChecker.Terminate;
   Estado.Caption := Var18;
   BDetenerCh.Visible := False;
@@ -268,7 +268,7 @@ end;
 
 procedure TForm1.BDetenerClick(Sender: TObject);
 begin
-  if TIniciar <> nil then
+  if Assigned(TIniciar) then
     TIniciar.Terminate;
   BDetener.Visible := False;
 end;
@@ -521,7 +521,7 @@ end;
 
 procedure TForm1.BtnDetenerListaClick(Sender: TObject);
 begin
-  if TIniciar <> nil then
+  if Assigned(TIniciar) then
     TIniciar.Terminate;
   Estado.Caption := Var18;
   BtnDetenerLista.Visible := False;
@@ -529,7 +529,7 @@ end;
 
 procedure TForm1.BtnDetenerRClick(Sender: TObject);
 begin
-  if TIniciarR <> nil then
+  if Assigned(TIniciarR) then
     TIniciarR.Terminate;
   Estado.Caption := Var18;
   BtnDetenerR.Visible := False;
