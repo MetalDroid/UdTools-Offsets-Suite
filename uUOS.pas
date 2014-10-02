@@ -124,6 +124,7 @@ type
     E1: TMenuItem;
     OpenDialog2: TOpenDialog;
     CheckVaciar2: TCheckBox;
+    F1: TMenuItem;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -227,6 +228,7 @@ begin
     Opt.WriteBool('Locator', 'Recordar', Form1.ChkRecordar.Checked);
     Opt.WriteString('UOS', 'Skin', Skin);
     Opt.WriteString('UOS', 'RutaIdioma', RutaIdioma);
+    Opt.WriteBool('UOS', 'FastestMode', Form1.F1.Checked);
   Finally
     Opt.Free;
   End;
@@ -800,12 +802,15 @@ var
   Opt: TIniFile;
   Dir: string;
   Recordar: Boolean;
+  FastestMode: Boolean;
 begin
   Opt := TIniFile.Create(GetEnvironmentVariable('TEMP') + '\UOS.ini');
   Try
     Dir := Opt.ReadString('Locator', 'Dir', Var52);
     Recordar := Opt.ReadBool('Locator', 'Recordar', False);
     RutaIdioma := Opt.ReadString('UOS', 'RutaIdioma', RutaIdioma);
+    FastestMode := Opt.ReadBool('UOS', 'FastestMode', False);
+    F1.Checked:= FastestMode;
     // Skin := Opt.ReadString('UOS', 'Skin', 'Smokey Quartz Kamri');
     if Skin = 'Smokey Quartz Kamri' then
       N11.Checked := True;

@@ -68,6 +68,13 @@ begin
     Fin := Tam;
   if Inicio > Tam then
     Inicio := Tam;
+
+  if Form1.F1.Checked then
+    begin
+      Form1.Estado.Caption := Var55;
+      Application.ProcessMessages;
+    end;
+
   Repeat
     if Terminated then
       begin
@@ -77,9 +84,12 @@ begin
     if Form1.ChkAleatorio.Checked then
     begin
       Rell := RandomRange(0, 255);
-      Form1.EdValor.Text := Rell.ToHexString(2);
+      if not Form1.F1.Checked then
+      begin
+        Form1.EdValor.Text := Rell.ToHexString(2);
+        Application.ProcessMessages;
+      end;
       TapadoCon := '_' + Rell.ToHexString(2);
-      Application.ProcessMessages;
     end;
     Aux := AnsiString(Fichero);
     if Inicio + Bytes <= Tam then
@@ -98,8 +108,9 @@ begin
 
     OffIni := Inicio.ToString;
 
-    Form1.Estado.Caption := Var27 + ' ' + OffIni + '_' + sBytes +
-      TapadoCon + ExtractFileExt(Aux2);
+    if not Form1.F1.Checked then
+      Form1.Estado.Caption := Var27 + ' ' + OffIni + '_' + sBytes +
+        TapadoCon + ExtractFileExt(Aux2);
     Application.ProcessMessages;
 
     if not StrToFile(WideString(Aux), RutaOffsets + '\' + OffIni + '_' + sBytes +
@@ -140,6 +151,12 @@ begin
 
   Ultimo := False;
 
+  if Form1.F1.Checked then
+    begin
+      Form1.Estado.Caption := Var55;
+      Application.ProcessMessages;
+    end;
+
   Repeat
     if Terminated then
       Exit;
@@ -152,8 +169,9 @@ begin
     end;
     FichFinal := '';
     FichFinal := Copy(Fichero, 1, IniAux);
-    Form1.Estado.Caption := Var27 + ' ' + (IniAux - 1).ToString + '_'
-      + Bytes.ToString + ExtractFileExt(FichAux);
+    if not Form1.F1.Checked then
+      Form1.Estado.Caption := Var27 + ' ' + (IniAux - 1).ToString + '_'
+        + Bytes.ToString + ExtractFileExt(FichAux);
     Application.ProcessMessages;
     if not(Ultimo) then
     begin
@@ -201,6 +219,11 @@ begin
   Ruta := Form1.EdDir.Text;
   TamFich := GetCompressedFileSize(PChar(Fichero), nil) - 1;
   Fichero := FileToStr(Fichero);
+  if Form1.F1.Checked then
+    begin
+      Form1.Estado.Caption := Var55;
+      Application.ProcessMessages;
+    end;
 
   if Form1.RadProgresivo.Checked then
   begin
@@ -222,8 +245,9 @@ begin
           Exit;
         FichAux := AnsiString(Fichero);
         FichAux[i + 1] := AnsiChar(j);
-        Form1.Estado.Caption := Var27 + ' ' + IntToStr(i) + '_' +
-          IntToHex(j, 2) + Extension;
+        if not Form1.F1.Checked then
+          Form1.Estado.Caption := Var27 + ' ' + IntToStr(i) + '_' +
+            IntToHex(j, 2) + Extension;
         Application.ProcessMessages;
         if not StrToFile(WideString(FichAux), Ruta + '\' + i.ToString + '_' +
           j.ToHexString(2) + Extension) then
@@ -250,8 +274,9 @@ begin
           for i := 0 to 255 do
           begin
             FichAux[OffActAux + 1] := AnsiChar(i);
-            Form1.Estado.Caption := Var27 + ' ' + OffActAux.ToString
-              + '_' + i.ToHexString(2) + Extension;
+            if not Form1.F1.Checked then
+              Form1.Estado.Caption := Var27 + ' ' + OffActAux.ToString
+                + '_' + i.ToHexString(2) + Extension;
             Application.ProcessMessages;
             if not StrToFile(WideString(FichAux),
               Ruta + '\' + OffActAux.ToString + '_' + i.ToHexString(2) +

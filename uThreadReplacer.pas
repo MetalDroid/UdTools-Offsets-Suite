@@ -32,6 +32,7 @@ begin
   if FindFirst('*', faArchive, SearchResult) = 0 then
   begin
     repeat
+      Application.ProcessMessages;
       if (SearchResult.Attr and faArchive = faArchive) and
         (SearchResult.Attr and faDirectory <> faDirectory) then
         if not Deletefile(PChar(Form1.EdDir.Text + '\' + SearchResult.Name)) then
@@ -64,6 +65,13 @@ begin
   Directorio := Form1.EdDir.Text;
   Inicio := 1;
   Fin := Length(Fichero);
+
+  if Form1.F1.Checked then
+    begin
+      Form1.Estado.Caption := Var55;
+      Application.ProcessMessages;
+    end;
+
   if Form1.RadRango.Checked then
   begin
     Inicio := StrToInt(Form1.EdInicioR.Text);
@@ -87,6 +95,7 @@ begin
       if not StrToFile(WideString(FicheroF), Directorio + '\' + (i - 1).ToString +
         Extension) then
         Log.Add(Var26 + ' ' + Directorio + '\' + (i - 1).ToString + Extension);
+      if not Form1.F1.Checked then
       Form1.Estado.Caption := Var27 + ' ' + (i - 1).ToString +
         Extension;
       Application.ProcessMessages;

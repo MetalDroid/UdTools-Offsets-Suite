@@ -11,7 +11,7 @@ var
   Var13, Var14, Var15, Var16, Var17, Var18, Var19, Var20, Var21, Var22, Var23,
   Var24, Var25, Var26, Var27, Var28, Var29, Var30, Var31, Var32, Var33, Var34,
   Var35, Var36, Var37, Var38, Var39, Var40, Var41, Var42, Var43, Var44, Var45,
-  Var46, Var47, Var48, Var49, Var50, Var51, Var52, Var53, Var54: String;
+  Var46, Var47, Var48, Var49, Var50, Var51, Var52, Var53, Var54, Var55: String;
 
 Procedure Traduce(LangFile: String);
 
@@ -115,6 +115,7 @@ begin
     Form1.I1.Caption:= Idioma.ReadString('Principal', 'I1Caption', 'Idioma');
     Form1.E1.Caption:= Idioma.ReadString('Principal', 'E1Caption', 'Escribir plantilla para idiomas en disco');
     Form1.C1.Caption:= Idioma.ReadString('Principal', 'C1Caption', 'Cargar idioma');
+    Form1.F1.Caption:= Idioma.ReadString('Principal', 'F1Caption', 'Generar ficheros en Modo Rápido');
 
     //[About]
     AboutBox.Version.Caption:= Idioma.ReadString('About', 'VersionCaption', 'Versión 1.0 Final');
@@ -199,6 +200,7 @@ begin
     Var52:= Idioma.ReadString('Internal', 'Var52', 'Directorio de trabajo');
     Var53:= Idioma.ReadString('Internal', 'Var53', 'Se añadieron offsets a la Lista Almacenada.');
     Var54:= Idioma.ReadString('Internal', 'Var54', 'El programa se reiniciará para aplicar el Skin.');
+    Var55:= Idioma.ReadString('Internal', 'Var55', 'Procesando en Modo Rápido...');
 
   Finally
     Idioma.Free;

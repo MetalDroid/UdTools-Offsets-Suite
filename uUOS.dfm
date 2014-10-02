@@ -964,6 +964,10 @@ object Form1: TForm1
           OnClick = N1Click
         end
       end
+      object F1: TMenuItem
+        AutoCheck = True
+        Caption = 'Generar ficheros en Modo R'#225'pido'
+      end
     end
     object I1: TMenuItem
       Caption = 'Idioma'
