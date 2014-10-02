@@ -422,7 +422,7 @@ object Form1: TForm1
       end
       object BtnDetenerLista: TButton
         Left = 169
-        Top = 418
+        Top = 417
         Width = 168
         Height = 24
         Caption = 'Detener'
