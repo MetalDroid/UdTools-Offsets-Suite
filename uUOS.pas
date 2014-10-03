@@ -9,7 +9,7 @@ uses
   uThreadLocator, Vcl.FileCtrl, System.IOUtils, Vcl.ExtCtrls, System.IniFiles,
   Winapi.ShellApi, uThreadReplacer, Vcl.Menus, Vcl.Themes, Vcl.Styles,
   Winapi.TlHelp32, uFuncCompartidas, uThreadChecker, uAddToList, About,
-  uListaGuardada, uIdiomas;
+  uListaGuardada, uIdiomas, Vcl.Imaging.pngimage;
 
 type
   TForm1 = class(TForm)
@@ -125,6 +125,7 @@ type
     OpenDialog2: TOpenDialog;
     CheckVaciar2: TCheckBox;
     F1: TMenuItem;
+    Image1: TImage;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
