@@ -166,8 +166,6 @@ type
     procedure RadioButton2Click(Sender: TObject);
     procedure Edit4Change(Sender: TObject);
     procedure ListView1DblClick(Sender: TObject);
-    procedure ListView1Change(Sender: TObject; Item: TListItem;
-      Change: TItemChange);
     procedure Edit3KeyPress(Sender: TObject; var Key: Char);
     procedure TabSheet4Show(Sender: TObject);
     procedure Edit6KeyPress(Sender: TObject; var Key: Char);
@@ -922,44 +920,6 @@ begin
   ChkAv1Byte.Enabled := False;
   ChkRestar.Enabled := False;
   BtnAVFLista.Enabled := False;
-end;
-
-procedure TForm1.ListView1Change(Sender: TObject; Item: TListItem;
-  Change: TItemChange);
-//var
-//  i, Checks: Integer;
-begin
-//  Checks := 0;
-//  for i := 0 to ListView1.Items.Count - 1 do
-//    if ListView1.Items.Item[i].Checked then
-//      inc(Checks);
-//
-//  if Checks > 0 then
-//  begin
-//    ChkRestar.Enabled := True;
-//    ChkAv1Byte.Enabled := True;
-//    if RadAvFucker.Checked then
-//    begin
-//      BtnAVFLista.Enabled := True;
-//      BtnDetenerLista.Enabled := True;
-//      ChkAv1Byte.Enabled := True;
-//      ChkRestar.Enabled := True;
-//    end
-//    else
-//    begin
-//      BtnAVFLista.Enabled := False;
-//      BtnDetenerLista.Enabled := False;
-//      ChkAv1Byte.Enabled := False;
-//      ChkRestar.Enabled := False;
-//    end;
-//  end
-//  else
-//  begin
-//    ChkRestar.Enabled := False;
-//    ChkAv1Byte.Enabled := False;
-//    BtnAVFLista.Enabled := False;
-//    BtnDetenerLista.Enabled := False;
-//  end;
 end;
 
 procedure TForm1.ListView1DblClick(Sender: TObject);

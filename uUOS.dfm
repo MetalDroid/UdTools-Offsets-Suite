@@ -204,7 +204,6 @@ object Form1: TForm1
         PopupMenu = PopupMenu1
         TabOrder = 7
         ViewStyle = vsReport
-        OnChange = ListView1Change
         OnDblClick = ListView1DblClick
       end
       object BtnIniciar: TButton
