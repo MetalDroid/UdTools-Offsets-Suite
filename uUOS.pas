@@ -266,6 +266,8 @@ begin
     TChecker.Terminate;
   Estado.Caption := Var18;
   BDetenerCh.Visible := False;
+  BtnIniciar.Enabled := True;
+  BtnIniciarR.Enabled := True;
 end;
 
 procedure TForm1.BDetenerClick(Sender: TObject);
@@ -273,6 +275,8 @@ begin
   if Assigned(TIniciar) then
     TIniciar.Terminate;
   BDetener.Visible := False;
+  BIniciarCh.Enabled := True;
+  BtnIniciarR.Enabled := True;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -370,10 +374,14 @@ begin
 
   ListarFicheros;
   BDetenerCh.Visible := True;
+  BtnIniciar.Enabled := False;
+  BtnIniciarR.Enabled := False;
   TChecker := HChecker.Create(False);
   TChecker.WaitFor;
-  TChecker := nil;
+//  TChecker := nil;
   BDetenerCh.Visible := False;
+  BtnIniciar.Enabled := True;
+  BtnIniciarR.Enabled := True;
 end;
 
 procedure TForm1.BtnAyudaClick(Sender: TObject);
@@ -398,10 +406,14 @@ begin
   if Assigned(TChecker) then TChecker.Terminate;
 
   BtnDetenerR.Visible := True;
+  BtnIniciar.Enabled := False;
+  BIniciarCh.Enabled := False;
   TIniciarR := HReplacer.Create(False);
   TIniciarR.WaitFor;
 //  TIniciarR := nil;
   BtnDetenerR.Visible := False;
+  BtnIniciar.Enabled := True;
+  BIniciarCh.Enabled := True;
 end;
 
 // Comprobar si una cadena es numérica
@@ -495,6 +507,17 @@ begin
     FindClose(SearchResult);
     inc(ini, sBytes.ToInteger);
   end;
+  if Form1.ListView1.Items.Count = 0 then
+    begin
+      Form1.BtnAVFLista.Enabled := False;
+      Form1.ChkAv1Byte.Enabled := False;
+      Form1.ChkRestar.Enabled := False;
+    end else
+    begin
+      Form1.BtnAVFLista.Enabled := True;
+      Form1.ChkAv1Byte.Enabled := True;
+      Form1.ChkRestar.Enabled := True;
+    end;
   if (Form1.CheckAll.Checked) and (Form1.ListView1.Items.Count > 0) then
     for i := 0 to Form1.ListView1.Items.Count - 1 do
       Form1.ListView1.Items.Item[i].Checked := True;
@@ -547,6 +570,8 @@ begin
     TIniciarR.Terminate;
   Estado.Caption := Var18;
   BtnDetenerR.Visible := False;
+  BtnIniciar.Enabled := True;
+  BIniciarCh.Enabled := True;
 end;
 
 procedure TForm1.C1Click(Sender: TObject);
@@ -627,7 +652,12 @@ begin
 
   ListView1.Clear;
   BDetener.Visible := True;
-  BtnMostrarLista.Enabled := False;
+//  BtnMostrarLista.Enabled := False;
+  BtnIniciarR.Enabled := False;
+  BIniciarCh.Enabled := False;
+  BtnAVFLista.Enabled := False;
+  ChkAv1Byte.Enabled := False;
+  ChkRestar.Enabled := False;
   Vaciar := False;
   if RadComb.Checked then
     Vaciar := CheckVaciar.Checked;
@@ -635,7 +665,9 @@ begin
   TIniciar.WaitFor;
 //  TIniciar := nil;
   BDetener.Visible := False;
-  BtnMostrarLista.Enabled := True;
+  BtnIniciarR.Enabled := True;
+  BIniciarCh.Enabled := True;
+//  BtnMostrarLista.Enabled := True;
   if (CheckGen.Checked) and NOT(RadComb.Checked) then
     AddToList;
   if RadComb.Checked then
@@ -738,6 +770,12 @@ procedure TForm1.Eliminarseleccionados1Click(Sender: TObject);
 begin
   if ListView1.SelCount > 0 then
     ListView1.DeleteSelected;
+  if ListView1.Items.Count = 0 then
+    begin
+      ChkAv1Byte.Enabled := False;
+      ChkRestar.Enabled := False;
+      BtnAVFLista.Enabled := False;
+    end;
 end;
 
 procedure TForm1.Eliminartodoslosajustesyresetearaplicacin1Click
@@ -881,44 +919,47 @@ end;
 procedure TForm1.Limpiar1Click(Sender: TObject);
 begin
   ListView1.Clear;
+  ChkAv1Byte.Enabled := False;
+  ChkRestar.Enabled := False;
+  BtnAVFLista.Enabled := False;
 end;
 
 procedure TForm1.ListView1Change(Sender: TObject; Item: TListItem;
   Change: TItemChange);
-var
-  i, Checks: Integer;
+//var
+//  i, Checks: Integer;
 begin
-  Checks := 0;
-  for i := 0 to ListView1.Items.Count - 1 do
-    if ListView1.Items.Item[i].Checked then
-      inc(Checks);
-
-  if Checks > 0 then
-  begin
-    ChkRestar.Enabled := True;
-    ChkAv1Byte.Enabled := True;
-    if RadAvFucker.Checked then
-    begin
-      BtnAVFLista.Enabled := True;
-      BtnDetenerLista.Enabled := True;
-      ChkAv1Byte.Enabled := True;
-      ChkRestar.Enabled := True;
-    end
-    else
-    begin
-      BtnAVFLista.Enabled := False;
-      BtnDetenerLista.Enabled := False;
-      ChkAv1Byte.Enabled := False;
-      ChkRestar.Enabled := False;
-    end;
-  end
-  else
-  begin
-    ChkRestar.Enabled := False;
-    ChkAv1Byte.Enabled := False;
-    BtnAVFLista.Enabled := False;
-    BtnDetenerLista.Enabled := False;
-  end;
+//  Checks := 0;
+//  for i := 0 to ListView1.Items.Count - 1 do
+//    if ListView1.Items.Item[i].Checked then
+//      inc(Checks);
+//
+//  if Checks > 0 then
+//  begin
+//    ChkRestar.Enabled := True;
+//    ChkAv1Byte.Enabled := True;
+//    if RadAvFucker.Checked then
+//    begin
+//      BtnAVFLista.Enabled := True;
+//      BtnDetenerLista.Enabled := True;
+//      ChkAv1Byte.Enabled := True;
+//      ChkRestar.Enabled := True;
+//    end
+//    else
+//    begin
+//      BtnAVFLista.Enabled := False;
+//      BtnDetenerLista.Enabled := False;
+//      ChkAv1Byte.Enabled := False;
+//      ChkRestar.Enabled := False;
+//    end;
+//  end
+//  else
+//  begin
+//    ChkRestar.Enabled := False;
+//    ChkAv1Byte.Enabled := False;
+//    BtnAVFLista.Enabled := False;
+//    BtnDetenerLista.Enabled := False;
+//  end;
 end;
 
 procedure TForm1.ListView1DblClick(Sender: TObject);

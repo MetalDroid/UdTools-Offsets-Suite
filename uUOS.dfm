@@ -249,7 +249,7 @@ object Form1: TForm1
       end
       object BDetener: TButton
         Left = 3
-        Top = 197
+        Top = 196
         Width = 150
         Height = 25
         Caption = 'Detener'
@@ -695,7 +695,7 @@ object Form1: TForm1
         OnClick = BIniciarChClick
       end
       object BDetenerCh: TButton
-        Left = 193
+        Left = 175
         Top = 409
         Width = 145
         Height = 32

@@ -100,6 +100,14 @@ begin
   end;
 
   Form1.Estado.Caption := Var3;
+
+  if Form1.ListView1.Items.Count > 0 then
+    begin
+      Form1.ChkAv1Byte.Enabled := True;
+      Form1.ChkRestar.Enabled := True;
+      Form1.BtnAVFLista.Enabled := True;
+    end;
+
   Form2.Close;
 end;
 
