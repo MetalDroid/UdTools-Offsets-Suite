@@ -821,7 +821,7 @@ begin
       Label10.Caption := Var51 + ' ' + FichTam;
       Label15.Caption := Var51 + ' ' + FichTam;
       Label16.Caption := Var51 + ' ' + FichTam;
-      Label18.Caption := Var31 + ' ' + ExtractFileExt(OpenDialog1.FileName);
+      Label18.Caption := Var31 + ' ' + ExtractFileExt(EdFichero.Text);
       Estado.Caption := Var30;
       Button3.Enabled := True;
       BtnIniciar.Enabled := True;

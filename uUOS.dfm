@@ -32,7 +32,6 @@ object Form1: TForm1
     ParentShowHint = False
     ShowHint = False
     TabOrder = 0
-    ExplicitTop = -6
     object TabSheet1: TTabSheet
       Caption = 'Locator'
       ParentShowHint = False
