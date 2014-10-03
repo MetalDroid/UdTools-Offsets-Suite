@@ -39,7 +39,7 @@ end;
 
 procedure TAboutBox.WebClick(Sender: TObject);
 begin
-  ShellExecute(0, 'OPEN', 'http://udtools.net', nil, nil, SW_SHOW);
+  ShellExecute(0, 'OPEN', 'https://www.udtools.net', nil, nil, SW_SHOW);
 end;
 
 end.

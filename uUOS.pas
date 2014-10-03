@@ -1231,7 +1231,7 @@ end;
 procedure TForm1.Visitarenlacedelproyecto1Click(Sender: TObject);
 begin
   ShellExecute(0, 'OPEN',
-    'http://foro.udtools.net/forumdisplay.php?110-UdTools-Offset-Suite-(Object-Pascal)',
+    'https://foro.udtools.net/forumdisplay.php?110-UdTools-Offset-Suite-(Object-Pascal)',
     nil, nil, SW_SHOW);
 end;
 
