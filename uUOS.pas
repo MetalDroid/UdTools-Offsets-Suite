@@ -194,6 +194,7 @@ type
     procedure ChkAv1ByteClick(Sender: TObject);
     procedure CheckVaciarClick(Sender: TObject);
     procedure CheckVaciar2Click(Sender: TObject);
+    procedure ListView1Click(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -210,6 +211,7 @@ var
   HexChars: TSysCharSet;
   Skin: String = '';
   RutaIdioma: String = '';
+  SenderFromLV: Boolean;
 
 implementation
 
@@ -513,9 +515,12 @@ begin
       Form1.ChkRestar.Enabled := False;
     end else
     begin
-      Form1.BtnAVFLista.Enabled := True;
-      Form1.ChkAv1Byte.Enabled := True;
-      Form1.ChkRestar.Enabled := True;
+      if Form1.RadAvFucker.Checked then
+      begin
+        Form1.BtnAVFLista.Enabled := True;
+        Form1.ChkAv1Byte.Enabled := True;
+        Form1.ChkRestar.Enabled := True;
+      end;
     end;
   if (Form1.CheckAll.Checked) and (Form1.ListView1.Items.Count > 0) then
     for i := 0 to Form1.ListView1.Items.Count - 1 do
@@ -553,6 +558,8 @@ begin
   CheckVaciar.Checked := Vaciar;
   BtnListado := False;
   BtnDetenerLista.Visible := False;
+  if (CheckGen.Checked) and NOT(RadComb.Checked) then
+    AddToList;
 end;
 
 procedure TForm1.BtnDetenerListaClick(Sender: TObject);
@@ -586,12 +593,13 @@ procedure TForm1.CheckAllClick(Sender: TObject);
 var
   i: Integer;
 begin
-  if (CheckAll.Checked) and (Form1.ListView1.Items.Count > 0) then
-    for i := 0 to Form1.ListView1.Items.Count - 1 do
-      Form1.ListView1.Items.Item[i].Checked := True
-  else if not(CheckAll.Checked) and (Form1.ListView1.Items.Count > 0) then
-    for i := 0 to Form1.ListView1.Items.Count - 1 do
-      Form1.ListView1.Items.Item[i].Checked := False;
+  if not SenderFromLV then
+    if (CheckAll.Checked) and (Form1.ListView1.Items.Count > 0) then
+      for i := 0 to Form1.ListView1.Items.Count - 1 do
+        Form1.ListView1.Items.Item[i].Checked := True
+    else if not(CheckAll.Checked) and (Form1.ListView1.Items.Count > 0) then
+      for i := 0 to Form1.ListView1.Items.Count - 1 do
+        Form1.ListView1.Items.Item[i].Checked := False;
 end;
 
 procedure TForm1.CheckVaciar2Click(Sender: TObject);
@@ -921,6 +929,22 @@ begin
   ChkAv1Byte.Enabled := False;
   ChkRestar.Enabled := False;
   BtnAVFLista.Enabled := False;
+end;
+
+procedure TForm1.ListView1Click(Sender: TObject);
+var
+  I: Integer;
+begin
+  SenderFromLV:= True;
+  if Listview1.Items.Count = 0 then
+    Exit;
+  for I := 0 to ListView1.Items.Count -1 do
+    if not ListView1.Items.Item[i].Checked then
+      begin
+        CheckAll.Checked:= False;
+        Break;
+      end;
+  SenderFromLV:= False;
 end;
 
 procedure TForm1.ListView1DblClick(Sender: TObject);
