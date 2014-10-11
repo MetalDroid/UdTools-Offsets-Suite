@@ -126,6 +126,7 @@ type
     CheckVaciar2: TCheckBox;
     F1: TMenuItem;
     Image1: TImage;
+    Reset1: TMenuItem;
     procedure BtnIniciarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -195,6 +196,7 @@ type
     procedure CheckVaciarClick(Sender: TObject);
     procedure CheckVaciar2Click(Sender: TObject);
     procedure ListView1Click(Sender: TObject);
+    procedure Reset1Click(Sender: TObject);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
@@ -1210,6 +1212,13 @@ begin
     Label10.Visible := True;
     CheckVaciar2.Left := Edit3.Left;
   end;
+end;
+
+procedure TForm1.Reset1Click(Sender: TObject);
+begin
+  DeleteFile(GetEnvironmentVariable('TEMP') + '\UOS.ini');
+  ShellExecute(0, nil, PChar(ParamStr(0)), nil, nil, SW_NORMAL);
+  Application.Terminate;
 end;
 
 procedure TForm1.TabSheet1Show(Sender: TObject);
