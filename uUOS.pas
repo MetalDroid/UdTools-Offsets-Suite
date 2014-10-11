@@ -854,7 +854,8 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   // Cambia proporcionalmente el tamaño del form y controles según resolución en base al alto (800 px)  ScaleBy(Screen.Height, 800);
-  ScaleBy(Screen.Height, 800);
+  if Screen.Height > 800 then
+    ScaleBy(Screen.Height, 800);
   DragAcceptFiles(Handle, True);
 end;
 
