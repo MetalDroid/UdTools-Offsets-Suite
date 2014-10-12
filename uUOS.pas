@@ -440,10 +440,11 @@ Procedure AddToList;
 var
   SearchResult: TSearchRec;
   Dir, Inicio, Fin, sBytes: String;
-  Acumulados, i, Ficheros, Res, TamFich, ini: Integer;
+  Acumulados, i, Ficheros, Res, TamFich, ini, AuxDS, LastDS: Integer;
 begin
   Form1.ListView1.Clear;
   Acumulados := 0;
+  AuxDS:= 0;
   Dir := Form1.EdDir.Text + '\';
   Inicio := Form1.EdInicio.Text;
   Fin := Form1.EdFin.Text;
@@ -467,7 +468,7 @@ begin
 
   ini := Inicio.ToInteger();
 
-  for i := 1 to Ficheros + 1 do
+  for i := 1 to Ficheros + 2 do
   begin
     Res := FindFirst(Dir + ini.ToString + '_*', faAnyFile, SearchResult);
     if Res = 0 then
@@ -492,8 +493,11 @@ begin
           end;
         end
         else if Form1.RadDSplit.Checked then
-        begin
-          Caption := (ini - sBytes.ToInteger).ToString;
+        begin    
+          if AuxDS = 0 then
+            Caption := (ini - sBytes.ToInteger).ToString
+          else    
+            Caption := LastDS.ToString;
           if ini > TamFich then
           begin
             SubItems.Add(TamFich.ToString);
@@ -509,6 +513,14 @@ begin
     end;
     FindClose(SearchResult);
     inc(ini, sBytes.ToInteger);
+
+    if form1.RadDSplit.Checked then
+      if (ini > tamfich) and (auxds <> tamfich)then
+        begin    
+          LastDS:= ini - sBytes.ToInteger; 
+          ini:= Tamfich;
+          AuxDS:= TamFich;
+        end;
   end;
   if Form1.ListView1.Items.Count = 0 then
     begin
