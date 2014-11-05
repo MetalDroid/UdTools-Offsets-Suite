@@ -7,7 +7,6 @@ uses
 
 Function FileToStr(mFile: String): String;
 Function StrToFile(Str, Ruta: String): Boolean;
-Procedure ListarFicheros;
 Procedure ErrorLog(Errores: TStringList; mFile: String);
 
 implementation
@@ -57,40 +56,6 @@ begin
   if (WriteFile(hFile, Buff[1], iSize, dwRet, nil) = True) then
     Result := True;
   CloseHandle(hFile);
-end;
-
-// Procedimiento para listar ficheros del Directorio de trabajo
-Procedure ListarFicheros;
-var
-  SearchResult: TSearchRec;
-  Extension: String;
-begin
-  Form1.ListView2.Clear;
-  if Form1.RadioButton1.Checked then
-    begin
-      if (NOT System.SysUtils.DirectoryExists(Form1.EdDir.Text)) or (NOT System.SysUtils.FileExists(Form1.EdFichero.Text)) then
-        Exit;
-      Extension:= ExtractFileExt(Form1.EdFichero.Text);
-    end;
-  if Form1.RadioButton2.Checked then
-    begin
-      if (NOT System.SysUtils.DirectoryExists(Form1.EdDir.Text)) then
-        Exit;
-      Extension:= Form1.Edit4.Text;
-    end;
-  SetCurrentDir(Form1.EdDir.Text);
-  if FindFirst('*' + Extension, faArchive, SearchResult) = 0 then
-  begin
-    repeat
-      if (SearchResult.Attr and faArchive = faArchive) and (SearchResult.Attr and faDirectory <> faDirectory) then
-        with Form1.ListView2.Items.Add do
-          begin
-            Caption:= Form1.EdDir.Text + '\' + SearchResult.Name;
-            SubItems.Add('');
-          end;
-    until FindNext(SearchResult) <> 0;
-    System.SysUtils.FindClose(SearchResult);
-  end;
 end;
 
 end.

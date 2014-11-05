@@ -197,11 +197,14 @@ type
     procedure CheckVaciar2Click(Sender: TObject);
     procedure ListView1Click(Sender: TObject);
     procedure Reset1Click(Sender: TObject);
+    procedure ListView2Data(Sender: TObject; Item: TListItem);
   private
     TIniciar: HPrincipal;
     TIniciarR: HReplacer;
     TChecker: HChecker;
+    ListaFicheros: TStringList;
     procedure DragAndDrop(var Msg: TWMDropFiles); message WM_DROPFILES;
+    Procedure ListarFicheros;
     { Private declarations }
   public
     { Public declarations }
@@ -433,6 +436,38 @@ begin
       Result := True;
       Break;
     end;
+end;
+
+// Procedimiento para listar ficheros del Directorio de trabajo
+Procedure TForm1.ListarFicheros;
+var
+  SearchResult: TSearchRec;
+  Extension: String;
+begin
+  ListView2.Items.Count:= 0;
+  ListaFicheros.Clear;
+  if RadioButton1.Checked then
+    begin
+      if (NOT System.SysUtils.DirectoryExists(EdDir.Text)) or (NOT System.SysUtils.FileExists(EdFichero.Text)) then
+        Exit;
+      Extension:= ExtractFileExt(EdFichero.Text);
+    end;
+  if RadioButton2.Checked then
+    begin
+      if (NOT System.SysUtils.DirectoryExists(EdDir.Text)) then
+        Exit;
+      Extension:= Edit4.Text;
+    end;
+  SetCurrentDir(EdDir.Text);
+  if FindFirst('*' + Extension, faArchive, SearchResult) = 0 then
+  begin
+    repeat
+      if (SearchResult.Attr and faArchive = faArchive) and (SearchResult.Attr and faDirectory <> faDirectory) then
+        ListaFicheros.Add(EdDir.Text + '\' + SearchResult.Name);
+    until FindNext(SearchResult) <> 0;
+    System.SysUtils.FindClose(SearchResult);
+    ListView2.Items.Count := ListaFicheros.Count;
+  end;
 end;
 
 // Función para añadir offsets al listado teniendo en cuenta ficheros consecutivos (Es un poco chapuza por ahora, pero funcional)
@@ -871,6 +906,7 @@ begin
   if Screen.Height > 800 then
     ScaleBy(Screen.Height, 800);
   DragAcceptFiles(Handle, True);
+  ListaFicheros:= TStringList.Create;
 end;
 
 procedure TForm1.FormShow(Sender: TObject);
@@ -981,6 +1017,12 @@ begin
     Sender.Canvas.Font.Color := clGreen
   else
     Sender.Canvas.Font.Color := clRed;
+end;
+
+procedure TForm1.ListView2Data(Sender: TObject; Item: TListItem);
+begin
+  Item.Caption := ListaFicheros[Item.Index];
+  Item.SubItems.Add('');
 end;
 
 procedure TForm1.MostrarListaAlmacenada1Click(Sender: TObject);

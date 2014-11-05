@@ -27,7 +27,7 @@ object Form1: TForm1
     Top = 0
     Width = 358
     Height = 472
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alClient
     ParentShowHint = False
     ShowHint = False
@@ -742,11 +742,13 @@ object Form1: TForm1
             Width = 60
           end>
         GridLines = True
+        OwnerData = True
         ReadOnly = True
         RowSelect = True
         TabOrder = 0
         ViewStyle = vsReport
         OnAdvancedCustomDrawSubItem = ListView2AdvancedCustomDrawSubItem
+        OnData = ListView2Data
       end
       object EdEspera: TEdit
         Left = 167
