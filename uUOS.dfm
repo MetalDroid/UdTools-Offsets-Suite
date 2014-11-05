@@ -790,7 +790,7 @@ object Form1: TForm1
         OnClick = BIniciarChClick
       end
       object BDetenerCh: TButton
-        Left = 175
+        Left = 193
         Top = 409
         Width = 145
         Height = 32
