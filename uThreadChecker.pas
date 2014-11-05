@@ -148,7 +148,11 @@ begin
             end;
           end;
       except
-
+        for i := 0 to Form1.ListView2.Items.Count - 1 do
+          begin
+            Form1.ListView2.Items.Item[i].SubItems[0] := Var8;
+            Application.ProcessMessages;
+          end;
       end;
     finally
       TSFuncionales.Free;
