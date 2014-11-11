@@ -207,7 +207,7 @@ type
     Procedure ListarFicheros;
     { Private declarations }
   public
-    { Public declarations }
+
   end;
 
 var
@@ -443,8 +443,11 @@ Procedure TForm1.ListarFicheros;
 var
   SearchResult: TSearchRec;
   Extension: String;
+  LItem : TListItem;
 begin
   ListView2.Items.Count:= 0;
+  VirtualList.Clear;
+
   ListaFicheros.Clear;
   if RadioButton1.Checked then
     begin
@@ -463,10 +466,16 @@ begin
   begin
     repeat
       if (SearchResult.Attr and faArchive = faArchive) and (SearchResult.Attr and faDirectory <> faDirectory) then
-        ListaFicheros.Add(EdDir.Text + '\' + SearchResult.Name);
+        begin
+          LItem := TListItem.Create(ListView2.Items);
+          LItem.Caption := EdDir.Text + '\' + SearchResult.Name;
+          LItem.SubItems.Add('');
+          VirtualList.Add(LItem);
+        end;
+
     until FindNext(SearchResult) <> 0;
     System.SysUtils.FindClose(SearchResult);
-    ListView2.Items.Count := ListaFicheros.Count;
+    ListView2.Items.Count := VirtualList.Count;
   end;
 end;
 
@@ -907,6 +916,7 @@ begin
     ScaleBy(Screen.Height, 800);
   DragAcceptFiles(Handle, True);
   ListaFicheros:= TStringList.Create;
+  VirtualList := TList.Create;
 end;
 
 procedure TForm1.FormShow(Sender: TObject);
@@ -1021,8 +1031,8 @@ end;
 
 procedure TForm1.ListView2Data(Sender: TObject; Item: TListItem);
 begin
-  Item.Caption := ListaFicheros[Item.Index];
-  Item.SubItems.Add('');
+  Item.Caption := TListItem(VirtualList[Item.Index]).Caption;
+  Item.SubItems.Add(TListItem(VirtualList[Item.Index]).SubItems[0]);
 end;
 
 procedure TForm1.MostrarListaAlmacenada1Click(Sender: TObject);

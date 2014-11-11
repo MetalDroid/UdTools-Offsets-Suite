@@ -4,7 +4,7 @@ interface
 
 uses
   System.Classes, Winapi.tlHelp32, Winapi.Windows, System.SysUtils,
-  Winapi.Shellapi,
+  Winapi.Shellapi, Vcl.ComCtrls,
   Winapi.Messages, Vcl.Forms, Vcl.Graphics, uIdiomas;
 
 type
@@ -15,6 +15,9 @@ type
   protected
     procedure Execute; override;
   end;
+
+var
+  VirtualList: TList;
 
 implementation
 
@@ -58,7 +61,7 @@ begin
   Funcionales := Dir + '\' + Form1.EdFuncionales.Text;
 
   if Form1.EdEspera.Text = '' then
-    Espera := 750
+    Espera := 750 //Default
   else
     Espera := StrToInt(Form1.EdEspera.Text);
 
@@ -90,19 +93,19 @@ begin
       begin
         while FileExists(Funcionales) do
           DeleteFile(Funcionales);
-        Form1.ListView2.Items.Item[i].SubItems[0] := Var7;
+        TListItem(VirtualList[i]).SubItems[0]:= var7;
         Application.ProcessMessages;
         inc(OFuncionales);
       end
       else
       begin
-        Form1.ListView2.Items.Item[i].SubItems[0] := Var8;
+        TListItem(VirtualList[i]).SubItems[0]:= Var8;
         Application.ProcessMessages;
       end;
     end
     else
     begin
-      Form1.ListView2.Items.Item[i].SubItems[0] := Var9;
+      TListItem(VirtualList[i]).SubItems[0]:= Var9;
       Application.ProcessMessages;
     end;
 
@@ -133,24 +136,23 @@ begin
         for i := 0 to Form1.ListView2.Items.Count - 1 do
           for o := 0 to TSFuncionales.Count - 1 do
           begin
-            if pos(TSFuncionales.Strings[o], Form1.ListView2.Items.Item[i]
-              .Caption) <> 0 then
+            if pos(TSFuncionales.Strings[o], Form1.ListView2.Items.Item[i].Caption) <> 0 then
             begin
-              Form1.ListView2.Items.Item[i].SubItems[0] := Var7;
+              TListItem(VirtualList[i]).SubItems[0]:= Var7;
               inc(OFuncionales);
               Application.ProcessMessages;
               Break;
             end
             else
             begin
-              Form1.ListView2.Items.Item[i].SubItems[0] := Var8;
+              TListItem(VirtualList[i]).SubItems[0]:= Var8;
               Application.ProcessMessages;
             end;
           end;
       except
         for i := 0 to Form1.ListView2.Items.Count - 1 do
           begin
-            Form1.ListView2.Items.Item[i].SubItems[0] := Var8;
+            TListItem(VirtualList[i]).SubItems[0]:= Var8;
             Application.ProcessMessages;
           end;
       end;
@@ -158,6 +160,7 @@ begin
       TSFuncionales.Free;
     end;
 
+  Form1.ListView2.Repaint;
   // Le damos unas pasadas por si algún cabrón no se cerró
   for o := 1 to 5 do
     for i := 0 to TotalFiles - 1 do

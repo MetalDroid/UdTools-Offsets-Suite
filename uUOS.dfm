@@ -27,7 +27,7 @@ object Form1: TForm1
     Top = 0
     Width = 358
     Height = 472
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
     ParentShowHint = False
     ShowHint = False
@@ -344,7 +344,7 @@ object Form1: TForm1
       end
       object BDetener: TButton
         Left = 3
-        Top = 196
+        Top = 198
         Width = 150
         Height = 25
         Caption = 'Detener'
