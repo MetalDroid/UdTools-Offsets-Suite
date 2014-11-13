@@ -1291,8 +1291,15 @@ var
 begin
   EdDir.Visible := True;
   Button2.Visible := True;
-  Escala := (Screen.Height * 100) / 800;
-  Form1.ClientHeight := Round((490 * Escala) / 100);
+  if Screen.Height > 800 then
+  begin
+    Escala := (Screen.Height * 100) / 800;
+    Form1.ClientHeight := Round((490 * Escala) / 100);
+  end
+  else
+  begin
+    Form1.ClientHeight := 490;
+  end;
 end;
 
 procedure TForm1.TabSheet2Show(Sender: TObject);
@@ -1301,8 +1308,15 @@ var
 begin
   EdDir.Visible := True;
   Button2.Visible := True;
-  Escala := (Screen.Height * 100) / 800;
-  Form1.ClientHeight := Round((225 * Escala) / 100);
+  if Screen.Height > 800 then
+  begin
+    Escala := (Screen.Height * 100) / 800;
+    Form1.ClientHeight := Round((225 * Escala) / 100);
+  end
+  else
+  begin
+    Form1.ClientHeight := 225;
+  end;
 end;
 
 procedure TForm1.TabSheet3Show(Sender: TObject);
@@ -1311,8 +1325,15 @@ var
 begin
   EdDir.Visible := True;
   Button2.Visible := True;
-  Escala := (Screen.Height * 100) / 800;
-  Form1.ClientHeight := Round((490 * Escala) / 100);
+  if Screen.Height > 800 then
+  begin
+    Escala := (Screen.Height * 100) / 800;
+    Form1.ClientHeight := Round((490 * Escala) / 100);
+  end
+  else
+  begin
+    Form1.ClientHeight := 490;
+  end;
   ListarFicheros;
 end;
 
@@ -1322,8 +1343,15 @@ var
 begin
   EdDir.Visible := False;
   Button2.Visible := False;
-  Escala := (Screen.Height * 100) / 800;
-  Form1.ClientHeight := Round((155 * Escala) / 100);
+  if Screen.Height > 800 then
+  begin
+    Escala := (Screen.Height * 100) / 800;
+    Form1.ClientHeight := Round((155 * Escala) / 100);
+  end
+  else
+  begin
+    Form1.ClientHeight := 155;
+  end;
 end;
 
 procedure TForm1.Visitarenlacedelproyecto1Click(Sender: TObject);
