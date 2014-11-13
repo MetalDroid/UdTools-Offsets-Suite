@@ -14,7 +14,7 @@ implementation
 uses
   uUOS;
 
-//Guarda Log en caso de errores
+// Guarda Log en caso de errores
 procedure ErrorLog(Errores: TStringList; mFile: String);
 begin
   Errores.SaveToFile(mFile);
@@ -28,16 +28,16 @@ var
   iSize: DWORD;
   Buff: AnsiString;
 begin
-  hFile := CreateFile(PChar(mFile), GENERIC_READ, FILE_SHARE_READ, nil,
-    OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+  hFile:= CreateFile(PChar(mFile), GENERIC_READ, FILE_SHARE_READ, nil, OPEN_EXISTING,
+    FILE_ATTRIBUTE_NORMAL, 0);
   if hFile = INVALID_HANDLE_VALUE then
     Exit;
-  iSize := GetFileSize(hFile, nil);
+  iSize:= GetFileSize(hFile, nil);
   SetFilePointer(hFile, 0, nil, FILE_BEGIN);
   SetLength(Buff, iSize);
   ReadFile(hFile, Buff[1], iSize, dwRet, nil);
   CloseHandle(hFile);
-  Result := WiDeString(Buff);
+  Result:= WiDeString(Buff);
 end;
 
 // Función para crear ficheros a partir de una cadena
@@ -48,13 +48,13 @@ var
   dwRet: DWORD;
   Buff: AnsiString;
 begin
-  Result := False;
-  Buff := AnsiString(Str);
-  iSize := Length(Buff);
-  hFile := CreateFile(PChar(Ruta), GENERIC_WRITE, FILE_SHARE_READ, nil,
-    OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+  Result:= False;
+  Buff:= AnsiString(Str);
+  iSize:= Length(Buff);
+  hFile:= CreateFile(PChar(Ruta), GENERIC_WRITE, FILE_SHARE_READ, nil, OPEN_ALWAYS,
+    FILE_ATTRIBUTE_NORMAL, 0);
   if (WriteFile(hFile, Buff[1], iSize, dwRet, nil) = True) then
-    Result := True;
+    Result:= True;
   CloseHandle(hFile);
 end;
 

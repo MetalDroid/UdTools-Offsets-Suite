@@ -704,6 +704,10 @@ object Form1: TForm1
       Caption = 'Checker'
       ImageIndex = 2
       OnShow = TabSheet3Show
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label17: TLabel
         Left = 3
         Top = 98

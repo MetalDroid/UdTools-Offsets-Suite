@@ -27,10 +27,10 @@ type
     procedure Button1Click(Sender: TObject);
     procedure PopupMenu1Popup(Sender: TObject);
     procedure ListView1DblClick(Sender: TObject);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
+    private
+      { Private declarations }
+    public
+      { Public declarations }
   end;
 
 var
@@ -68,19 +68,19 @@ end;
 procedure TForm3.ListView1DblClick(Sender: TObject);
 begin
   if ListView1.SelCount > 0 then
-  begin
-    Form1.EdInicio.Text := ListView1.Selected.Caption;
-    Form1.EdFin.Text := ListView1.Selected.SubItems[0];
-    if not ChkRestar.Checked then
-      Form1.EdBytes.Text := ListView1.Selected.SubItems[1]
-    else
-      if Length(ListView1.Selected.SubItems[1]) > 1 then
-        Form1.EdBytes.Text := Copy(ListView1.Selected.SubItems[1], 1, Length(ListView1.Selected.SubItems[1]) -1)
+    begin
+      Form1.EdInicio.Text:= ListView1.Selected.Caption;
+      Form1.EdFin.Text:= ListView1.Selected.SubItems[0];
+      if not ChkRestar.Checked then
+        Form1.EdBytes.Text:= ListView1.Selected.SubItems[1]
+      else if Length(ListView1.Selected.SubItems[1]) > 1 then
+        Form1.EdBytes.Text:= Copy(ListView1.Selected.SubItems[1], 1,
+          Length(ListView1.Selected.SubItems[1]) - 1)
       else
-        Form1.EdBytes.Text := ListView1.Selected.SubItems[1];
-    if CheckBox1.Checked then
-      ListView1.DeleteSelected;
-  end;
+        Form1.EdBytes.Text:= ListView1.Selected.SubItems[1];
+      if CheckBox1.Checked then
+        ListView1.DeleteSelected;
+    end;
   Form1.Estado.Caption:= Var1;
   Form3.Close;
 end;

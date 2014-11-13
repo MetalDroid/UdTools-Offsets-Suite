@@ -4,7 +4,7 @@ interface
 
 uses
   WinApi.Windows, System.SysUtils, System.Classes, Vcl.Graphics, Vcl.Forms, Vcl.Controls,
-  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Winapi.ShellApi, Vcl.Imaging.jpeg;
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, WinApi.ShellApi, Vcl.Imaging.jpeg;
 
 type
   TAboutBox = class(TForm)
@@ -19,10 +19,10 @@ type
     GitHub: TLabel;
     procedure WebClick(Sender: TObject);
     procedure GitHubClick(Sender: TObject);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
+    private
+      { Private declarations }
+    public
+      { Public declarations }
   end;
 
 var
@@ -43,4 +43,3 @@ begin
 end;
 
 end.
- 
