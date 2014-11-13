@@ -27,7 +27,7 @@ object Form1: TForm1
     Top = 0
     Width = 358
     Height = 472
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
     ParentShowHint = False
     ShowHint = False
